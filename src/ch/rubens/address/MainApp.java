@@ -1,18 +1,20 @@
 /*
-Separar as funções do main
+Separar as funções do main (show, carregar, setPreferences)
 criar uma mascara para fazer o loader
 */
 
 package ch.rubens.address;
 
-import ch.rubens.address.model.Person;
+import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.model.PersonListWrapper;
+import ch.rubens.address.model.concreate.PersonProperty;
 import ch.rubens.address.view.BirthdayStatisticsController;
 import ch.rubens.address.view.PersonEditDialogController;
 import ch.rubens.address.view.PersonOverviewController;
 import ch.rubens.address.view.RootLayoutController;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.prefs.Preferences;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -27,7 +29,6 @@ import javafx.stage.Stage;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import org.controlsfx.dialog.Dialogs;
 
 /**
  *
@@ -40,15 +41,15 @@ public class MainApp extends Application {
     private ObservableList<Person> personsData = FXCollections.observableArrayList();
     
     public MainApp() {
-        personsData.add(new Person("Hans", "Muster"));
-        personsData.add(new Person("Ruth", "Mueller"));
-        personsData.add(new Person("Heinz", "Kurz"));
-        personsData.add(new Person("Cornelia", "Meier"));
-        personsData.add(new Person("Werner", "Meyer"));
-        personsData.add(new Person("Lydia", "Kunz"));
-        personsData.add(new Person("Anna", "Best"));
-        personsData.add(new Person("Stefan", "Meier"));
-        personsData.add(new Person("Martin", "Mueller"));
+        personsData.add(new PersonProperty("Hans", "Muster"));
+        personsData.add(new PersonProperty("Ruth", "Mueller"));
+        personsData.add(new PersonProperty("Heinz", "Kurz"));
+        personsData.add(new PersonProperty("Cornelia", "Meier"));
+        personsData.add(new PersonProperty("Werner", "Meyer"));
+        personsData.add(new PersonProperty("Lydia", "Kunz"));
+        personsData.add(new PersonProperty("Anna", "Best"));
+        personsData.add(new PersonProperty("Stefan", "Meier"));
+        personsData.add(new PersonProperty("Martin", "Mueller"));
     }
     
     @Override
@@ -91,10 +92,10 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
         
-        File file = getPersonFilePath();
+        /*File file = getPersonFilePath();
         if (file != null) {
             loadPersonDataFromFile(file);
-        }
+        }*/
         
     }
     
@@ -191,9 +192,8 @@ public class MainApp extends Application {
             setPersonFilePath(file);
         }
         catch (Exception e) {
-            Dialogs.create().title("Erro")
-                    .masthead("Não foi possível carregar dados do arquivo:\n" 
-                               + file.getPath()).showException(e);
+            System.out.println("Não foi possível carregar dados do arquivo\n"
+                               + file.getPath());
         }
         
     }
@@ -207,9 +207,15 @@ public class MainApp extends Application {
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             
-            // "Encapsula" a personsData
+            // "Encapsula" a personPropertyList
             PersonListWrapper wrapper = new PersonListWrapper();
-            wrapper.setPersons(personsData);
+            ArrayList<PersonProperty> personPropertyList = new ArrayList();
+            
+            for(Person p : personsData){
+                personPropertyList.add((PersonProperty) p);
+            }
+            
+            wrapper.setPersons(personPropertyList);
             
             // Salva os dados no XML
             m.marshal(wrapper, file);
@@ -219,9 +225,8 @@ public class MainApp extends Application {
             
         }
         catch (Exception e) {
-            Dialogs.create().title("Erro")
-                    .masthead("Não foi possível salvar dados do arquivo:\n" 
-                               + file.getPath()).showException(e);
+            System.out.println("Não foi possível salvar dados do arquivo:\n" 
+                               + file.getPath());
         }
         
     }

@@ -1,7 +1,8 @@
 package ch.rubens.address.view;
 
 import ch.rubens.address.MainApp;
-import ch.rubens.address.model.Person;
+import ch.rubens.address.model.abstracts.Person;
+import ch.rubens.address.model.concreate.PersonProperty;
 import ch.rubens.address.util.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -17,8 +18,8 @@ import javafx.scene.control.TableView;
 public class PersonOverviewController {
     
     @FXML private TableView<Person> personTable;
-    @FXML private TableColumn<Person, String> firstNameColumn;
-    @FXML private TableColumn<Person, String> lastNameColumn;
+    @FXML private TableColumn<PersonProperty, String> firstNameColumn;
+    @FXML private TableColumn<PersonProperty, String> lastNameColumn;
     
     @FXML private Label firstNameLabel;
     @FXML private Label lastNameLabel;
@@ -35,9 +36,9 @@ public class PersonOverviewController {
     private void initialize() {
         
         firstNameColumn.setCellValueFactory(
-                cellData -> cellData.getValue().firstNameProperty());
+                cellData -> cellData.getValue().getFirstNameProperty());
         lastNameColumn.setCellValueFactory(
-                cellData -> cellData.getValue().lastNameProperty());
+                cellData -> cellData.getValue().getLastNameProperty());
         
         showPersonDetails(null);
         
@@ -100,7 +101,7 @@ public class PersonOverviewController {
     @FXML
     private void handleNewPerson() {
         
-        Person tempPerson = new Person();
+        Person tempPerson = new PersonProperty();
         boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
         if (okClicked) {
             mainApp.getPersonsData().add(tempPerson);

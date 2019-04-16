@@ -4,7 +4,6 @@ import ch.rubens.address.MainApp;
 import java.io.File;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
-import org.controlsfx.dialog.Dialogs;
 
 /**
  *
@@ -73,11 +72,7 @@ public class RootLayoutController {
     
     @FXML
     private void handleAbout() {
-        Dialogs.create()
-            .title("App de Endereços")
-            .masthead("Sobre")
-            .message("Autor: Rubens Souza\nGitHub: https://github.com/Rubens-Souza")
-            .showInformation();
+
     }
     
     @FXML
