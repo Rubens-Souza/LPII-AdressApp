@@ -1,6 +1,6 @@
 package ch.rubens.address.view;
 
-import ch.rubens.address.model.Person;
+import ch.rubens.address.model.abstracts.Person;
 import java.text.DateFormatSymbols;
 import java.util.Arrays;
 import java.util.List;

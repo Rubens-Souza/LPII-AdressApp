@@ -1,6 +1,6 @@
 package ch.rubens.address.view;
 
-import ch.rubens.address.model.Person;
+import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.util.DateUtil;
 import java.time.LocalDate;
 import javafx.fxml.FXML;
