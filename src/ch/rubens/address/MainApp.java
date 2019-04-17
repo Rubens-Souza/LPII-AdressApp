@@ -7,7 +7,8 @@ package ch.rubens.address;
 
 import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.model.PersonListWrapper;
-import ch.rubens.address.model.concreate.PersonProperty;
+import ch.rubens.address.model.abstracts.PersonProperty;
+import ch.rubens.address.model.concreate.ConcreatePersonProperty;
 import ch.rubens.address.view.BirthdayStatisticsController;
 import ch.rubens.address.view.PersonEditDialogController;
 import ch.rubens.address.view.PersonOverviewController;
@@ -41,15 +42,15 @@ public class MainApp extends Application {
     private ObservableList<Person> personsData = FXCollections.observableArrayList();
     
     public MainApp() {
-        personsData.add(new PersonProperty("Hans", "Muster"));
-        personsData.add(new PersonProperty("Ruth", "Mueller"));
-        personsData.add(new PersonProperty("Heinz", "Kurz"));
-        personsData.add(new PersonProperty("Cornelia", "Meier"));
-        personsData.add(new PersonProperty("Werner", "Meyer"));
-        personsData.add(new PersonProperty("Lydia", "Kunz"));
-        personsData.add(new PersonProperty("Anna", "Best"));
-        personsData.add(new PersonProperty("Stefan", "Meier"));
-        personsData.add(new PersonProperty("Martin", "Mueller"));
+        personsData.add(new ConcreatePersonProperty("Hans", "Muster"));
+        personsData.add(new ConcreatePersonProperty("Ruth", "Mueller"));
+        personsData.add(new ConcreatePersonProperty("Heinz", "Kurz"));
+        personsData.add(new ConcreatePersonProperty("Cornelia", "Meier"));
+        personsData.add(new ConcreatePersonProperty("Werner", "Meyer"));
+        personsData.add(new ConcreatePersonProperty("Lydia", "Kunz"));
+        personsData.add(new ConcreatePersonProperty("Anna", "Best"));
+        personsData.add(new ConcreatePersonProperty("Stefan", "Meier"));
+        personsData.add(new ConcreatePersonProperty("Martin", "Mueller"));
     }
     
     @Override

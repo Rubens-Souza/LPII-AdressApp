@@ -1,6 +1,6 @@
 package ch.rubens.address.model;
 
-import ch.rubens.address.model.concreate.PersonProperty;
+import ch.rubens.address.model.abstracts.PersonProperty;
 import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

@@ -1,7 +1,7 @@
 package ch.rubens.address.model.concreate;
 
 import ch.rubens.address.model.abstracts.Person;
-import ch.rubens.address.util.DateUtil;
+import ch.rubens.address.model.abstracts.PersonProperty;
 import ch.rubens.address.util.LocalDateAdapter;
 import java.time.LocalDate;
 import javafx.beans.property.IntegerProperty;
@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * para que eventos sejam detectados na interface gráfica. Segue (SRP) (OCP) (DIP)
  * @author rubens
  */
-public class PersonProperty implements Person {
+public class ConcreatePersonProperty implements PersonProperty {
 
     private StringProperty firstName;
     private StringProperty lastName;
@@ -26,39 +26,45 @@ public class PersonProperty implements Person {
     private IntegerProperty postalCode;
     private ObjectProperty<LocalDate> birthday;  
     
-    public PersonProperty() { this(null, null); }
+    public ConcreatePersonProperty() { this(null, null); }
     
-    public PersonProperty(String firstName, String lastName) {
+    public ConcreatePersonProperty(String firstName, String lastName) {
         
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
-        this.street = new SimpleStringProperty("a");
-        this.city = new SimpleStringProperty("a");
-        this.postalCode = new SimpleIntegerProperty(1);
-        this.birthday = new SimpleObjectProperty(DateUtil.parse("02/03/2001"));
+        this.street = new SimpleStringProperty();
+        this.city = new SimpleStringProperty();
+        this.postalCode = new SimpleIntegerProperty();
+        this.birthday = new SimpleObjectProperty();
         
     }
     
+    @Override
     public StringProperty getFirstNameProperty() {
         return firstName;
     }
     
+    @Override
     public StringProperty getLastNameProperty() {
         return lastName;
     }
     
+    @Override
     public StringProperty getStreetProperty() {
         return street;
     }
     
+    @Override
     public StringProperty getCityProperty() {
         return city;
     }
     
+    @Override
     public IntegerProperty getPostalCodeProperty() {
         return postalCode;
     }
     
+    @Override
     public ObjectProperty<LocalDate> getBirthdayProperty() {
         return birthday;
     }
