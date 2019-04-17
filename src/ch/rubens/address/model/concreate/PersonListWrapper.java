@@ -7,22 +7,23 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * A classe PersonListWrapper serve para carregar e salvar os dados do XML
+ * Ela implementa ListWrapper para seguir os princípios OCP e DIR.
  * @author rubens
  */
 @XmlRootElement(name = "persons")
-public class PersonListWrapper implements ListWrapper<PersonProperty> {
+public class PersonListWrapper implements ListWrapper<ConcreatePersonProperty> {
 
-  private List<PersonProperty> listPersons;
+  private List<ConcreatePersonProperty> listPersons;
 
    @Override
    @XmlElement(name = "person")
-   public List<PersonProperty> getList() {
+   public List<ConcreatePersonProperty> getList() {
        return listPersons;
    }
 
    @Override
-   public void setList(List<PersonProperty> list) {
+   public void setList(List<ConcreatePersonProperty> list) {
        listPersons = list;
    }
     

@@ -187,7 +187,7 @@ public class MainApp extends Application {
             JAXBContext context = JAXBContext.newInstance(PersonListWrapper.class);
             Unmarshaller um = context.createUnmarshaller();
             
-            ListWrapper<PersonProperty> wrapper = (PersonListWrapper) um.unmarshal(file);
+            ListWrapper wrapper = (PersonListWrapper) um.unmarshal(file);
             personsData.clear();
             personsData.addAll(wrapper.getList());
             
@@ -195,7 +195,7 @@ public class MainApp extends Application {
         }
         catch (Exception e) {
             System.out.println("Não foi possível carregar dados do arquivo\n"
-                               + file.getPath());
+                               + file.getPath() + "\n" + e);
         }
         
     }
@@ -210,11 +210,11 @@ public class MainApp extends Application {
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             
             // "Encapsula" a personPropertyList
-            ListWrapper<PersonProperty> wrapper = new PersonListWrapper();
-            ArrayList<PersonProperty> personPropertyList = new ArrayList();
+            ListWrapper wrapper = new PersonListWrapper();
+            ArrayList<ConcreatePersonProperty> personPropertyList = new ArrayList();
             
             for(Person p : personsData){
-                personPropertyList.add((PersonProperty) p);
+                personPropertyList.add((ConcreatePersonProperty) p);
             }
             
             wrapper.setList(personPropertyList);
@@ -228,7 +228,7 @@ public class MainApp extends Application {
         }
         catch (Exception e) {
             System.out.println("Não foi possível salvar dados do arquivo:\n" 
-                               + file.getPath());
+                               + file.getPath() + "\n" + e);
         }
         
     }
