@@ -2,7 +2,8 @@ package ch.rubens.address.view;
 
 import ch.rubens.address.MainApp;
 import ch.rubens.address.model.abstracts.Person;
-import ch.rubens.address.model.concreate.PersonProperty;
+import ch.rubens.address.model.abstracts.PersonProperty;
+import ch.rubens.address.model.concreate.ConcreatePersonProperty;
 import ch.rubens.address.util.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -101,7 +102,7 @@ public class PersonOverviewController {
     @FXML
     private void handleNewPerson() {
         
-        Person tempPerson = new PersonProperty();
+        Person tempPerson = new ConcreatePersonProperty();
         boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
         if (okClicked) {
             mainApp.getPersonsData().add(tempPerson);
