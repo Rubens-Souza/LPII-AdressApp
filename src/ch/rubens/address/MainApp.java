@@ -6,7 +6,8 @@ criar uma mascara para fazer o loader
 package ch.rubens.address;
 
 import ch.rubens.address.model.abstracts.Person;
-import ch.rubens.address.model.PersonListWrapper;
+import ch.rubens.address.model.concreate.PersonListWrapper;
+import ch.rubens.address.model.abstracts.ListWrapper;
 import ch.rubens.address.model.abstracts.PersonProperty;
 import ch.rubens.address.model.concreate.ConcreatePersonProperty;
 import ch.rubens.address.view.BirthdayStatisticsController;
@@ -186,9 +187,9 @@ public class MainApp extends Application {
             JAXBContext context = JAXBContext.newInstance(PersonListWrapper.class);
             Unmarshaller um = context.createUnmarshaller();
             
-            PersonListWrapper wrapper = (PersonListWrapper) um.unmarshal(file);
+            ListWrapper<PersonProperty> wrapper = (PersonListWrapper) um.unmarshal(file);
             personsData.clear();
-            personsData.addAll(wrapper.getPersons());
+            personsData.addAll(wrapper.getList());
             
             setPersonFilePath(file);
         }
@@ -209,14 +210,14 @@ public class MainApp extends Application {
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             
             // "Encapsula" a personPropertyList
-            PersonListWrapper wrapper = new PersonListWrapper();
+            ListWrapper<PersonProperty> wrapper = new PersonListWrapper();
             ArrayList<PersonProperty> personPropertyList = new ArrayList();
             
             for(Person p : personsData){
                 personPropertyList.add((PersonProperty) p);
             }
             
-            wrapper.setPersons(personPropertyList);
+            wrapper.setList(personPropertyList);
             
             // Salva os dados no XML
             m.marshal(wrapper, file);

@@ -1,6 +1,5 @@
 package ch.rubens.address.model.concreate;
 
-import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.model.abstracts.PersonProperty;
 import ch.rubens.address.util.LocalDateAdapter;
 import java.time.LocalDate;
