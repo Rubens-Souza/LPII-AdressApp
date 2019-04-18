@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 /**
  * Esta implementação consiste em utilizar os atributos de uma Person como Property
  * para que eventos sejam detectados na interface gráfica. Segue (SRP) (OCP) (DIP)
+ * 
  * @author rubens
  */
 public class ConcreatePersonProperty implements PersonProperty {

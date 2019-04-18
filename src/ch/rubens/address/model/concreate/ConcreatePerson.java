@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 /**
  * Esta implementação consiste em apenas abstrair uma pessoa, de modo que possa
  * ser usada para apenas representá-la no código. Segue (SRP) (OCP) (DIP)
+ * 
  * @author rubens
  */
 public class ConcreatePerson implements Person {

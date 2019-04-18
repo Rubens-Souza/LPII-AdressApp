@@ -1,7 +1,13 @@
 package ch.rubens.address.view;
 
 import ch.rubens.address.model.abstracts.Person;
-import ch.rubens.address.util.DateUtil;
+import ch.rubens.address.util.abstracts.IDateValidation;
+import ch.rubens.address.util.abstracts.IFormater;
+import ch.rubens.address.util.abstracts.IParser;
+import ch.rubens.address.util.concreate.BrazilDateValidation;
+import ch.rubens.address.util.concreate.LocalDateFormater;
+import ch.rubens.address.util.concreate.StringToLocalDateParse;
+import java.time.LocalDate;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -34,13 +40,14 @@ public class PersonEditDialogController {
     public void setPerson(Person person) {
         
         this.person = person;
+        IFormater dateFormater = new LocalDateFormater("dd/MM/yyyy");
         
         firstNameField.setText(person.getFirstName());
         lastNameField.setText(person.getLastName());
         streetField.setText(person.getStreet());
         postalCodeField.setText(Integer.toString(person.getPostalCode()));
         cityField.setText(person.getCity());
-        birthdayField.setText(DateUtil.format(person.getBirthday()));
+        birthdayField.setText(dateFormater.format(person.getBirthday()));
         birthdayField.setPromptText("dd/mm/yyyy");
         
     }
@@ -52,12 +59,14 @@ public class PersonEditDialogController {
         
         if (isInputValid()) {
             
+            IParser dateParser = new StringToLocalDateParse("dd/MM/yyyy");
+            
             person.setFirstName(firstNameField.getText());
             person.setLastName(lastNameField.getText());
             person.setStreet(streetField.getText());
             person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
             person.setCity(cityField.getText());
-            person.setBirthday(DateUtil.parse(birthdayField.getText()));
+            person.setBirthday((LocalDate) dateParser.parse(birthdayField.getText()));
             
             okClicked = true;
             dialogStage.close();
@@ -102,7 +111,10 @@ public class PersonEditDialogController {
             errorMessage += "Aniversário inválido!\n";
         } 
         else {
-            if (!DateUtil.validDate(birthdayField.getText()))
+            
+            IDateValidation brazilValidation = new BrazilDateValidation();
+            
+            if (!brazilValidation.isDateValid(birthdayField.getText()))
                 errorMessage += "Aniversário inválido. Use o formato dd/mm/yyyy!\n";
         }
 
