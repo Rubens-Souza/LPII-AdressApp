@@ -5,7 +5,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- *
+ * Esta classe implementa a interface IFormater para converter uma LocalDate em
+ * uma String. [Antigo métdo do DateUtil.format()]
+ * 
  * @author rubens
  */
 public class LocalDateFormater implements IFormater<LocalDate> {

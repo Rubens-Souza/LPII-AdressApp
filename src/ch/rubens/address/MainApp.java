@@ -8,7 +8,6 @@ package ch.rubens.address;
 import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.model.concreate.PersonListWrapper;
 import ch.rubens.address.model.abstracts.ListWrapper;
-import ch.rubens.address.model.abstracts.PersonProperty;
 import ch.rubens.address.model.concreate.ConcreatePersonProperty;
 import ch.rubens.address.view.BirthdayStatisticsController;
 import ch.rubens.address.view.PersonEditDialogController;

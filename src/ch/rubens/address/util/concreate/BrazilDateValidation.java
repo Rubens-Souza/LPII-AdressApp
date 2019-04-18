@@ -6,7 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- *
+ * Esta classe implementa a interface IDatevalidation de acordo com o padrão de 
+ * data usado no Brasil. [Antigo método de DateUtil.isDateValid()]
+ * 
  * @author rubens
  */
 public class BrazilDateValidation implements IDateValidation {

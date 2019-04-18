@@ -7,6 +7,7 @@ import java.util.List;
  *      * Passe a seguir o OCP já que qualquer classe pode implementar ListWrapper
  *      * Passe a seguir o DIP tendo uma interface como referência
  *      * Tenha a assinatura dos métodos padronizadas
+ * 
  * @author rubens
  * @param <T> Tipo de lista que será utilizada pela implementação do Wrapper
  */

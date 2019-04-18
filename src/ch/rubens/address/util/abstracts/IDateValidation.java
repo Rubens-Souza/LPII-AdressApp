@@ -1,10 +1,10 @@
 package ch.rubens.address.util.abstracts;
 
 /**
- * Essa classe se originou devido ao DateUtil, que vai contra o principio SRP
- * executando mais de uma funcionalidade. [Criada devido ao antigo DateUtil]
+ * Esta classe se originou devido ao DateUtil, que vai contra o principio SRP
+ * executando mais de uma funcionalidade.
  * 
- * Essa interface faz com que a forma de validar a data siga o SRP, OCP, ISP e
+ * Ela faz com que a forma de validar a data siga o SRP, OCP, ISP e
  * DIP.
  * 
  * @author rubens

@@ -6,7 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- *
+ * Esta classe Implementa a interfae IParser de modo que converta String em 
+ * LocalDate. [Executa o antigo método DateUtil.parse()]
+ * 
  * @author rubens
  */
 public class StringToLocalDateParse implements IParser<String, LocalDate> {
