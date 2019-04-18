@@ -94,10 +94,10 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
         
-        /*File file = getPersonFilePath();
+        File file = getPersonFilePath();
         if (file != null) {
             loadPersonDataFromFile(file);
-        }*/
+        }
         
     }
     

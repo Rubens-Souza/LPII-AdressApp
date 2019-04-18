@@ -40,6 +40,7 @@ public class BirthdayStatisticsController {
         for (Person p: persons) {
             
             int month = p.getBirthday().getMonthValue();
+            month--;
             monthCounter[month]++;
             
         }
