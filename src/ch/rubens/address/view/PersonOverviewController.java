@@ -4,7 +4,8 @@ import ch.rubens.address.MainApp;
 import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.model.abstracts.PersonProperty;
 import ch.rubens.address.model.concreate.ConcreatePersonProperty;
-import ch.rubens.address.util.DateUtil;
+import ch.rubens.address.util.abstracts.IFormater;
+import ch.rubens.address.util.concreate.LocalDateFormater;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -57,12 +58,14 @@ public class PersonOverviewController {
         
         if (person != null) {
             
+            IFormater dateFormater = new LocalDateFormater("dd/MM/yyyy");
+            
             firstNameLabel.setText(person.getFirstName());
             lastNameLabel.setText(person.getLastName());
             streetLabel.setText(person.getStreet());
             postalCodeLabel.setText(Integer.toString(person.getPostalCode()));
             cityLabel.setText(person.getCity());
-            birthdayLabel.setText(DateUtil.format(person.getBirthday()));
+            birthdayLabel.setText(dateFormater.format(person.getBirthday()));
             
         }
         else {
