@@ -2,7 +2,6 @@ package ch.rubens.address.view;
 
 import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.util.DateUtil;
-import java.time.LocalDate;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
