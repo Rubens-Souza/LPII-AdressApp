@@ -3,18 +3,23 @@ package ch.rubens.address.view;
 import ch.rubens.address.MainApp;
 import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.model.abstracts.PersonProperty;
-import ch.rubens.address.model.concreate.ConcreatePersonProperty;
-import ch.rubens.address.util.abstracts.IFormater;
-import ch.rubens.address.util.concreate.LocalDateFormater;
+import ch.rubens.address.view.abstracts.IPersonManipulation;
+import ch.rubens.address.view.abstracts.IShowOverviewInfo;
+import ch.rubens.address.view.concreate.OverviewControllerPersonManipulation;
+import ch.rubens.address.view.concreate.ShowOverviewInfo;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 /**
- *
+ * As implementações dos seus métodos foram divididas em outras classes para que o 
+ * PersonOverviewController tenha como única responsabilidade associar quais ações
+ * devem ser tomadas em determinados eventos. (SRP)
+ * 
+ * A segregação das funcionalidades em outras classes/interfaces atende o OCP,
+ * o ISP e o DIP.
+ * 
  * @author rubens
  */
 public class PersonOverviewController {
@@ -27,12 +32,19 @@ public class PersonOverviewController {
     @FXML private Label lastNameLabel;
     @FXML private Label streetLabel;
     @FXML private Label postalCodeLabel;
-    @FXML private Label cityLabel;;
+    @FXML private Label cityLabel;
     @FXML private Label birthdayLabel;
     
     private MainApp mainApp;
+    private IPersonManipulation personManipulator;
+    private IShowOverviewInfo infoExhibitor;
     
-    public PersonOverviewController() {}
+    public PersonOverviewController() {
+        
+        personManipulator = new OverviewControllerPersonManipulation(this);
+        infoExhibitor = new ShowOverviewInfo(this);
+        
+    }
     
     @FXML
     private void initialize() {
@@ -42,95 +54,77 @@ public class PersonOverviewController {
         lastNameColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getLastNameProperty());
         
-        showPersonDetails(null);
+        infoExhibitor.hideInfo();
         
         personTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showPersonDetails(newValue));
+        
     }
     
-    /**
-     * Preenche todos os campos de texto para mostrar detalhes sobre a pessoa.
-     * Se a pessoa especificada for null, todos os campos de texto são limpos.
-     * 
-     * @param person a pessoa ou null
-     */
     private void showPersonDetails(Person person) {
-        
-        if (person != null) {
-            
-            IFormater dateFormater = new LocalDateFormater("dd/MM/yyyy");
-            
-            firstNameLabel.setText(person.getFirstName());
-            lastNameLabel.setText(person.getLastName());
-            streetLabel.setText(person.getStreet());
-            postalCodeLabel.setText(Integer.toString(person.getPostalCode()));
-            cityLabel.setText(person.getCity());
-            birthdayLabel.setText(dateFormater.format(person.getBirthday()));
-            
-        }
-        else {
-            
-            firstNameLabel.setText("");
-            lastNameLabel.setText("");
-            streetLabel.setText("");
-            postalCodeLabel.setText("");
-            cityLabel.setText("");
-            birthdayLabel.setText("");
-            
-        }
-        
+        infoExhibitor.loadInfo(person);
     }
     
     @FXML
     private void handelDeletePerson() {
-        
-        int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
-        
-        if (selectedIndex >= 0) {
-            personTable.getItems().remove(selectedIndex);
-        }
-        else {
-            
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle("Nenhuma seleção!");
-            alert.setHeaderText("Nenhuma pessoa foi selecionada");
-            alert.setContentText("por favor, selecione uma pessoa na tabela.");
-            alert.showAndWait();
-            
-        }
-        
-                
+        personManipulator.deletePerson();
     }
     
     @FXML
     private void handleNewPerson() {
-        
-        Person tempPerson = new ConcreatePersonProperty();
-        boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
-        if (okClicked) {
-            mainApp.getPersonsData().add(tempPerson);
-        }
-        
+        personManipulator.newPerson();
     }
     
     @FXML
     private void handleEditPerson() {
-        
-        Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
-        if (selectedPerson != null) {
-            boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);
-            if (okClicked) {
-                showPersonDetails(selectedPerson);
-            }
-        }
-        
+        personManipulator.editPerson();
+    }
+    
+    public TableView<Person> getPersonTable() {
+        return personTable;
+    }
+
+    public TableColumn<PersonProperty, String> getFirstNameColumn() {
+        return firstNameColumn;
+    }
+
+    public TableColumn<PersonProperty, String> getLastNameColumn() {
+        return lastNameColumn;
+    }
+
+    public Label getFirstNameLabel() {
+        return firstNameLabel;
+    }
+
+    public Label getLastNameLabel() {
+        return lastNameLabel;
+    }
+
+    public Label getStreetLabel() {
+        return streetLabel;
+    }
+
+    public Label getPostalCodeLabel() {
+        return postalCodeLabel;
+    }
+
+    public Label getCityLabel() {
+        return cityLabel;
+    }
+
+    public Label getBirthdayLabel() {
+        return birthdayLabel;
+    }
+
+    public MainApp getMainApp() {
+        return mainApp;
     }
     
     public void setMainApp(MainApp main) {
         
         this.mainApp = main;
-        
         personTable.setItems(mainApp.getPersonsData());
         
     }
+    
 }
