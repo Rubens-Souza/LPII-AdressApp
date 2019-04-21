@@ -1,7 +1,7 @@
 package ch.rubens.address.model.concreate;
 
 import ch.rubens.address.model.abstracts.Person;
-import ch.rubens.address.util.LocalDateAdapter;
+import ch.rubens.address.util.concreate.LocalDateAdapter;
 import java.time.LocalDate;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
