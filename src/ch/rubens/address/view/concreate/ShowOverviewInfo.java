@@ -7,7 +7,8 @@ import ch.rubens.address.view.PersonOverviewController;
 import ch.rubens.address.view.abstracts.IShowPersonInfo;
 
 /**
- * Está classe é a implementação da interface IShowPersonInfo. (DIP)
+ * Esta classe é a implementação de IShowPersonInfo de acordo com a forma que deve
+ * ser exibida pela modal aberta para editar alguma pessoa cadastrada.
  * 
  * @author rubens
  */
