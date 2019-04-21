@@ -4,13 +4,13 @@ import ch.rubens.address.MainApp;
 import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.model.abstracts.PersonProperty;
 import ch.rubens.address.view.abstracts.IPersonManipulation;
-import ch.rubens.address.view.abstracts.IShowOverviewInfo;
 import ch.rubens.address.view.concreate.OverviewControllerPersonManipulation;
 import ch.rubens.address.view.concreate.ShowOverviewInfo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import ch.rubens.address.view.abstracts.IShowPersonInfo;
 
 /**
  * As implementações dos seus métodos foram divididas em outras classes para que o 
@@ -37,7 +37,7 @@ public class PersonOverviewController {
     
     private MainApp mainApp;
     private IPersonManipulation personManipulator;
-    private IShowOverviewInfo infoExhibitor;
+    private IShowPersonInfo infoExhibitor;
     
     public PersonOverviewController() {
         

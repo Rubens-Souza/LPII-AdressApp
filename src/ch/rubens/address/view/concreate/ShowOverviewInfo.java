@@ -4,14 +4,14 @@ import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.util.abstracts.IFormater;
 import ch.rubens.address.util.concreate.LocalDateFormater;
 import ch.rubens.address.view.PersonOverviewController;
-import ch.rubens.address.view.abstracts.IShowOverviewInfo;
+import ch.rubens.address.view.abstracts.IShowPersonInfo;
 
 /**
- * Está classe é a implementação da interface IShowOverviewInfo
+ * Está classe é a implementação da interface IShowPersonInfo. (DIP)
  * 
  * @author rubens
  */
-public class ShowOverviewInfo implements IShowOverviewInfo {
+public class ShowOverviewInfo implements IShowPersonInfo {
     
     private PersonOverviewController controller;
     
