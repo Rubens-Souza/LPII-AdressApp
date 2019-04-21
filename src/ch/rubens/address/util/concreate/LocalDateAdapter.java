@@ -1,4 +1,4 @@
-package ch.rubens.address.util;
+package ch.rubens.address.util.concreate;
 
 import java.time.LocalDate;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
