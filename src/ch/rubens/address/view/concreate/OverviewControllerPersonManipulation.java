@@ -6,7 +6,7 @@ import ch.rubens.address.util.abstracts.IFastAlert;
 import ch.rubens.address.util.concreate.FastAlertWarning;
 import ch.rubens.address.view.PersonOverviewController;
 import ch.rubens.address.view.abstracts.IPersonManipulation;
-import ch.rubens.address.view.abstracts.IShowOverviewInfo;
+import ch.rubens.address.view.abstracts.IShowPersonInfo;
 
 /**
  * Esta classe é a implementação da interface IPersonManipulation
@@ -62,7 +62,7 @@ public class OverviewControllerPersonManipulation implements IPersonManipulation
             
             if (okClicked) {
                 
-                IShowOverviewInfo infoExhibitor = new ShowOverviewInfo(controller);
+                IShowPersonInfo infoExhibitor = new ShowOverviewInfo(controller);
                 infoExhibitor.loadInfo(selectedPerson);
                 
             }
