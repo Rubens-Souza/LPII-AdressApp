@@ -36,6 +36,7 @@ public class BirthdayStatisticsController {
     public void setPersonData(List<Person> persons) {
         
         int[] monthCounter = new int[12];
+        int i = 0;
         
         for (Person p: persons) {
             
@@ -47,8 +48,15 @@ public class BirthdayStatisticsController {
         
         XYChart.Series<String, Integer> series = new XYChart.Series<>();
         
-        for (int i = 0; i < monthCounter.length; i++) {
-            series.getData().add(new XYChart.Data<>(monthNames.get(i), monthCounter[i]));
+        /**
+         * Alterei o tipo de for para ser um for iterativo e seguir o padrão de
+         * projeto Iterator
+         */
+        for (Integer monthNumber : monthCounter) {
+            
+            series.getData().add(new XYChart.Data<>(monthNames.get(i), monthNumber));
+            i++;
+            
         }
         
         barChart.getData().add(series);
