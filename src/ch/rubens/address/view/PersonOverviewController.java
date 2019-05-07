@@ -3,6 +3,7 @@ package ch.rubens.address.view;
 import ch.rubens.address.MainApp;
 import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.model.abstracts.PersonProperty;
+import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.view.abstracts.IPersonManipulation;
 import ch.rubens.address.view.concreate.OverviewControllerPersonManipulation;
 import ch.rubens.address.view.concreate.ShowOverviewInfo;
@@ -41,6 +42,7 @@ public class PersonOverviewController {
     
     public PersonOverviewController() {
         
+        personTable.setItems(PersonListSingleton.getPersonListSingleInstace().getList());
         personManipulator = new OverviewControllerPersonManipulation(this);
         infoExhibitor = new ShowOverviewInfo(this);
         
@@ -114,17 +116,6 @@ public class PersonOverviewController {
 
     public Label getBirthdayLabel() {
         return birthdayLabel;
-    }
-
-    public MainApp getMainApp() {
-        return mainApp;
-    }
-    
-    public void setMainApp(MainApp main) {
-        
-        this.mainApp = main;
-        personTable.setItems(mainApp.getPersonsData());
-        
     }
     
 }
