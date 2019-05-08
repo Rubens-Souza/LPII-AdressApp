@@ -1,6 +1,5 @@
 package ch.rubens.address.view;
 
-import ch.rubens.address.MainApp;
 import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.model.abstracts.PersonProperty;
 import ch.rubens.address.model.concreate.PersonListSingleton;
@@ -36,7 +35,6 @@ public class PersonOverviewController {
     @FXML private Label cityLabel;
     @FXML private Label birthdayLabel;
     
-    private MainApp mainApp;
     private IPersonManipulation personManipulator;
     private IShowPersonInfo infoExhibitor;
     

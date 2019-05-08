@@ -88,7 +88,6 @@ public class PrimaryStageSingleton extends IWindow {
         FXMLLoader loader = new FXMLLoader();
         
         overviewController = loader.getController();
-        overviewController.setMainApp(this);
         
     }
     

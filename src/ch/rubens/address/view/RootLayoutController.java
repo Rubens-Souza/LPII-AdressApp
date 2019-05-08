@@ -1,6 +1,8 @@
 package ch.rubens.address.view;
 
 import ch.rubens.address.MainApp;
+import ch.rubens.address.model.concreate.PersonListSingleton;
+import ch.rubens.address.view.concreate.PrimaryStageSingleton;
 import java.io.File;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
@@ -16,7 +18,7 @@ public class RootLayoutController {
     // Criar novo arquivo
     @FXML
     private void handleNew() {
-        main.getPersonsData().clear();
+        PersonListSingleton.getPersonListSingleInstace().getList().clear();
         main.setPersonFilePath(null);
     }
     
@@ -29,7 +31,7 @@ public class RootLayoutController {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extFilter);
         
-        File file = fileChooser.showOpenDialog(main.getPrimaryStage());
+        File file = fileChooser.showOpenDialog(PrimaryStageSingleton.getInstance().getPrimaryStage());
         
         if (file != null) {
             main.loadPersonDataFromFile(file);
@@ -60,7 +62,7 @@ public class RootLayoutController {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extFilter);
         
-        File file = fileChooser.showSaveDialog(main.getPrimaryStage());
+        File file = fileChooser.showSaveDialog(PrimaryStageSingleton.getInstance().getPrimaryStage());
         
         if (file != null) {
             if (!file.getPath().endsWith(".xml"))
@@ -82,7 +84,7 @@ public class RootLayoutController {
     
     @FXML
     private void handleShowBirthdayStatistics() {
-        main.showBirthdayStatistics();
+        main.showBirthdayStatistics(); // Pedir ao madiator
     }
     
     public void setMainApp(MainApp main) { this.main = main; }

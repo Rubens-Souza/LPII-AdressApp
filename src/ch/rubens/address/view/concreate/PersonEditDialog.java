@@ -61,7 +61,7 @@ public class PersonEditDialog extends IWindow {
         
         controller = loader.getController();
         controller.setDialogStage(dialogStage);
-        controller.setPerson(person);
+        //controller.setPerson(person);
         
     }
     
