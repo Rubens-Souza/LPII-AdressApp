@@ -56,6 +56,11 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        
+        // Inicializar o PrimaryStageSingleton
+        // Inicializar o PersonListSingleton
+        // Inicializar o WindowsMadiatorSingleton
+        
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App de Endereços");
         this.primaryStage.getIcons().add(new Image("file:resoucers/imagens/icone_app.png"));
@@ -111,7 +116,6 @@ public class MainApp extends Application {
             rootLayout.setCenter(personOverview);
             
             PersonOverviewController controller = loader.getController();
-            controller.setMainApp(this);
             
         } catch(IOException e) {
             e.printStackTrace();

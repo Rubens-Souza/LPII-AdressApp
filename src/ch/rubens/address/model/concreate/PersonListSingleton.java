@@ -51,6 +51,7 @@ public class PersonListSingleton implements IPersonList<ObservableList> {
     }
 
     @Override
+    // Aplicar o padrão itarator ao invés de pegar a lista
     public ObservableList getList() {
         
         return personList;

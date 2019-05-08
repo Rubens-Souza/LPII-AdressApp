@@ -44,9 +44,11 @@ public class OverviewControllerPersonManipulation implements IPersonManipulation
     public void newPerson() {
         
         Person tempPerson = new ConcreatePersonProperty();
+        // pedir ao mediator
         boolean okClicked = controller.getMainApp().showPersonEditDialog(tempPerson);
         
         if (okClicked) {
+            // pedir ao mediator
             controller.getMainApp().getPersonsData().add(tempPerson);
         }
         
@@ -58,6 +60,7 @@ public class OverviewControllerPersonManipulation implements IPersonManipulation
        Person selectedPerson = controller.getPersonTable().getSelectionModel().getSelectedItem();
        
        if (selectedPerson != null) {
+           // pedir ao mediator
             boolean okClicked = controller.getMainApp().showPersonEditDialog(selectedPerson);
             
             if (okClicked) {
