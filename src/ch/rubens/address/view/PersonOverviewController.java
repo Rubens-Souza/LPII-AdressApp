@@ -3,6 +3,7 @@ package ch.rubens.address.view;
 import ch.rubens.address.MainApp;
 import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.model.abstracts.PersonProperty;
+import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.view.abstracts.IPersonManipulation;
 import ch.rubens.address.view.concreate.OverviewControllerPersonManipulation;
 import ch.rubens.address.view.concreate.ShowOverviewInfo;
@@ -123,7 +124,7 @@ public class PersonOverviewController {
     public void setMainApp(MainApp main) {
         
         this.mainApp = main;
-        personTable.setItems(mainApp.getPersonsData());
+        personTable.setItems(PersonListSingleton.getInstance().getList());
         
     }
     

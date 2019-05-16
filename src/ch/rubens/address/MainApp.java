@@ -9,6 +9,7 @@ import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.model.concreate.PersonListWrapper;
 import ch.rubens.address.model.abstracts.ListWrapper;
 import ch.rubens.address.model.concreate.ConcreatePersonProperty;
+import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.view.BirthdayStatisticsController;
 import ch.rubens.address.view.PersonEditDialogController;
 import ch.rubens.address.view.PersonOverviewController;
@@ -169,7 +170,7 @@ public class MainApp extends Application {
             dialogStage.setScene(scene);
             
             BirthdayStatisticsController controller = loader.getController();
-            controller.setPersonData(personsData);
+            controller.setPersonData(PersonListSingleton.getInstance().getList());
             
             dialogStage.show();
         }
@@ -187,8 +188,8 @@ public class MainApp extends Application {
             Unmarshaller um = context.createUnmarshaller();
             
             ListWrapper wrapper = (PersonListWrapper) um.unmarshal(file);
-            personsData.clear();
-            personsData.addAll(wrapper.getList());
+            PersonListSingleton.getInstance().clear();
+            PersonListSingleton.getInstance().getList().addAll(wrapper.getList());
             
             setPersonFilePath(file);
         }

@@ -1,6 +1,7 @@
 package ch.rubens.address.view;
 
 import ch.rubens.address.MainApp;
+import ch.rubens.address.model.concreate.PersonListSingleton;
 import java.io.File;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
@@ -16,7 +17,7 @@ public class RootLayoutController {
     // Criar novo arquivo
     @FXML
     private void handleNew() {
-        main.getPersonsData().clear();
+        PersonListSingleton.getInstance().clear();
         main.setPersonFilePath(null);
     }
     
