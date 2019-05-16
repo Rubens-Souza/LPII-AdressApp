@@ -50,6 +50,7 @@ public class PersonListSingleton implements IPersonList<ObservableList> {
         
     }
     
+    @Override
     public void clear() {
         personList.clear();
     }
