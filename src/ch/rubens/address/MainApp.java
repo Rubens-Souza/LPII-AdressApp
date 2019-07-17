@@ -32,6 +32,7 @@ import ch.rubens.address.model.abstracts.IPersonListSingleton;
 import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.util.abstracts.IPersistenceFormat;
 import ch.rubens.address.util.concreate.PersistDataXML;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
@@ -188,9 +189,13 @@ public class MainApp extends Application {
     // metodo para carregar o arquivo XML
     public void loadPersonDataFromFile(File file) {
         
-        personsList.clear();
-        personsList.addAll(format.load(file));
+        List personsSavedList = format.load(file);
         
+        personsList.clear();
+        
+        if (personsSavedList != null) {
+            personsList.addAll(format.load(file));
+        }
         
     }
     

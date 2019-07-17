@@ -88,6 +88,9 @@ public class PersistDataXML implements IPersistenceFormat<File> {
             
         }
         
+        if (loadWrapper == null)
+            return null;
+        
         return loadWrapper.getList();
         
     }
