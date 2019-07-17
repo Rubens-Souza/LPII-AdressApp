@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author rubens
  */
-public interface IPersistData<T> {
+public interface IPersistenceFormat<T> {
 
     public void save(T data);
     

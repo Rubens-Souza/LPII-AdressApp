@@ -10,7 +10,6 @@ import ch.rubens.address.model.abstracts.IListWrapper;
 import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.model.concreate.PersonProperty;
-import ch.rubens.address.util.abstracts.IPersistData;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +18,13 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import ch.rubens.address.util.abstracts.IPersistenceFormat;
 
 /**
  *
  * @author rubens
  */
-public class PersistDataXML implements IPersistData<File> {
+public class PersistDataXML implements IPersistenceFormat<File> {
 
     private Unmarshaller unmarshaller;
     private Marshaller marshaller;
@@ -33,7 +33,7 @@ public class PersistDataXML implements IPersistData<File> {
     private IListWrapper saveWrapper;
     private MainApp main;
     
-    public PersistDataXML(String context, IListWrapper wrapper, MainApp main) throws JAXBException {
+    public PersistDataXML(Class context, IListWrapper wrapper, MainApp main) throws JAXBException {
         
         setContext(JAXBContext.newInstance(context));
         setWrapper(wrapper);
