@@ -7,6 +7,7 @@ import ch.rubens.address.view.PersonOverviewController;
 import ch.rubens.address.view.abstracts.IPersonManipulation;
 import ch.rubens.address.view.abstracts.IShowPersonInfo;
 import ch.rubens.address.model.abstracts.IPerson;
+import ch.rubens.address.model.concreate.PersonListSingleton;
 
 /**
  * Esta classe é a implementação da interface IPersonManipulation
@@ -47,7 +48,7 @@ public class OverviewControllerPersonManipulation implements IPersonManipulation
         boolean okClicked = controller.getMainApp().showPersonEditDialog(tempPerson);
         
         if (okClicked) {
-            controller.getMainApp().getPersonsData().add(tempPerson);
+            PersonListSingleton.getInstance().addPerson(tempPerson);
         }
         
     }

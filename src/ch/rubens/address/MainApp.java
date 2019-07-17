@@ -30,6 +30,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.abstracts.IListWrapper;
+import ch.rubens.address.model.abstracts.IPersonListSingleton;
+import ch.rubens.address.model.concreate.PersonListSingleton;
 
 /**
  *
@@ -39,18 +41,22 @@ public class MainApp extends Application {
     
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private ObservableList<IPerson> personsData = FXCollections.observableArrayList();
+    private IPersonListSingleton personsList;
+    //private ObservableList<IPerson> personsData = FXCollections.observableArrayList();
     
     public MainApp() {
-        personsData.add(new PersonProperty("Hans", "Muster"));
-        personsData.add(new PersonProperty("Ruth", "Mueller"));
-        personsData.add(new PersonProperty("Heinz", "Kurz"));
-        personsData.add(new PersonProperty("Cornelia", "Meier"));
-        personsData.add(new PersonProperty("Werner", "Meyer"));
-        personsData.add(new PersonProperty("Lydia", "Kunz"));
-        personsData.add(new PersonProperty("Anna", "Best"));
-        personsData.add(new PersonProperty("Stefan", "Meier"));
-        personsData.add(new PersonProperty("Martin", "Mueller"));
+        
+        personsList = PersonListSingleton.getInstance();
+        
+        personsList.addPerson(new PersonProperty("Hans", "Muster"));
+        personsList.addPerson(new PersonProperty("Ruth", "Mueller"));
+        personsList.addPerson(new PersonProperty("Heinz", "Kurz"));
+        personsList.addPerson(new PersonProperty("Cornelia", "Meier"));
+        personsList.addPerson(new PersonProperty("Werner", "Meyer"));
+        personsList.addPerson(new PersonProperty("Lydia", "Kunz"));
+        personsList.addPerson(new PersonProperty("Anna", "Best"));
+        personsList.addPerson(new PersonProperty("Stefan", "Meier"));
+        personsList.addPerson(new PersonProperty("Martin", "Mueller"));
     }
     
     @Override
@@ -169,7 +175,7 @@ public class MainApp extends Application {
             dialogStage.setScene(scene);
             
             BirthdayStatisticsController controller = loader.getController();
-            controller.setPersonData(personsData);
+            controller.setPersonData(personsList.getObservableList());
             
             dialogStage.show();
         }
@@ -187,8 +193,8 @@ public class MainApp extends Application {
             Unmarshaller um = context.createUnmarshaller();
             
             IListWrapper wrapper = (PersonListWrapper) um.unmarshal(file);
-            personsData.clear();
-            personsData.addAll(wrapper.getList());
+            personsList.clear();
+            personsList.addAll(wrapper.getList());
             
             setPersonFilePath(file);
         }
@@ -212,7 +218,7 @@ public class MainApp extends Application {
             IListWrapper wrapper = new PersonListWrapper();
             ArrayList<PersonProperty> personPropertyList = new ArrayList();
             
-            for(IPerson p : personsData){
+            for(IPerson p : personsList.getObservableList()){
                 personPropertyList.add((PersonProperty) p);
             }
             
@@ -263,6 +269,6 @@ public class MainApp extends Application {
     }
     
     public Stage getPrimaryStage() { return primaryStage; }
-    public ObservableList<IPerson> getPersonsData() { return personsData; }
+    //public ObservableList<IPerson> getPersonsData() { return personsData; }
     
 }

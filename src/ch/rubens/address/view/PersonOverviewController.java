@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import ch.rubens.address.view.abstracts.IShowPersonInfo;
 import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.abstracts.IPersonProperty;
+import ch.rubens.address.model.concreate.PersonListSingleton;
 
 /**
  * As implementações dos seus métodos foram divididas em outras classes para que o 
@@ -123,7 +124,7 @@ public class PersonOverviewController {
     public void setMainApp(MainApp main) {
         
         this.mainApp = main;
-        personTable.setItems(mainApp.getPersonsData());
+        personTable.setItems(PersonListSingleton.getInstance().getObservableList());
         
     }
     
