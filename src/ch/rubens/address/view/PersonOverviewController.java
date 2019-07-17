@@ -1,8 +1,6 @@
 package ch.rubens.address.view;
 
 import ch.rubens.address.MainApp;
-import ch.rubens.address.model.abstracts.Person;
-import ch.rubens.address.model.abstracts.PersonProperty;
 import ch.rubens.address.view.abstracts.IPersonManipulation;
 import ch.rubens.address.view.concreate.OverviewControllerPersonManipulation;
 import ch.rubens.address.view.concreate.ShowOverviewInfo;
@@ -11,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import ch.rubens.address.view.abstracts.IShowPersonInfo;
+import ch.rubens.address.model.abstracts.IPerson;
+import ch.rubens.address.model.abstracts.IPersonProperty;
 
 /**
  * As implementações dos seus métodos foram divididas em outras classes para que o 
@@ -24,9 +24,9 @@ import ch.rubens.address.view.abstracts.IShowPersonInfo;
  */
 public class PersonOverviewController {
     
-    @FXML private TableView<Person> personTable;
-    @FXML private TableColumn<PersonProperty, String> firstNameColumn;
-    @FXML private TableColumn<PersonProperty, String> lastNameColumn;
+    @FXML private TableView<IPerson> personTable;
+    @FXML private TableColumn<IPersonProperty, String> firstNameColumn;
+    @FXML private TableColumn<IPersonProperty, String> lastNameColumn;
     
     @FXML private Label firstNameLabel;
     @FXML private Label lastNameLabel;
@@ -61,7 +61,7 @@ public class PersonOverviewController {
         
     }
     
-    private void showPersonDetails(Person person) {
+    private void showPersonDetails(IPerson person) {
         infoExhibitor.loadInfo(person);
     }
     
@@ -80,15 +80,15 @@ public class PersonOverviewController {
         personManipulator.editPerson();
     }
     
-    public TableView<Person> getPersonTable() {
+    public TableView<IPerson> getPersonTable() {
         return personTable;
     }
 
-    public TableColumn<PersonProperty, String> getFirstNameColumn() {
+    public TableColumn<IPersonProperty, String> getFirstNameColumn() {
         return firstNameColumn;
     }
 
-    public TableColumn<PersonProperty, String> getLastNameColumn() {
+    public TableColumn<IPersonProperty, String> getLastNameColumn() {
         return lastNameColumn;
     }
 

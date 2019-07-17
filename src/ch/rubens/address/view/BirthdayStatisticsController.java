@@ -1,6 +1,5 @@
 package ch.rubens.address.view;
 
-import ch.rubens.address.model.abstracts.Person;
 import java.text.DateFormatSymbols;
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.XYChart;
+import ch.rubens.address.model.abstracts.IPerson;
 
 /**
  *
@@ -33,12 +33,12 @@ public class BirthdayStatisticsController {
         
     }
     
-    public void setPersonData(List<Person> persons) {
+    public void setPersonData(List<IPerson> persons) {
         
         int[] monthCounter = new int[12];
         int i = 0;
         
-        for (Person p: persons) {
+        for (IPerson p: persons) {
             
             int month = p.getBirthday().getMonthValue();
             month--;

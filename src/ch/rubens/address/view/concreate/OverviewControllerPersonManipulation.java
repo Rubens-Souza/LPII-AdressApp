@@ -1,12 +1,12 @@
 package ch.rubens.address.view.concreate;
 
-import ch.rubens.address.model.abstracts.Person;
-import ch.rubens.address.model.concreate.ConcreatePersonProperty;
+import ch.rubens.address.model.concreate.PersonProperty;
 import ch.rubens.address.util.abstracts.IFastAlert;
 import ch.rubens.address.util.concreate.FastAlertWarning;
 import ch.rubens.address.view.PersonOverviewController;
 import ch.rubens.address.view.abstracts.IPersonManipulation;
 import ch.rubens.address.view.abstracts.IShowPersonInfo;
+import ch.rubens.address.model.abstracts.IPerson;
 
 /**
  * Esta classe é a implementação da interface IPersonManipulation
@@ -43,7 +43,7 @@ public class OverviewControllerPersonManipulation implements IPersonManipulation
     @Override
     public void newPerson() {
         
-        Person tempPerson = new ConcreatePersonProperty();
+        IPerson tempPerson = new PersonProperty();
         boolean okClicked = controller.getMainApp().showPersonEditDialog(tempPerson);
         
         if (okClicked) {
@@ -55,7 +55,7 @@ public class OverviewControllerPersonManipulation implements IPersonManipulation
     @Override
     public void editPerson() {
         
-       Person selectedPerson = controller.getPersonTable().getSelectionModel().getSelectedItem();
+       IPerson selectedPerson = controller.getPersonTable().getSelectionModel().getSelectedItem();
        
        if (selectedPerson != null) {
             boolean okClicked = controller.getMainApp().showPersonEditDialog(selectedPerson);

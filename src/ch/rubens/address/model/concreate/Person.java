@@ -1,9 +1,9 @@
 package ch.rubens.address.model.concreate;
 
-import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.util.concreate.LocalDateAdapter;
 import java.time.LocalDate;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import ch.rubens.address.model.abstracts.IPerson;
 
 /**
  * Esta implementação consiste em apenas abstrair uma pessoa, de modo que possa
@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  * @author rubens
  */
-public class ConcreatePerson implements Person {
+public class Person implements IPerson {
 
     private String firstName;
     private String lastName;
@@ -20,9 +20,9 @@ public class ConcreatePerson implements Person {
     private Integer postalCode;
     private LocalDate birthday; 
     
-    public ConcreatePerson() { this(null, null); }
+    public Person() { this(null, null); }
     
-    public ConcreatePerson(String firstName, String lastName) {
+    public Person(String firstName, String lastName) {
         setFirstName(firstName);
         setLastName(lastName);
     }

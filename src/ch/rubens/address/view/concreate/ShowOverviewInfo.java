@@ -1,10 +1,10 @@
 package ch.rubens.address.view.concreate;
 
-import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.util.abstracts.IFormater;
 import ch.rubens.address.util.concreate.LocalDateFormater;
 import ch.rubens.address.view.PersonOverviewController;
 import ch.rubens.address.view.abstracts.IShowPersonInfo;
+import ch.rubens.address.model.abstracts.IPerson;
 
 /**
  * Esta classe é a implementação de IShowPersonInfo de acordo com a forma que deve
@@ -23,7 +23,7 @@ public class ShowOverviewInfo implements IShowPersonInfo {
     }
     
     @Override
-    public void loadInfo(Person person) {
+    public void loadInfo(IPerson person) {
         
         if (person != null) {
             

@@ -13,7 +13,7 @@ import java.time.LocalDate;
  * Segue (SRP) (OCP) (DIP) 
  * @author rubens 
  */ 
-public interface Person { 
+public interface IPerson { 
  
     public String getFirstName(); 
     public String getLastName(); 

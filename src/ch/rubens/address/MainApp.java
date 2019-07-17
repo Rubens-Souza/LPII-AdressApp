@@ -5,10 +5,8 @@ criar uma mascara para fazer o loader
 
 package ch.rubens.address;
 
-import ch.rubens.address.model.abstracts.Person;
 import ch.rubens.address.model.concreate.PersonListWrapper;
-import ch.rubens.address.model.abstracts.ListWrapper;
-import ch.rubens.address.model.concreate.ConcreatePersonProperty;
+import ch.rubens.address.model.concreate.PersonProperty;
 import ch.rubens.address.view.BirthdayStatisticsController;
 import ch.rubens.address.view.PersonEditDialogController;
 import ch.rubens.address.view.PersonOverviewController;
@@ -30,6 +28,8 @@ import javafx.stage.Stage;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import ch.rubens.address.model.abstracts.IPerson;
+import ch.rubens.address.model.abstracts.IListWrapper;
 
 /**
  *
@@ -39,18 +39,18 @@ public class MainApp extends Application {
     
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private ObservableList<Person> personsData = FXCollections.observableArrayList();
+    private ObservableList<IPerson> personsData = FXCollections.observableArrayList();
     
     public MainApp() {
-        personsData.add(new ConcreatePersonProperty("Hans", "Muster"));
-        personsData.add(new ConcreatePersonProperty("Ruth", "Mueller"));
-        personsData.add(new ConcreatePersonProperty("Heinz", "Kurz"));
-        personsData.add(new ConcreatePersonProperty("Cornelia", "Meier"));
-        personsData.add(new ConcreatePersonProperty("Werner", "Meyer"));
-        personsData.add(new ConcreatePersonProperty("Lydia", "Kunz"));
-        personsData.add(new ConcreatePersonProperty("Anna", "Best"));
-        personsData.add(new ConcreatePersonProperty("Stefan", "Meier"));
-        personsData.add(new ConcreatePersonProperty("Martin", "Mueller"));
+        personsData.add(new PersonProperty("Hans", "Muster"));
+        personsData.add(new PersonProperty("Ruth", "Mueller"));
+        personsData.add(new PersonProperty("Heinz", "Kurz"));
+        personsData.add(new PersonProperty("Cornelia", "Meier"));
+        personsData.add(new PersonProperty("Werner", "Meyer"));
+        personsData.add(new PersonProperty("Lydia", "Kunz"));
+        personsData.add(new PersonProperty("Anna", "Best"));
+        personsData.add(new PersonProperty("Stefan", "Meier"));
+        personsData.add(new PersonProperty("Martin", "Mueller"));
     }
     
     @Override
@@ -120,7 +120,7 @@ public class MainApp extends Application {
     }
     
     // mostra a tela de editar e criar
-    public boolean showPersonEditDialog(Person person) {
+    public boolean showPersonEditDialog(IPerson person) {
         
         try {
             
@@ -186,7 +186,7 @@ public class MainApp extends Application {
             JAXBContext context = JAXBContext.newInstance(PersonListWrapper.class);
             Unmarshaller um = context.createUnmarshaller();
             
-            ListWrapper wrapper = (PersonListWrapper) um.unmarshal(file);
+            IListWrapper wrapper = (PersonListWrapper) um.unmarshal(file);
             personsData.clear();
             personsData.addAll(wrapper.getList());
             
@@ -209,11 +209,11 @@ public class MainApp extends Application {
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             
             // "Encapsula" a personPropertyList
-            ListWrapper wrapper = new PersonListWrapper();
-            ArrayList<ConcreatePersonProperty> personPropertyList = new ArrayList();
+            IListWrapper wrapper = new PersonListWrapper();
+            ArrayList<PersonProperty> personPropertyList = new ArrayList();
             
-            for(Person p : personsData){
-                personPropertyList.add((ConcreatePersonProperty) p);
+            for(IPerson p : personsData){
+                personPropertyList.add((PersonProperty) p);
             }
             
             wrapper.setList(personPropertyList);
@@ -263,6 +263,6 @@ public class MainApp extends Application {
     }
     
     public Stage getPrimaryStage() { return primaryStage; }
-    public ObservableList<Person> getPersonsData() { return personsData; }
+    public ObservableList<IPerson> getPersonsData() { return personsData; }
     
 }

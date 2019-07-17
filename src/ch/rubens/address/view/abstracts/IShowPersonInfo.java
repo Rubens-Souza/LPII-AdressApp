@@ -1,6 +1,6 @@
 package ch.rubens.address.view.abstracts;
 
-import ch.rubens.address.model.abstracts.Person;
+import ch.rubens.address.model.abstracts.IPerson;
 
 /**
  * Esta interface é responsável por exibir ou ocultar os dados na tela em que é
@@ -13,7 +13,7 @@ import ch.rubens.address.model.abstracts.Person;
  */
 public interface IShowPersonInfo {
     
-    public void loadInfo(Person person);
+    public void loadInfo(IPerson person);
     public void hideInfo();
     
 }

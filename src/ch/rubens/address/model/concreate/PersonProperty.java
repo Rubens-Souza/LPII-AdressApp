@@ -1,6 +1,5 @@
 package ch.rubens.address.model.concreate;
 
-import ch.rubens.address.model.abstracts.PersonProperty;
 import ch.rubens.address.util.concreate.LocalDateAdapter;
 import java.time.LocalDate;
 import javafx.beans.property.IntegerProperty;
@@ -10,6 +9,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import ch.rubens.address.model.abstracts.IPersonProperty;
 
 /**
  * Esta implementação consiste em utilizar os atributos de uma Person como Property
@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  * @author rubens
  */
-public class ConcreatePersonProperty implements PersonProperty {
+public class PersonProperty implements IPersonProperty {
 
     private StringProperty firstName;
     private StringProperty lastName;
@@ -26,9 +26,9 @@ public class ConcreatePersonProperty implements PersonProperty {
     private IntegerProperty postalCode;
     private ObjectProperty<LocalDate> birthday;  
     
-    public ConcreatePersonProperty() { this(null, null); }
+    public PersonProperty() { this(null, null); }
     
-    public ConcreatePersonProperty(String firstName, String lastName) {
+    public PersonProperty(String firstName, String lastName) {
         
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
