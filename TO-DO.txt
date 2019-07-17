@@ -8,3 +8,4 @@ Turma: INF-3A
 
 1. Criar uma classe abstrata que represente as classes de janela independentes
 2. Criar uma classe que tem controle de todas as janelas e facilita a intanciação
+3. Transformar algumas classes em services estáticos

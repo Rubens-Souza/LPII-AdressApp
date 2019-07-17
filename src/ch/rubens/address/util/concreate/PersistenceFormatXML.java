@@ -20,9 +20,12 @@ import javax.xml.bind.Unmarshaller;
 
 /**
  *
+ * Essa classe implementa a forma como os dados do programa devem ser salvos
+ * por meio do XML.
+ * 
  * @author rubens
  */
-public class PersistDataXML implements IPersistenceFormat<File, File> {
+public class PersistenceFormatXML implements IPersistenceFormat<File, File> {
 
     private Unmarshaller unmarshaller;
     private Marshaller marshaller;
@@ -30,7 +33,7 @@ public class PersistDataXML implements IPersistenceFormat<File, File> {
     private JAXBContext context;
     private IListWrapper saveWrapper;
     
-    public PersistDataXML(Class context, IListWrapper wrapper) throws JAXBException {
+    public PersistenceFormatXML(Class context, IListWrapper wrapper) throws JAXBException {
         
         setContext(JAXBContext.newInstance(context));
         setWrapper(wrapper);

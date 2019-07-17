@@ -13,6 +13,8 @@ import javax.xml.bind.JAXBException;
 
 /**
  *
+ * Esta classe funciona como um proxy para as operações feitas pelo PersistenceFormatXML
+ * 
  * @author rubens
  */
 public class PersistenceXML extends PersistenceService<File, File> {
@@ -53,7 +55,7 @@ public class PersistenceXML extends PersistenceService<File, File> {
         
         try {
             
-            return new PersistDataXML(context, wrapper);
+            return new PersistenceFormatXML(context, wrapper);
             
         } catch (JAXBException ex) {
             
@@ -67,7 +69,7 @@ public class PersistenceXML extends PersistenceService<File, File> {
   
     public File getFilePath() {
         
-        PersistDataXML persistFormat = (PersistDataXML) getPersistenceFormat();
+        PersistenceFormatXML persistFormat = (PersistenceFormatXML) getPersistenceFormat();
         
         return persistFormat.getFilePath();
         
@@ -75,7 +77,7 @@ public class PersistenceXML extends PersistenceService<File, File> {
     
     public void resetFilePath() {
         
-        PersistDataXML persistFormat = (PersistDataXML) getPersistenceFormat();
+        PersistenceFormatXML persistFormat = (PersistenceFormatXML) getPersistenceFormat();
         
         try {
             
