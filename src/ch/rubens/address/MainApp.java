@@ -6,15 +6,12 @@ criar uma mascara para fazer o loader
 package ch.rubens.address;
 
 import ch.rubens.address.model.concreate.PersonListWrapper;
-import ch.rubens.address.model.concreate.PersonProperty;
 import ch.rubens.address.view.BirthdayStatisticsController;
 import ch.rubens.address.view.PersonEditDialogController;
 import ch.rubens.address.view.PersonOverviewController;
 import ch.rubens.address.view.RootLayoutController;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.prefs.Preferences;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,19 +20,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import ch.rubens.address.model.abstracts.IPerson;
-import ch.rubens.address.model.abstracts.IListWrapper;
 import ch.rubens.address.model.abstracts.IPersonListSingleton;
 import ch.rubens.address.model.concreate.PersonListSingleton;
-import ch.rubens.address.util.abstracts.IPersistenceFormat;
+import ch.rubens.address.util.abstracts.PersistenceService;
 import ch.rubens.address.util.concreate.PersistDataXML;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.bind.JAXBException;
+import ch.rubens.address.util.concreate.PersistenceXML;
 
 /**
  *
@@ -46,17 +36,13 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private IPersonListSingleton personsList;
-    private IPersistenceFormat format;
+    private PersistenceService persistence;
     
     public MainApp() {
         
         personsList = PersonListSingleton.getInstance();
         
-        try {
-            format = new PersistDataXML(PersonListWrapper.class, new PersonListWrapper(), this);
-        } catch (JAXBException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        persistence = new PersistenceXML(PersonListWrapper.class, new PersonListWrapper(), this);
 
     }
     
@@ -82,6 +68,8 @@ public class MainApp extends Application {
     
     public void initRootLayout() {
         
+        PersistenceXML persistenceXML = (PersistenceXML) persistence;
+        
         try {
             
             FXMLLoader loader = new FXMLLoader();
@@ -100,9 +88,9 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
         
-        File file = getPersonFilePath();
+        File file = persistenceXML.getFilePath();
         if (file != null) {
-            loadPersonDataFromFile(file);
+            persistence.load(file);
         }
         
     }
@@ -183,42 +171,6 @@ public class MainApp extends Application {
         catch (IOException e) {
             e.printStackTrace();
         }
-        
-    }
-    
-    // metodo para carregar o arquivo XML
-    public void loadPersonDataFromFile(File file) {
-        
-        List personsSavedList = format.load(file);
-        
-        personsList.clear();
-        
-        if (personsSavedList != null) {
-            personsList.addAll(format.load(file));
-        }
-        
-    }
-    
-    // Salva os dados de personsData em um XML
-    public void savePersonDataToFile(File file) {
-        
-        format.save(file);
-        
-    }
-    
-    // salva o caminho do ultimo arquivo aberto no registro
-    public void setPersonFilePath(File file) {
-        
-        PersistDataXML a = (PersistDataXML) format;
-        a.setFilePath(file);
-        
-    }
-    
-    // carrega o caminho do ultimo arquivo aberto no registro
-    public File getPersonFilePath() {
-        
-        PersistDataXML a = (PersistDataXML) format;
-        return a.getFilePath();
         
     }
     
