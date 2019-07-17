@@ -6,6 +6,9 @@ import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.model.concreate.PersonProperty;
 import ch.rubens.address.util.abstracts.IPersistenceFormat;
+import ch.rubens.address.windows.PrimaryStageInstanceException;
+import ch.rubens.address.windows.PrimaryStageSingleton;
+import ch.rubens.address.windows.PrimaryStageSingletonInstanceException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +29,8 @@ public class PersistDataXML implements IPersistenceFormat<File, File> {
     private Preferences appPreferences;
     private JAXBContext context;
     private IListWrapper saveWrapper;
-    private MainApp main;
     
-    public PersistDataXML(Class context, IListWrapper wrapper, MainApp main) throws JAXBException {
+    public PersistDataXML(Class context, IListWrapper wrapper) throws JAXBException {
         
         setContext(JAXBContext.newInstance(context));
         setWrapper(wrapper);
@@ -63,6 +65,10 @@ public class PersistDataXML implements IPersistenceFormat<File, File> {
             System.out.println("Não foi possível salvar dados do arquivo:\n" 
                                + data.getPath() + "\n" + ex);
             
+        } catch (PrimaryStageInstanceException | PrimaryStageSingletonInstanceException ex) {
+            
+            System.out.println("Não foi possível salvar dados do arquivo. Erro: " + ex);
+            
         }
             
     }
@@ -90,15 +96,15 @@ public class PersistDataXML implements IPersistenceFormat<File, File> {
         
     }
     
-    public void setFilePath(File file) {
+    public void setFilePath(File file) throws PrimaryStageInstanceException, PrimaryStageSingletonInstanceException {
         
         if (file != null) {
             appPreferences.put("filePath", file.getPath());
-            main.getPrimaryStage().setTitle("App de Endereços - " + file.getName());
+            PrimaryStageSingleton.getInstance().setTitle("App de Endereços - " + file.getName());
         }
         else {
             appPreferences.remove("filePath");
-            main.getPrimaryStage().setTitle("App de Endereços");
+            PrimaryStageSingleton.getInstance().setTitle("App de Endereços");
         }
         
     }

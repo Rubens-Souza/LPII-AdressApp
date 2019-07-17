@@ -8,9 +8,13 @@ import ch.rubens.address.view.abstracts.IPersonManipulation;
 import ch.rubens.address.view.abstracts.IShowPersonInfo;
 import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.concreate.PersonListSingleton;
+import ch.rubens.address.windows.EditPersonStage;
 
 /**
  * Esta classe é a implementação da interface IPersonManipulation
+ * 
+ * A referência ao Main foi substituida pela instanciação da classe EditPersonStage
+ * para abrir a janela
  * 
  * @author rubens
  */
@@ -45,11 +49,12 @@ public class OverviewControllerPersonManipulation implements IPersonManipulation
     public void newPerson() {
         
         IPerson tempPerson = new PersonProperty();
-        boolean okClicked = controller.getMainApp().showPersonEditDialog(tempPerson);
+        EditPersonStage editWindow = new EditPersonStage(tempPerson);
         
-        if (okClicked) {
+        editWindow.open();
+        
+        if (editWindow.isOpen())
             PersonListSingleton.getInstance().addPerson(tempPerson);
-        }
         
     }
 
@@ -59,14 +64,17 @@ public class OverviewControllerPersonManipulation implements IPersonManipulation
        IPerson selectedPerson = controller.getPersonTable().getSelectionModel().getSelectedItem();
        
        if (selectedPerson != null) {
-            boolean okClicked = controller.getMainApp().showPersonEditDialog(selectedPerson);
-            
-            if (okClicked) {
+           
+           EditPersonStage editWindow = new EditPersonStage(selectedPerson);
+           editWindow.open();
+
+           if (editWindow.isOpen()) {
+               
+               IShowPersonInfo infoExhibitor = new ShowOverviewInfo(controller);
+               infoExhibitor.loadInfo(selectedPerson);
+               
+           }
                 
-                IShowPersonInfo infoExhibitor = new ShowOverviewInfo(controller);
-                infoExhibitor.loadInfo(selectedPerson);
-                
-            }
         }
         
     }

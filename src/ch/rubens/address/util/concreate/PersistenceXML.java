@@ -1,11 +1,12 @@
 
 package ch.rubens.address.util.concreate;
 
-import ch.rubens.address.MainApp;
 import ch.rubens.address.model.abstracts.IListWrapper;
 import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.util.abstracts.IPersistenceFormat;
 import ch.rubens.address.util.abstracts.PersistenceService;
+import ch.rubens.address.windows.PrimaryStageInstanceException;
+import ch.rubens.address.windows.PrimaryStageSingletonInstanceException;
 import java.io.File;
 import java.util.List;
 import javax.xml.bind.JAXBException;
@@ -18,13 +19,11 @@ public class PersistenceXML extends PersistenceService<File, File> {
     
     private Class context;
     private IListWrapper wrapper;
-    private MainApp main;
 
-    public PersistenceXML(Class context, IListWrapper wrapper, MainApp main) {
+    public PersistenceXML(Class context, IListWrapper wrapper) {
         
         this.context = context;
         this.wrapper = wrapper;
-        this.main = main;
         
         setPersistenceFormat(createPersistenceData());
         
@@ -54,7 +53,7 @@ public class PersistenceXML extends PersistenceService<File, File> {
         
         try {
             
-            return new PersistDataXML(context, wrapper, main);
+            return new PersistDataXML(context, wrapper);
             
         } catch (JAXBException ex) {
             
@@ -77,7 +76,16 @@ public class PersistenceXML extends PersistenceService<File, File> {
     public void resetFilePath() {
         
         PersistDataXML persistFormat = (PersistDataXML) getPersistenceFormat();
-        persistFormat.setFilePath(null);
+        
+        try {
+            
+            persistFormat.setFilePath(null);
+            
+        } catch (PrimaryStageInstanceException | PrimaryStageSingletonInstanceException ex) {
+            
+            System.out.println("Não foi possível redefiinir o caminho do arquivo. Erro: " + ex);
+            
+        }
         
     }
     

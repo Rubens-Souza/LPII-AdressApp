@@ -15,6 +15,9 @@ import javafx.stage.Stage;
  * O método isInputValid() foi separado em diversas interfaces, cada uma com sua
  * implementação, que são utilizadas na classe de EditPersonDataValidation para
  * validar as entradas dos campos. (OCP), (ISP), (DIP)
+ *  
+ * Todas as referências ao main foram retiradas. As referencias a lista de pessoas e
+ * ao primaryStage foram substituidas pelos seus respectivos singletons
  * 
  * @author rubens
  */
