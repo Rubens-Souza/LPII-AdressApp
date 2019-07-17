@@ -7,7 +7,10 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- *
+ * 
+ * A main tem a unica responsabilidade de criar o primaryStage e entrega-lo ao
+ * PrimaryStageSingleton
+ * 
  * @author rubens
  */
 public class MainApp extends Application {

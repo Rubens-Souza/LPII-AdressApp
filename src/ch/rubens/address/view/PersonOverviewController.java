@@ -20,6 +20,9 @@ import javafx.fxml.FXML;
  * A segregação das funcionalidades em outras classes/interfaces atende o OCP,
  * o ISP e o DIP.
  * 
+ * Todas as referências ao main foram retiradas. As referencias a lista de pessoas e
+ * ao primaryStage foram substituidas pelos seus respectivos singletons
+ * 
  * @author rubens
  */
 public class PersonOverviewController {

@@ -16,6 +16,9 @@ import javafx.stage.Stage;
 
 /**
  *
+ * Esta é uma classe que busca retirar a resposabilidade que a main possuia de 
+ * criar e configurar a janela principal do aplicativo
+ * 
  * @author rubens
  */
 public class PrimaryStageSingleton {

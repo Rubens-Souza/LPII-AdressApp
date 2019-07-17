@@ -13,6 +13,9 @@ import ch.rubens.address.windows.EditPersonStage;
 /**
  * Esta classe é a implementação da interface IPersonManipulation
  * 
+ * A referência ao Main foi substituida pela instanciação da classe EditPersonStage
+ * para abrir a janela
+ * 
  * @author rubens
  */
 public class OverviewControllerPersonManipulation implements IPersonManipulation {

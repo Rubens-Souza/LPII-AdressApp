@@ -11,7 +11,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- *
+ * 
+ * Esta é uma classe que busca retirar a resposabilidade que a main possuia de 
+ * criar e configurar a janela de BirthdayStatistics
+ * 
  * @author rubens
  */
 public class BirthdayStatisticsStage {

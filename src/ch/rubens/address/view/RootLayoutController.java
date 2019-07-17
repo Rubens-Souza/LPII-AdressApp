@@ -14,6 +14,9 @@ import javafx.stage.FileChooser;
 
 /**
  *
+ * Todas as referências ao main foram retiradas. As referencias a lista de pessoas e
+ * ao primaryStage foram substituidas pelos seus respectivos singletons
+ * 
  * @author rubens
  */
 public class RootLayoutController {
