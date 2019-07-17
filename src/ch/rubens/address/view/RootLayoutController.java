@@ -1,10 +1,13 @@
 package ch.rubens.address.view;
 
-import ch.rubens.address.MainApp;
 import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.model.concreate.PersonListWrapper;
 import ch.rubens.address.util.abstracts.PersistenceService;
 import ch.rubens.address.util.concreate.PersistenceXML;
+import ch.rubens.address.windows.BirthdayStatisticsStage;
+import ch.rubens.address.windows.PrimaryStageInstanceException;
+import ch.rubens.address.windows.PrimaryStageSingleton;
+import ch.rubens.address.windows.PrimaryStageSingletonInstanceException;
 import java.io.File;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
@@ -15,7 +18,6 @@ import javafx.stage.FileChooser;
  */
 public class RootLayoutController {
 
-    private MainApp main;
     private PersistenceService persistence;
     
     public RootLayoutController() {
@@ -44,7 +46,17 @@ public class RootLayoutController {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extFilter);
         
-        File file = fileChooser.showOpenDialog(main.getPrimaryStage());
+        File file = null;
+        
+        try {
+            
+            file = fileChooser.showOpenDialog(PrimaryStageSingleton.getInstance());
+            
+        } catch (PrimaryStageInstanceException | PrimaryStageSingletonInstanceException ex) {
+            
+            System.out.println("Erro ao abrir o arquivo: " + ex);
+            
+        }
         
         if (file != null)
             persistence.load(file);
@@ -77,7 +89,15 @@ public class RootLayoutController {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extFilter);
         
-        File file = fileChooser.showSaveDialog(main.getPrimaryStage());
+        File file = null;
+        
+        try {
+            file = fileChooser.showSaveDialog(PrimaryStageSingleton.getInstance());
+        } catch (PrimaryStageInstanceException | PrimaryStageSingletonInstanceException ex) {
+            
+            System.out.println("Erro ao salvar o arquivo: " + ex);
+            
+        }
         
         if (file != null) {
             if (!file.getPath().endsWith(".xml"))
@@ -99,9 +119,10 @@ public class RootLayoutController {
     
     @FXML
     private void handleShowBirthdayStatistics() {
-        main.showBirthdayStatistics();
+       
+        BirthdayStatisticsStage statsiticsWindow = new BirthdayStatisticsStage();
+        statsiticsWindow.open();
+        
     }
-    
-    public void setMainApp(MainApp main) { this.main = main; }
     
 }

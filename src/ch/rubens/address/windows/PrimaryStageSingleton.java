@@ -24,6 +24,9 @@ public class PrimaryStageSingleton {
     private static PrimaryStageSingleton classInstance = null;
     
     private BorderPane rootLayout;
+    private RootLayoutController rootController;
+    private PersonOverviewController overviewController;
+    
     
     private PrimaryStageSingleton() {
         
@@ -79,6 +82,8 @@ public class PrimaryStageSingleton {
             
             stageInstance.show();
             
+            rootController = loader.getController();
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,6 +104,9 @@ public class PrimaryStageSingleton {
             AnchorPane personOverview = (AnchorPane) loader.load();
             
             rootLayout.setCenter(personOverview);
+            
+            overviewController = loader.getController();
+            overviewController.setTableItems();
             
         } catch(IOException e) {
             e.printStackTrace();

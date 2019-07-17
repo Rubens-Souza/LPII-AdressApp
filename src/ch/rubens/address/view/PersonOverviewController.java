@@ -1,6 +1,5 @@
 package ch.rubens.address.view;
 
-import ch.rubens.address.MainApp;
 import ch.rubens.address.view.abstracts.IPersonManipulation;
 import ch.rubens.address.view.concreate.OverviewControllerPersonManipulation;
 import ch.rubens.address.view.concreate.ShowOverviewInfo;
@@ -35,8 +34,7 @@ public class PersonOverviewController {
     @FXML private Label postalCodeLabel;
     @FXML private Label cityLabel;
     @FXML private Label birthdayLabel;
-    
-    private MainApp mainApp;
+
     private IPersonManipulation personManipulator;
     private IShowPersonInfo infoExhibitor;
     
@@ -116,14 +114,9 @@ public class PersonOverviewController {
     public Label getBirthdayLabel() {
         return birthdayLabel;
     }
-
-    public MainApp getMainApp() {
-        return mainApp;
-    }
     
-    public void setMainApp(MainApp main) {
-        
-        this.mainApp = main;
+    public void setTableItems() {
+
         personTable.setItems(PersonListSingleton.getInstance().getObservableList());
         
     }

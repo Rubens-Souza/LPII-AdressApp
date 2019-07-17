@@ -40,7 +40,6 @@ public class EditPersonStage {
     private void initLayout() {
         
         AnchorPane page = null;
-
         try {
             
             page = (AnchorPane) loader.load();
