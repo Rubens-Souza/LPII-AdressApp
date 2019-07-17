@@ -30,6 +30,11 @@ import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.abstracts.IListWrapper;
 import ch.rubens.address.model.abstracts.IPersonListSingleton;
 import ch.rubens.address.model.concreate.PersonListSingleton;
+import ch.rubens.address.util.abstracts.IPersistenceFormat;
+import ch.rubens.address.util.concreate.PersistDataXML;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBException;
 
 /**
  *
@@ -40,10 +45,17 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private IPersonListSingleton personsList;
+    private IPersistenceFormat format;
     
     public MainApp() {
         
         personsList = PersonListSingleton.getInstance();
+        
+        try {
+            format = new PersistDataXML(PersonListWrapper.class, new PersonListWrapper(), this);
+        } catch (JAXBException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
     
@@ -176,83 +188,32 @@ public class MainApp extends Application {
     // metodo para carregar o arquivo XML
     public void loadPersonDataFromFile(File file) {
         
-        try {
-            JAXBContext context = JAXBContext.newInstance(PersonListWrapper.class);
-            Unmarshaller um = context.createUnmarshaller();
-            
-            IListWrapper wrapper = (PersonListWrapper) um.unmarshal(file);
-            personsList.clear();
-            personsList.addAll(wrapper.getList());
-            
-            setPersonFilePath(file);
-        }
-        catch (Exception e) {
-            System.out.println("Não foi possível carregar dados do arquivo\n"
-                               + file.getPath() + "\n" + e);
-        }
+        personsList.clear();
+        personsList.addAll(format.load(file));
+        
         
     }
     
     // Salva os dados de personsData em um XML
     public void savePersonDataToFile(File file) {
         
-        try {
-            
-            JAXBContext context = JAXBContext.newInstance(PersonListWrapper.class);
-            Marshaller m = context.createMarshaller();
-            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            
-            // "Encapsula" a personPropertyList
-            IListWrapper wrapper = new PersonListWrapper();
-            ArrayList<PersonProperty> personPropertyList = new ArrayList();
-            
-            for(IPerson p : personsList.getObservableList()){
-                personPropertyList.add((PersonProperty) p);
-            }
-            
-            wrapper.setList(personPropertyList);
-            
-            // Salva os dados no XML
-            m.marshal(wrapper, file);
-            
-            // Salva o caminho do arquivo no registro
-            setPersonFilePath(file);
-            
-        }
-        catch (Exception e) {
-            System.out.println("Não foi possível salvar dados do arquivo:\n" 
-                               + file.getPath() + "\n" + e);
-        }
+        format.save(file);
         
     }
     
     // salva o caminho do ultimo arquivo aberto no registro
     public void setPersonFilePath(File file) {
         
-        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
-        if (file != null) {
-            prefs.put("filePath", file.getPath());
-            primaryStage.setTitle("App de Endereços - " + file.getName());
-        }
-        else {
-            prefs.remove("filePath");
-            primaryStage.setTitle("App de Endereços");
-        }
+        PersistDataXML a = (PersistDataXML) format;
+        a.setFilePath(file);
         
     }
     
     // carrega o caminho do ultimo arquivo aberto no registro
     public File getPersonFilePath() {
         
-        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
-        String filePath = prefs.get("filePath", null);
-        
-        if (filePath != null) {
-            return new File(filePath);
-        }
-        else {
-            return null;
-        }
+        PersistDataXML a = (PersistDataXML) format;
+        return a.getFilePath();
         
     }
     
