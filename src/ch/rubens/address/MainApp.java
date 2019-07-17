@@ -15,6 +15,7 @@ import ch.rubens.address.model.abstracts.IPersonListSingleton;
 import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.util.abstracts.PersistenceService;
 import ch.rubens.address.util.concreate.PersistenceXML;
+import ch.rubens.address.windows.PrimaryStageSingleton;
 import java.io.File;
 import java.io.IOException;
 import javafx.application.Application;
@@ -41,13 +42,15 @@ public class MainApp extends Application {
         
         personsList = PersonListSingleton.getInstance();
         
-        persistence = new PersistenceXML(PersonListWrapper.class, new PersonListWrapper(), this);
+        persistence = new PersistenceXML(PersonListWrapper.class, new PersonListWrapper());
 
     }
     
     @Override
     public void start(Stage primaryStage) {
 
+        PrimaryStageSingleton.getInstance(primaryStage);
+        
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App de Endereços");
         this.primaryStage.getIcons().add(new Image("file:resoucers/imagens/icone_app.png"));
@@ -114,7 +117,7 @@ public class MainApp extends Application {
     }
     
     // mostra a tela de editar e criar
-    public boolean showPersonEditDialog(IPerson person) {
+    /*public boolean showPersonEditDialog(IPerson person) {
         
         try {
             
@@ -144,7 +147,7 @@ public class MainApp extends Application {
             return false;
         }
         
-    }
+    }*/
     
     public void showBirthdayStatistics() {
         

@@ -20,7 +20,7 @@ public class RootLayoutController {
     
     public RootLayoutController() {
         
-        persistence = new PersistenceXML(PersonListWrapper.class, new PersonListWrapper(), main);
+        persistence = new PersistenceXML(PersonListWrapper.class, new PersonListWrapper());
         
     }
     
