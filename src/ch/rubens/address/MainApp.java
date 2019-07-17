@@ -6,15 +6,12 @@ criar uma mascara para fazer o loader
 package ch.rubens.address;
 
 import ch.rubens.address.model.concreate.PersonListWrapper;
-import ch.rubens.address.model.concreate.PersonProperty;
 import ch.rubens.address.view.BirthdayStatisticsController;
 import ch.rubens.address.view.PersonEditDialogController;
 import ch.rubens.address.view.PersonOverviewController;
 import ch.rubens.address.view.RootLayoutController;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.prefs.Preferences;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,13 +20,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import ch.rubens.address.model.abstracts.IPerson;
-import ch.rubens.address.model.abstracts.IListWrapper;
 import ch.rubens.address.model.abstracts.IPersonListSingleton;
 import ch.rubens.address.model.concreate.PersonListSingleton;
+import ch.rubens.address.util.abstracts.PersistenceService;
+import ch.rubens.address.util.concreate.PersistDataXML;
+import ch.rubens.address.util.concreate.PersistenceXML;
 
 /**
  *
@@ -40,10 +36,13 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private IPersonListSingleton personsList;
+    private PersistenceService persistence;
     
     public MainApp() {
         
         personsList = PersonListSingleton.getInstance();
+        
+        persistence = new PersistenceXML(PersonListWrapper.class, new PersonListWrapper(), this);
 
     }
     
@@ -69,6 +68,8 @@ public class MainApp extends Application {
     
     public void initRootLayout() {
         
+        PersistenceXML persistenceXML = (PersistenceXML) persistence;
+        
         try {
             
             FXMLLoader loader = new FXMLLoader();
@@ -87,9 +88,9 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
         
-        File file = getPersonFilePath();
+        File file = persistenceXML.getFilePath();
         if (file != null) {
-            loadPersonDataFromFile(file);
+            persistence.load(file);
         }
         
     }
@@ -169,89 +170,6 @@ public class MainApp extends Application {
         }
         catch (IOException e) {
             e.printStackTrace();
-        }
-        
-    }
-    
-    // metodo para carregar o arquivo XML
-    public void loadPersonDataFromFile(File file) {
-        
-        try {
-            JAXBContext context = JAXBContext.newInstance(PersonListWrapper.class);
-            Unmarshaller um = context.createUnmarshaller();
-            
-            IListWrapper wrapper = (PersonListWrapper) um.unmarshal(file);
-            personsList.clear();
-            personsList.addAll(wrapper.getList());
-            
-            setPersonFilePath(file);
-        }
-        catch (Exception e) {
-            System.out.println("Não foi possível carregar dados do arquivo\n"
-                               + file.getPath() + "\n" + e);
-        }
-        
-    }
-    
-    // Salva os dados de personsData em um XML
-    public void savePersonDataToFile(File file) {
-        
-        try {
-            
-            JAXBContext context = JAXBContext.newInstance(PersonListWrapper.class);
-            Marshaller m = context.createMarshaller();
-            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            
-            // "Encapsula" a personPropertyList
-            IListWrapper wrapper = new PersonListWrapper();
-            ArrayList<PersonProperty> personPropertyList = new ArrayList();
-            
-            for(IPerson p : personsList.getObservableList()){
-                personPropertyList.add((PersonProperty) p);
-            }
-            
-            wrapper.setList(personPropertyList);
-            
-            // Salva os dados no XML
-            m.marshal(wrapper, file);
-            
-            // Salva o caminho do arquivo no registro
-            setPersonFilePath(file);
-            
-        }
-        catch (Exception e) {
-            System.out.println("Não foi possível salvar dados do arquivo:\n" 
-                               + file.getPath() + "\n" + e);
-        }
-        
-    }
-    
-    // salva o caminho do ultimo arquivo aberto no registro
-    public void setPersonFilePath(File file) {
-        
-        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
-        if (file != null) {
-            prefs.put("filePath", file.getPath());
-            primaryStage.setTitle("App de Endereços - " + file.getName());
-        }
-        else {
-            prefs.remove("filePath");
-            primaryStage.setTitle("App de Endereços");
-        }
-        
-    }
-    
-    // carrega o caminho do ultimo arquivo aberto no registro
-    public File getPersonFilePath() {
-        
-        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
-        String filePath = prefs.get("filePath", null);
-        
-        if (filePath != null) {
-            return new File(filePath);
-        }
-        else {
-            return null;
         }
         
     }
