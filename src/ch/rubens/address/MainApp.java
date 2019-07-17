@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -42,21 +40,11 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private IPersonListSingleton personsList;
-    //private ObservableList<IPerson> personsData = FXCollections.observableArrayList();
     
     public MainApp() {
         
         personsList = PersonListSingleton.getInstance();
-        
-        personsList.addPerson(new PersonProperty("Hans", "Muster"));
-        personsList.addPerson(new PersonProperty("Ruth", "Mueller"));
-        personsList.addPerson(new PersonProperty("Heinz", "Kurz"));
-        personsList.addPerson(new PersonProperty("Cornelia", "Meier"));
-        personsList.addPerson(new PersonProperty("Werner", "Meyer"));
-        personsList.addPerson(new PersonProperty("Lydia", "Kunz"));
-        personsList.addPerson(new PersonProperty("Anna", "Best"));
-        personsList.addPerson(new PersonProperty("Stefan", "Meier"));
-        personsList.addPerson(new PersonProperty("Martin", "Mueller"));
+
     }
     
     @Override
@@ -269,6 +257,5 @@ public class MainApp extends Application {
     }
     
     public Stage getPrimaryStage() { return primaryStage; }
-    //public ObservableList<IPerson> getPersonsData() { return personsData; }
     
 }
