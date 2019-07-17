@@ -7,7 +7,7 @@ import javafx.beans.property.StringProperty;
 
 /**
  * A interface IPersonProperty serve para fazer com que a classe 
- ConcreatePersonProperty passe a seguir o DIP e tenha um contrato em seus métdos
+ * ConcreatePersonProperty passe a seguir o DIP e tenha um contrato em seus métdos
  * 
  * @author rubens
  */

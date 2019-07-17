@@ -1,9 +1,9 @@
 package ch.rubens.address.model.concreate;
 
 import ch.rubens.address.util.concreate.LocalDateAdapter;
+import ch.rubens.address.model.abstracts.IPerson;
 import java.time.LocalDate;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import ch.rubens.address.model.abstracts.IPerson;
 
 /**
  * Esta implementação consiste em apenas abstrair uma pessoa, de modo que possa

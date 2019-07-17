@@ -4,14 +4,14 @@ import ch.rubens.address.MainApp;
 import ch.rubens.address.view.abstracts.IPersonManipulation;
 import ch.rubens.address.view.concreate.OverviewControllerPersonManipulation;
 import ch.rubens.address.view.concreate.ShowOverviewInfo;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import ch.rubens.address.view.abstracts.IShowPersonInfo;
 import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.abstracts.IPersonProperty;
 import ch.rubens.address.model.concreate.PersonListSingleton;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.fxml.FXML;
 
 /**
  * As implementações dos seus métodos foram divididas em outras classes para que o 

@@ -1,5 +1,5 @@
 /*
-Separar as funções do main (show, carregar, setPreferences)
+Separar as funções do main (show)
 criar uma mascara para fazer o loader
 */
 
@@ -10,6 +10,11 @@ import ch.rubens.address.view.BirthdayStatisticsController;
 import ch.rubens.address.view.PersonEditDialogController;
 import ch.rubens.address.view.PersonOverviewController;
 import ch.rubens.address.view.RootLayoutController;
+import ch.rubens.address.model.abstracts.IPerson;
+import ch.rubens.address.model.abstracts.IPersonListSingleton;
+import ch.rubens.address.model.concreate.PersonListSingleton;
+import ch.rubens.address.util.abstracts.PersistenceService;
+import ch.rubens.address.util.concreate.PersistenceXML;
 import java.io.File;
 import java.io.IOException;
 import javafx.application.Application;
@@ -20,12 +25,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ch.rubens.address.model.abstracts.IPerson;
-import ch.rubens.address.model.abstracts.IPersonListSingleton;
-import ch.rubens.address.model.concreate.PersonListSingleton;
-import ch.rubens.address.util.abstracts.PersistenceService;
-import ch.rubens.address.util.concreate.PersistDataXML;
-import ch.rubens.address.util.concreate.PersistenceXML;
 
 /**
  *

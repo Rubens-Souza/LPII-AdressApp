@@ -7,9 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * 
- * Cria uma lista de pessoas singleton para que ela possa ser acessada em qualquer lugar
- * e com os mesmos dados.
+ * Esta classe é a implementação da interface IPersonListSingleton de forma que
+ * ela tenha apenas uma única instância.
  * 
  * @author rubens
  */

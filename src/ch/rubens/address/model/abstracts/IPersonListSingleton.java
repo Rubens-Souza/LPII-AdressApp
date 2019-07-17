@@ -4,7 +4,10 @@ import java.util.Collection;
 import javafx.collections.ObservableList;
 
 /**
- *
+ * Esta interface busca usar o padrão singleton na lista de pessoas (antes presente no main)
+ * para que ela possa ser acessada por qualquer código sem necessecidade de uma referência
+ * direta. Além de ser uma informção única que deve ser compartilhada entre eles.
+ * 
  * @author rubens
  */
 public interface IPersonListSingleton {

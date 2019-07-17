@@ -5,11 +5,11 @@ import ch.rubens.address.util.concreate.StringToLocalDateParse;
 import ch.rubens.address.view.abstracts.IShowPersonInfo;
 import ch.rubens.address.view.concreate.EditPersonDataValidation;
 import ch.rubens.address.view.concreate.ShowEditDialogInfo;
+import ch.rubens.address.model.abstracts.IPerson;
 import java.time.LocalDate;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import ch.rubens.address.model.abstracts.IPerson;
 
 /**
  * O método isInputValid() foi separado em diversas interfaces, cada uma com sua
