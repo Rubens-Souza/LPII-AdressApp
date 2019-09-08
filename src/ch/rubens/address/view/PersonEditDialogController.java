@@ -6,6 +6,7 @@ import ch.rubens.address.view.abstracts.IShowPersonInfo;
 import ch.rubens.address.view.concreate.EditPersonDataValidation;
 import ch.rubens.address.view.concreate.ShowEditDialogInfo;
 import ch.rubens.address.model.abstracts.IPerson;
+import ch.rubens.address.view.abstracts.ControllerI;
 import java.time.LocalDate;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
  * 
  * @author rubens
  */
-public class PersonEditDialogController {
+public class PersonEditDialogController implements ControllerI {
 
     @FXML private TextField firstNameField;
     @FXML private TextField lastNameField;

@@ -1,6 +1,7 @@
 package ch.rubens.address.view;
 
 import ch.rubens.address.model.abstracts.IPerson;
+import ch.rubens.address.view.abstracts.ControllerI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -16,7 +17,7 @@ import java.text.DateFormatSymbols;
  *
  * @author rubens
  */
-public class BirthdayStatisticsController {
+public class BirthdayStatisticsController implements ControllerI {
     
     @FXML private BarChart<String, Integer> barChart;
     @FXML private CategoryAxis xAxis;

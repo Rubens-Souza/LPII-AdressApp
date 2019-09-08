@@ -2,7 +2,7 @@ package ch.rubens.address;
 
 import ch.rubens.address.model.abstracts.IPersonListSingleton;
 import ch.rubens.address.model.concreate.PersonListSingleton;
-import ch.rubens.address.windows.PrimaryStageSingleton;
+import ch.rubens.address.windows.concreate.PrimaryStageSingleton;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

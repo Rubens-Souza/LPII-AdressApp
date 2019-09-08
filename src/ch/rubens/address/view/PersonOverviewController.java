@@ -7,6 +7,7 @@ import ch.rubens.address.view.abstracts.IShowPersonInfo;
 import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.abstracts.IPersonProperty;
 import ch.rubens.address.model.concreate.PersonListSingleton;
+import ch.rubens.address.view.abstracts.ControllerI;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,7 +26,7 @@ import javafx.fxml.FXML;
  * 
  * @author rubens
  */
-public class PersonOverviewController {
+public class PersonOverviewController implements ControllerI {
     
     @FXML private TableView<IPerson> personTable;
     @FXML private TableColumn<IPersonProperty, String> firstNameColumn;

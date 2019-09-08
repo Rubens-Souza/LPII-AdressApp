@@ -4,10 +4,12 @@ import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.model.concreate.PersonListWrapper;
 import ch.rubens.address.util.abstracts.PersistenceService;
 import ch.rubens.address.util.concreate.PersistenceXML;
-import ch.rubens.address.windows.BirthdayStatisticsStage;
-import ch.rubens.address.windows.PrimaryStageInstanceException;
-import ch.rubens.address.windows.PrimaryStageSingleton;
-import ch.rubens.address.windows.PrimaryStageSingletonInstanceException;
+import ch.rubens.address.view.abstracts.ControllerI;
+import ch.rubens.address.windows.concreate.BirthdayStatisticsStage;
+import ch.rubens.address.windows.concreate.PrimaryStageInstanceException;
+import ch.rubens.address.windows.concreate.PrimaryStageSingleton;
+import ch.rubens.address.windows.concreate.PrimaryStageSingletonInstanceException;
+import ch.rubens.address.windows.abstracts.WindowI;
 import java.io.File;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
@@ -19,7 +21,7 @@ import javafx.stage.FileChooser;
  * 
  * @author rubens
  */
-public class RootLayoutController {
+public class RootLayoutController implements ControllerI {
 
     private PersistenceService persistence;
     
@@ -123,7 +125,7 @@ public class RootLayoutController {
     @FXML
     private void handleShowBirthdayStatistics() {
        
-        BirthdayStatisticsStage statsiticsWindow = new BirthdayStatisticsStage();
+        WindowI statsiticsWindow = new BirthdayStatisticsStage();
         statsiticsWindow.open();
         
     }
