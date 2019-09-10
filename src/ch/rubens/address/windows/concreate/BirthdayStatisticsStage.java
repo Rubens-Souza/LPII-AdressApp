@@ -1,6 +1,6 @@
 package ch.rubens.address.windows.concreate;
 
-import ch.rubens.address.windows.abstracts.WindowI;
+import ch.rubens.address.windows.abstracts.IWindow;
 import ch.rubens.address.MainApp;
 import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.view.BirthdayStatisticsController;
@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  * 
  * @author rubens
  */
-public class BirthdayStatisticsStage extends WindowI {
+public class BirthdayStatisticsStage extends IWindow {
 
     public BirthdayStatisticsStage() {
         

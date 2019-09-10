@@ -9,7 +9,7 @@ import ch.rubens.address.view.abstracts.IShowPersonInfo;
 import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.windows.concreate.EditPersonStage;
-import ch.rubens.address.windows.abstracts.WindowI;
+import ch.rubens.address.windows.abstracts.IWindow;
 
 /**
  * Esta classe é a implementação da interface IPersonManipulation
@@ -50,7 +50,7 @@ public class OverviewControllerPersonManipulation implements IPersonManipulation
     public void newPerson() {
         
         IPerson tempPerson = new PersonProperty();
-        WindowI editWindow = new EditPersonStage(tempPerson);
+        IWindow editWindow = new EditPersonStage(tempPerson);
         
         editWindow.open();
         
@@ -66,7 +66,7 @@ public class OverviewControllerPersonManipulation implements IPersonManipulation
        
        if (selectedPerson != null) {
            
-           WindowI editWindow = new EditPersonStage(selectedPerson);
+           IWindow editWindow = new EditPersonStage(selectedPerson);
            editWindow.open();
 
            if (editWindow.isOpen()) {

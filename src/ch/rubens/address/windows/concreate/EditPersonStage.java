@@ -1,6 +1,6 @@
 package ch.rubens.address.windows.concreate;
 
-import ch.rubens.address.windows.abstracts.WindowI;
+import ch.rubens.address.windows.abstracts.IWindow;
 import ch.rubens.address.MainApp;
 import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.view.PersonEditDialogController;
@@ -19,7 +19,7 @@ import javafx.stage.Stage;
  * 
  * @author rubens
  */
-public class EditPersonStage extends WindowI {
+public class EditPersonStage extends IWindow {
 
     public EditPersonStage(IPerson person) {
         
