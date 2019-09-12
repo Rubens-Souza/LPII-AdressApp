@@ -11,6 +11,7 @@ public interface AddressDAO extends DAO<Address> {
     public Address getAddress(int postalCode);
     public Address remove(int postalCode);
     public Address update(int postalCode, Address newAddressData);
+    public boolean isRegistered(int postalCode);
     
     public String getStreet(int postalCode);
     public String getCity(int postalCode);

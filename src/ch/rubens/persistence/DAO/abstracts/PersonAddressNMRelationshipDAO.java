@@ -12,6 +12,7 @@ public interface PersonAddressNMRelationshipDAO extends DAO<PersonAddressNMRelat
     public List<Integer> getAllPersonsInAddress(int postalcode);
     public List<Integer> getAllAddressOfPerson(int personId);
     public PersonAddressNMRelationship update(int postalCode, int personId, PersonAddressNMRelationship newRelationship);
+    public boolean isRegistered(int postalCode, int personId);
     
     public String getAddressType(PersonAddressNMRelationship relationship);
     

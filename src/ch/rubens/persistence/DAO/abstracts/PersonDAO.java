@@ -12,6 +12,7 @@ public interface PersonDAO extends DAO<Person> {
     public Person getPerson(int personId);
     public Person remove(int personId);
     public Person update(int personId, Person newPersonData);
+    public boolean isRegistered(int personId);
     
     public String getPersonFirstName(int personId);
     public String getPersonLastName(int personId);
