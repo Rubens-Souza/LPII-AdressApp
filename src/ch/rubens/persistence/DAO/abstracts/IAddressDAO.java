@@ -6,7 +6,7 @@ import ch.rubens.address.model.concreate.Address;
  *
  * @author Aluno
  */
-public interface AddressDAO extends DAO<Address> {
+public interface IAddressDAO extends IDAO<Address> {
 
     public Address getAddress(int postalCode);
     public Address remove(int postalCode);

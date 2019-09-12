@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author Aluno
  */
-public interface DAO<T> {
+public interface IDAO<T> {
     
     public List<T> listAll();
     public T add(T data);

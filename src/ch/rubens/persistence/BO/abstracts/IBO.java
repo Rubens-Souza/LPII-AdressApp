@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author Aluno
  */
-public interface BO<T> {
+public interface IBO<T> {
     
     public List<T> listAll();
     public T add(T data);

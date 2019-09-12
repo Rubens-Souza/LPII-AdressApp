@@ -7,7 +7,7 @@ import java.util.Date;
  *
  * @author Aluno
  */
-public interface PersonDAO extends DAO<Person> {
+public interface IPersonDAO extends IDAO<Person> {
     
     public Person getPerson(int personId);
     public Person remove(int personId);
