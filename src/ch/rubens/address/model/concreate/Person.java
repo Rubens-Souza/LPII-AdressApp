@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 public class Person implements IPerson {
 
+    private Integer id;
     private String firstName;
     private String lastName;
     private String street;
@@ -20,11 +21,25 @@ public class Person implements IPerson {
     private Integer postalCode;
     private LocalDate birthday; 
     
+    private Address address;
+    
     public Person() { this(null, null); }
+    
+    public Person(Integer id) {
+        setId(id);
+    }
     
     public Person(String firstName, String lastName) {
         setFirstName(firstName);
         setLastName(lastName);
+    }
+    
+    public Integer getId() {
+        return id;
+    }
+    
+    public Address getAddress() {
+        return address;
     }
     
     @Override
@@ -56,6 +71,14 @@ public class Person implements IPerson {
     @XmlJavaTypeAdapter(LocalDateAdapter.class) // Anotação para salvar no XML
     public LocalDate getBirthday() {
         return birthday;
+    }
+    
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override
