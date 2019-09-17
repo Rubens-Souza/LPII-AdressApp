@@ -1,7 +1,7 @@
 package ch.rubens.persistence.DAO.abstracts;
 
 import ch.rubens.address.model.concreate.Person;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -16,7 +16,7 @@ public interface IPersonDAO extends IDAO<Person> {
     
     public String getPersonFirstName(int personId);
     public String getPersonLastName(int personId);
-    public Date getPersonBirthdate(int personId);
+    public LocalDate getPersonBirthdate(int personId);
     public int getPersonPostalCode(int personId);
     
 }
