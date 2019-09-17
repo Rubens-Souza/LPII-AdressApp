@@ -36,21 +36,21 @@ public class Address {
     public Integer getPostalCode() {
         return postalCode;
     }
-
-    public void setPostalCode(Integer postalCode) {
-        this.postalCode = postalCode;
-    }
-
+    
     public String getStreet() {
         return street;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
     public String getCity() {
         return city;
+    }
+    
+    public void setPostalCode(Integer postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public void setCity(String city) {

@@ -3,6 +3,8 @@ package ch.rubens.address.model.concreate;
 import ch.rubens.address.util.concreate.LocalDateAdapter;
 import ch.rubens.address.model.abstracts.IPerson;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
@@ -16,17 +18,18 @@ public class Person implements IPerson {
     private Integer id;
     private String firstName;
     private String lastName;
+    private LocalDate birthday; 
     private String street;
     private String city;
     private Integer postalCode;
-    private LocalDate birthday; 
     
-    private Address address;
+    private ArrayList<Address> addressList;
     
     public Person() { this(null, null); }
     
     public Person(Integer id) {
         setId(id);
+        addressList = new ArrayList<Address>();
     }
     
     public Person(String firstName, String lastName) {
@@ -38,8 +41,12 @@ public class Person implements IPerson {
         return id;
     }
     
-    public Address getAddress() {
-        return address;
+    public ArrayList<Address> getAddressList() {
+        return addressList;
+    }
+    
+    public Address getAddress(int index) {
+        return addressList.get(index);
     }
     
     @Override
@@ -77,8 +84,8 @@ public class Person implements IPerson {
         this.id = id;
     }
     
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressList(ArrayList<Address> addressList) {
+        this.addressList = addressList;
     }
 
     @Override
@@ -109,6 +116,34 @@ public class Person implements IPerson {
     @Override
     public void setBirthday(LocalDate birthdayDate) {
         this.birthday = birthdayDate;
+    }
+    
+    public void addAddress(Address address) {
+        addressList.add(address);
+    }
+    
+    public void addAllAddress(Collection<? extends Address> addressList) {
+        this.addressList.addAll(addressList);
+    }
+    
+    public void removeAddress(Address address) {
+        addressList.remove(address);
+    }
+    
+    public void removeAddress(int index) {
+        addressList.remove(index);
+    }
+    
+    public void removeAllAddress() {
+        addressList.clear();
+    }
+    
+    public boolean haveAddress(Address address) {
+        return addressList.contains(address);
+    }
+    
+    public int countAddress() {
+        return addressList.size();
     }
     
 }
