@@ -149,9 +149,15 @@ public class PersonXMLDAO implements IPersonDAO {
         
         Document contacts = contactsFile.getContactsAsDOM();
         
-        //Element oldPersonNode = contacts.getElementById(oldData.getId());
+        Node persons = contacts.getElementsByTagName("persons").item(0);
         
-        return false;
+        Node oldPersonNode = contacts.getElementById("personId_" + oldData.getId());
+        
+        Node newPersonNode = createNode(newData);
+        
+        Node replacedNode = persons.replaceChild(newPersonNode, oldPersonNode);
+        
+        return (replacedNode != null);
         
     }
     

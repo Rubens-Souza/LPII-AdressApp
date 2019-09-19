@@ -76,6 +76,12 @@ public class MainApp extends Application {
         System.out.println(p.getLastName());
         System.out.println(p.getAddress(0).getStreet());
         
+        p.removeAddress(1);
+        
+        pDAO.update(p1, p);
+        
+        contactsFile.saveFileXML();
+        
         System.out.println(pDAO.isRegistered(1));
         System.out.println(pDAO.isRegistered(0));
 
