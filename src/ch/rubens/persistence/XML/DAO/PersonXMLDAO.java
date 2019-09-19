@@ -58,64 +58,9 @@ public class PersonXMLDAO implements IPersonDAO {
         
         Document contacts = contactsFile.getContactsAsDOM();
         
-        Element person = contacts.getElementById(Integer.toString(personId));
+        Element person = contacts.getElementById("personId_" + Integer.toString(personId));
         
         return createPersonFromElement(person);
-        
-        /*Node rootNode = contacts.getElementsByTagName("persons").item(0);
-        
-        if (rootNode.getNodeType() == Node.ELEMENT_NODE) {
-            
-            Element personsList = (Element) rootNode;
-            NodeList persons = personsList.getElementsByTagName("person");
-            
-            for (int i = 0; i < persons.getLength(); i++) {
-                
-                Node personNode = persons.item(i);
-                Integer personSavedId = Integer.parseInt(personNode.getAttributes().getNamedItem("id").getNodeValue()); 
-                
-                if (personNode.getNodeType() == Node.ELEMENT_NODE && personSavedId == personId) {
-                    
-                    Element personElement = (Element) personNode;
-                    
-                    String firstName = personElement.getElementsByTagName("firstName").item(0).getTextContent();
-                    String lastName = personElement.getElementsByTagName("lastName").item(0).getTextContent();
-                    LocalDate birthday = LocalDate.parse(personElement.getElementsByTagName("birthday").item(0).getTextContent());
-                    
-                    NodeList addressNodes = personElement.getElementsByTagName("address");
-                    ArrayList<Address> personAdresses = new ArrayList<Address>();
-                    
-                    for (int j = 0; j < addressNodes.getLength(); j++) {
-                        
-                        Element addressElement = (Element) addressNodes.item(j);
-                        
-                        Integer postalCode = Integer.parseInt(addressElement.getElementsByTagName("postalCode").item(0).getTextContent());
-                        String city = addressElement.getElementsByTagName("city").item(0).getTextContent();
-                        String street = addressElement.getElementsByTagName("street").item(0).getTextContent();
-                        
-                        Address address = new Address(postalCode);
-                        address.setCity(city);
-                        address.setStreet(street);
-                        
-                        personAdresses.add(address);
-                        
-                    }
-                    
-                    Person person = new Person(personSavedId);
-                    person.setFirstName(firstName);
-                    person.setLastName(lastName);
-                    person.setBirthday(birthday);
-                    person.setAddressList(personAdresses);
-                    
-                    return person;
-                    
-                }
-                
-            }
-            
-        }
-        
-        return null;*/
         
     }
 
@@ -141,33 +86,9 @@ public class PersonXMLDAO implements IPersonDAO {
         
         Document contacts = contactsFile.getContactsAsDOM();
         
-        Element person = contacts.getElementById(Integer.toString(personId));
+        Element person = contacts.getElementById("personId_" + Integer.toString(personId));
         
         return (person != null);
-        
-        /*Node rootNode = contacts.getElementsByTagName("persons").item(0);
-        
-        if (rootNode.getNodeType() == Node.ELEMENT_NODE) {
-            
-            Element personsElement = (Element) rootNode;
-            NodeList personNodes = personsElement.getElementsByTagName("persons");
-            
-            for (int i = 0; i < personNodes.getLength(); i++) {
-                
-                Node personElement = personNodes.item(i);
-                Integer personSavedId = Integer.parseInt(personElement.getAttributes().getNamedItem("id").getNodeValue());
-                
-                if (personSavedId == personId) {
-                    
-                    return true;
-                    
-                }
-                
-            }
-            
-        }
-        
-        return false;*/
         
     }
 
@@ -197,17 +118,24 @@ public class PersonXMLDAO implements IPersonDAO {
     }
 
     @Override
-    public Person add(Person data) {
+    public boolean add(Person data) {
         
         Document contacts = contactsFile.getContactsAsDOM();
         
         Node rootNode = contacts.getElementsByTagName("persons").item(0);
         
+        if (rootNode == null) {
+            
+            rootNode = contacts.createElement("persons");
+            contacts.appendChild(rootNode);
+            
+        }
+        
         Node newPersonNode = createNode(data);
         
-        rootNode.appendChild(newPersonNode);
+        Node nodeAdded = rootNode.appendChild(newPersonNode);
         
-        return null;
+        return (nodeAdded != null);
         
     }
 
@@ -217,21 +145,27 @@ public class PersonXMLDAO implements IPersonDAO {
     }
 
     @Override
-    public Person update(Person oldData, Person newData) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean update(Person oldData, Person newData) {
+        
+        Document contacts = contactsFile.getContactsAsDOM();
+        
+        //Element oldPersonNode = contacts.getElementById(oldData.getId());
+        
+        return false;
+        
     }
     
     public Person createPersonFromElement(Element personElement) {
         
-        Integer personId = Integer.parseInt(personElement.getAttributes().getNamedItem("id").getTextContent()) ;
+        Integer personId = Integer.parseInt(personElement.getAttributes().getNamedItem("id").getTextContent().split("_")[1]);
         
         Person person = new Person(personId);
         
-        String firstName = personElement.getAttributes().getNamedItem("firstName").getTextContent();
-        String lastName = personElement.getAttributes().getNamedItem("lastName").getTextContent();
-        LocalDate birthday = LocalDate.parse(personElement.getAttributes().getNamedItem("birthday").getTextContent());
+        String firstName = personElement.getElementsByTagName("firstName").item(0).getTextContent();
+        String lastName = personElement.getElementsByTagName("lastName").item(0).getTextContent();
+        LocalDate birthday = LocalDate.parse(personElement.getElementsByTagName("birthday").item(0).getTextContent());
         
-        person.setFirstName(lastName);
+        person.setFirstName(firstName);
         person.setLastName(lastName);
         person.setBirthday(birthday);
         
@@ -246,7 +180,7 @@ public class PersonXMLDAO implements IPersonDAO {
                 
                 Element personAddress = (Element) addressNode;
                 
-                Integer postalCode = Integer.parseInt(personAddress.getAttributes().getNamedItem("postalCode").getTextContent());
+                Integer postalCode = Integer.parseInt(personAddress.getAttributes().getNamedItem("postalCode").getTextContent().split("_")[1]);
                 String city = personAddress.getElementsByTagName("city").item(0).getTextContent();
                 String street = personAddress.getElementsByTagName("street").item(0).getTextContent();
                 
@@ -273,7 +207,7 @@ public class PersonXMLDAO implements IPersonDAO {
         Element person = contacts.createElement("person");
 
         Attr idAttribute = contacts.createAttribute("id");
-        idAttribute.setValue(personData.getId().toString());
+        idAttribute.setValue("personId_" + personData.getId().toString());
         person.setAttributeNode(idAttribute);
         person.setIdAttributeNode(idAttribute, true);
         
@@ -289,12 +223,17 @@ public class PersonXMLDAO implements IPersonDAO {
         Element birthday = contacts.createElement("birthday");
         birthday.appendChild(contacts.createTextNode(personData.getBirthday().toString()));
         
+        person.appendChild(personId);
+        person.appendChild(firstName);
+        person.appendChild(lastName);
+        person.appendChild(birthday);
+        
         for (int i = 0; i < personData.countAddress(); i++) {
             
             Element address = contacts.createElement("address");
             
             Attr postalCodeAttribute = contacts.createAttribute("postalCode");
-            postalCodeAttribute.setValue(personData.getAddress(i).getPostalCode().toString());
+            postalCodeAttribute.setValue("postalCode_" + personData.getAddress(i).getPostalCode().toString());
             address.setAttributeNode(postalCodeAttribute);
             address.setIdAttributeNode(postalCodeAttribute, true);
             person.appendChild(address);
@@ -312,11 +251,6 @@ public class PersonXMLDAO implements IPersonDAO {
             address.appendChild(street);
             
         }
-        
-        person.appendChild(personId);
-        person.appendChild(firstName);
-        person.appendChild(lastName);
-        person.appendChild(birthday);
         
         return person;
         
