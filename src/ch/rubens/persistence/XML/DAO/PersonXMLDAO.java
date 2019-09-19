@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -56,7 +57,12 @@ public class PersonXMLDAO implements IPersonDAO {
     public Person getPerson(int personId) {
         
         Document contacts = contactsFile.getContactsAsDOM();
-        Node rootNode = contacts.getElementsByTagName("persons").item(0);
+        
+        Element person = contacts.getElementById(Integer.toString(personId));
+        
+        return createPersonFromElement(person);
+        
+        /*Node rootNode = contacts.getElementsByTagName("persons").item(0);
         
         if (rootNode.getNodeType() == Node.ELEMENT_NODE) {
             
@@ -109,7 +115,7 @@ public class PersonXMLDAO implements IPersonDAO {
             
         }
         
-        return null;
+        return null;*/
         
     }
 
@@ -135,7 +141,11 @@ public class PersonXMLDAO implements IPersonDAO {
         
         Document contacts = contactsFile.getContactsAsDOM();
         
-        Node rootNode = contacts.getElementsByTagName("persons").item(0);
+        Element person = contacts.getElementById(Integer.toString(personId));
+        
+        return (person != null);
+        
+        /*Node rootNode = contacts.getElementsByTagName("persons").item(0);
         
         if (rootNode.getNodeType() == Node.ELEMENT_NODE) {
             
@@ -157,7 +167,7 @@ public class PersonXMLDAO implements IPersonDAO {
             
         }
         
-        return false;
+        return false;*/
         
     }
 
@@ -188,7 +198,17 @@ public class PersonXMLDAO implements IPersonDAO {
 
     @Override
     public Person add(Person data) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        
+        Document contacts = contactsFile.getContactsAsDOM();
+        
+        Element rootNode = (Element) contacts.getElementsByTagName("person").item(0);
+        
+        Node newPersonNode = createNode(data);
+        
+        rootNode.appendChild(newPersonNode);
+        
+        return null;
+        
     }
 
     @Override
@@ -199,6 +219,101 @@ public class PersonXMLDAO implements IPersonDAO {
     @Override
     public Person update(Person oldData, Person newData) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public Person createPersonFromElement(Element personElement) {
+        
+        Integer personId = Integer.parseInt(personElement.getAttributes().getNamedItem("id").getTextContent()) ;
+        
+        Person person = new Person(personId);
+        
+        String firstName = personElement.getAttributes().getNamedItem("firstName").getTextContent();
+        String lastName = personElement.getAttributes().getNamedItem("lastName").getTextContent();
+        LocalDate birthday = LocalDate.parse(personElement.getAttributes().getNamedItem("birthday").getTextContent());
+        
+        NodeList personAddressNodeList = personElement.getElementsByTagName("address");
+        ArrayList<Address> personAddressList = new ArrayList<Address>();
+        
+        for (int i = 0; i < personAddressNodeList.getLength(); i++) {
+            
+            Element addressNode = (Element) personAddressNodeList.item(i);
+            
+            if (addressNode.getNodeType() == Node.ELEMENT_NODE) {
+                
+                Element personAddress = (Element) addressNode;
+                
+                Integer postalCode = Integer.parseInt(personAddress.getAttributes().getNamedItem("postalCode").getTextContent());
+                String city = personAddress.getElementsByTagName("city").item(0).getTextContent();
+                String street = personAddress.getElementsByTagName("street").item(0).getTextContent();
+                
+                Address address = new Address(postalCode);
+                address.setCity(city);
+                address.setStreet(street);
+                
+                personAddressList.add(address);
+                
+            }
+            
+        }
+        
+        person.setFirstName(lastName);
+        person.setLastName(lastName);
+        person.setBirthday(birthday);
+        person.setAddressList(personAddressList);
+        
+        return person;
+        
+    }
+   
+    public Node createNode(Person personData){
+
+        Document contacts = contactsFile.getContactsAsDOM();
+        
+        Element person = contacts.createElement("person");
+
+        Attr idAttribute = contacts.createAttribute("id");
+        idAttribute.setValue(personData.getId().toString());
+        person.setAttributeNode(idAttribute);
+        person.setIdAttributeNode(idAttribute, true);
+        
+        Element personId = contacts.createElement("id");
+        personId.appendChild(contacts.createTextNode(personData.getId().toString()));
+        
+        Element firstName = contacts.createElement("firstName");
+        firstName.appendChild(contacts.createTextNode(personData.getFirstName()));
+        
+        Element lastName = contacts.createElement("lastName");
+        lastName.appendChild(contacts.createTextNode(personData.getLastName()));
+        
+        Element birthday = contacts.createElement("birthday");
+        birthday.appendChild(contacts.createTextNode(personData.getBirthday().toString()));
+        
+        for (int i = 0; i < personData.countAddress(); i++) {
+            
+            Element address = contacts.createElement("address");
+            
+            Attr postalCodeAttribute = contacts.createAttribute("postalCode");
+            postalCodeAttribute.setValue(personData.getAddress(i).getPostalCode().toString());
+            address.setAttributeNode(postalCodeAttribute);
+            address.setIdAttributeNode(postalCodeAttribute, true);
+            person.appendChild(address);
+
+            Element postalCode = contacts.createElement("postalCode");
+            postalCode.appendChild(contacts.createTextNode(personData.getAddress(i).getPostalCode().toString()));
+            address.appendChild(postalCode);
+
+            Element city = contacts.createElement("city");
+            city.appendChild(contacts.createTextNode(personData.getAddress(i).getCity()));
+            address.appendChild(city);
+
+            Element street = contacts.createElement("street");
+            street.appendChild(contacts.createTextNode(personData.getAddress(i).getStreet()));
+            address.appendChild(street);
+            
+        }
+        
+        return person;
+        
     }
     
 }
