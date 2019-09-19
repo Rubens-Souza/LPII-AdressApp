@@ -9,9 +9,9 @@ import java.util.List;
 public interface IDAO<T> {
     
     public List<T> listAll();
-    public T add(T data);
+    public boolean add(T data);
     public T remove(T data);
-    public T update(T oldData, T newData);
+    public boolean update(T oldData, T newData);
     public boolean isRegistered(T data);
     
 }
