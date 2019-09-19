@@ -201,7 +201,7 @@ public class PersonXMLDAO implements IPersonDAO {
         
         Document contacts = contactsFile.getContactsAsDOM();
         
-        Element rootNode = (Element) contacts.getElementsByTagName("person").item(0);
+        Node rootNode = contacts.getElementsByTagName("persons").item(0);
         
         Node newPersonNode = createNode(data);
         
@@ -231,6 +231,10 @@ public class PersonXMLDAO implements IPersonDAO {
         String lastName = personElement.getAttributes().getNamedItem("lastName").getTextContent();
         LocalDate birthday = LocalDate.parse(personElement.getAttributes().getNamedItem("birthday").getTextContent());
         
+        person.setFirstName(lastName);
+        person.setLastName(lastName);
+        person.setBirthday(birthday);
+        
         NodeList personAddressNodeList = personElement.getElementsByTagName("address");
         ArrayList<Address> personAddressList = new ArrayList<Address>();
         
@@ -256,9 +260,6 @@ public class PersonXMLDAO implements IPersonDAO {
             
         }
         
-        person.setFirstName(lastName);
-        person.setLastName(lastName);
-        person.setBirthday(birthday);
         person.setAddressList(personAddressList);
         
         return person;
@@ -311,6 +312,11 @@ public class PersonXMLDAO implements IPersonDAO {
             address.appendChild(street);
             
         }
+        
+        person.appendChild(personId);
+        person.appendChild(firstName);
+        person.appendChild(lastName);
+        person.appendChild(birthday);
         
         return person;
         
