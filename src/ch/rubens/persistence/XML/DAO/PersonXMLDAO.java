@@ -10,13 +10,10 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -28,6 +25,9 @@ import org.xml.sax.SAXException;
 public class PersonXMLDAO implements IPersonDAO {
     
     private ContactsFileXMLSingleton contactsFile;
+    
+    private final String PERSON_ID_PREFIX = "personId_";
+    private final String ADDRESS_ID_PREFIX = "postalCode_";
     
     public PersonXMLDAO() {
         
@@ -58,7 +58,7 @@ public class PersonXMLDAO implements IPersonDAO {
         
         Document contacts = contactsFile.getContactsAsDOM();
         
-        Element person = contacts.getElementById("personId_" + Integer.toString(personId));
+        Element person = contacts.getElementById(PERSON_ID_PREFIX + Integer.toString(personId));
         
         return createPersonFromElement(person);
         
@@ -66,12 +66,36 @@ public class PersonXMLDAO implements IPersonDAO {
 
     @Override
     public Person remove(int personId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Document contacts = contactsFile.getContactsAsDOM();
+        
+        Element rootElement = (Element) contacts.getElementsByTagName("persons").item(0);
+        Element personElement = contacts.getElementById(PERSON_ID_PREFIX + personId);
+        
+        Person personData = createPersonFromElement(personElement);
+        
+        rootElement.removeChild(personElement);
+        
+        return personData;
+        
     }
 
     @Override
     public Person update(int personId, Person newPersonData) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Document contacts = contactsFile.getContactsAsDOM();
+        
+        Element rootElement = (Element) contacts.getElementsByTagName("persons").item(0);
+        Element oldPersonElement = contacts.getElementById(PERSON_ID_PREFIX + personId);
+        
+        Person oldPersonData = createPersonFromElement(oldPersonElement);
+        
+        Node newPersonNode = createNode(newPersonData);
+        
+        rootElement.replaceChild(newPersonNode, oldPersonElement);
+        
+        return oldPersonData;
+        
     }
     
     @Override
@@ -86,7 +110,7 @@ public class PersonXMLDAO implements IPersonDAO {
         
         Document contacts = contactsFile.getContactsAsDOM();
         
-        Element person = contacts.getElementById("personId_" + Integer.toString(personId));
+        Element person = contacts.getElementById(PERSON_ID_PREFIX + Integer.toString(personId));
         
         return (person != null);
         
@@ -94,27 +118,67 @@ public class PersonXMLDAO implements IPersonDAO {
 
     @Override
     public String getPersonFirstName(int personId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Person personData = getPerson(personId);
+        
+        return personData.getFirstName();
+        
     }
 
     @Override
     public String getPersonLastName(int personId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                
+        Person personData = getPerson(personId);
+        
+        return personData.getLastName();
+        
     }
 
     @Override
-    public LocalDate getPersonBirthdate(int personId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public LocalDate getPersonBirthday(int personId) {
+                
+        Person personData = getPerson(personId);
+        
+        return personData.getBirthday();
+        
     }
 
     @Override
     public int getPersonPostalCode(int personId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Person personData = getPerson(personId);
+        
+        return personData.getPostalCode();
+                
     }
 
     @Override
     public List<Person> listAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Document contacts = contactsFile.getContactsAsDOM();
+        List<Person> personList = new ArrayList<Person>();
+        
+        Element rootElement = (Element) contacts.getElementsByTagName("persons").item(0);
+        
+        NodeList personNodes = rootElement.getElementsByTagName("person");
+        
+        for (int i = 0; i < personNodes.getLength(); i++) {
+            
+            Node person = personNodes.item(i);
+            
+            if (person.getNodeType() == Node.ELEMENT_NODE) {
+                
+                Element personElement = (Element) person;
+                
+                Person personData = createPersonFromElement(personElement);
+                personList.add(personData);
+                
+            }
+            
+        }
+        
+        return personList;
+        
     }
 
     @Override
@@ -141,7 +205,17 @@ public class PersonXMLDAO implements IPersonDAO {
 
     @Override
     public Person remove(Person data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Document contacts = contactsFile.getContactsAsDOM();
+        
+        Node rootElement = contacts.getElementsByTagName("persons").item(0);
+        
+        Node personNodeToRemove = contacts.getElementById(PERSON_ID_PREFIX + data.getId());
+        
+        rootElement.removeChild(personNodeToRemove);
+        
+        return createPersonFromElement((Element) personNodeToRemove);
+        
     }
 
     @Override
@@ -151,7 +225,7 @@ public class PersonXMLDAO implements IPersonDAO {
         
         Node persons = contacts.getElementsByTagName("persons").item(0);
         
-        Node oldPersonNode = contacts.getElementById("personId_" + oldData.getId());
+        Node oldPersonNode = contacts.getElementById(PERSON_ID_PREFIX + oldData.getId());
         
         Node newPersonNode = createNode(newData);
         
@@ -213,7 +287,7 @@ public class PersonXMLDAO implements IPersonDAO {
         Element person = contacts.createElement("person");
 
         Attr idAttribute = contacts.createAttribute("id");
-        idAttribute.setValue("personId_" + personData.getId().toString());
+        idAttribute.setValue(PERSON_ID_PREFIX + personData.getId().toString());
         person.setAttributeNode(idAttribute);
         person.setIdAttributeNode(idAttribute, true);
         
@@ -239,7 +313,7 @@ public class PersonXMLDAO implements IPersonDAO {
             Element address = contacts.createElement("address");
             
             Attr postalCodeAttribute = contacts.createAttribute("postalCode");
-            postalCodeAttribute.setValue("postalCode_" + personData.getAddress(i).getPostalCode().toString());
+            postalCodeAttribute.setValue(ADDRESS_ID_PREFIX + personData.getAddress(i).getPostalCode().toString());
             address.setAttributeNode(postalCodeAttribute);
             address.setIdAttributeNode(postalCodeAttribute, true);
             person.appendChild(address);
