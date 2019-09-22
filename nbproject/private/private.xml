@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/ruben/Desktop/Reizer/Trabalhos/1)%20LPII/LPII-Address_APP/src/ch/rubens/persistence/DAO/abstracts/IDAO.java</file>
             <file>file:/C:/Users/ruben/Desktop/Reizer/Trabalhos/1)%20LPII/LPII-Address_APP/src/ch/rubens/persistence/XML/DAO/PersonXMLDAO.java</file>
-            <file>file:/C:/Users/ruben/Desktop/Reizer/Trabalhos/1)%20LPII/LPII-Address_APP/src/ch/rubens/persistence/XML/ContactsFileXMLSingleton.java</file>
+            <file>file:/C:/Users/ruben/Desktop/Reizer/Trabalhos/1)%20LPII/LPII-Address_APP/src/ch/rubens/persistence/DAO/abstracts/IPersonDAO.java</file>
             <file>file:/C:/Users/ruben/Desktop/Reizer/Trabalhos/1)%20LPII/LPII-Address_APP/src/ch/rubens/address/MainApp.java</file>
+            <file>file:/C:/Users/ruben/Desktop/Reizer/Trabalhos/1)%20LPII/LPII-Address_APP/src/ch/rubens/address/model/concreate/Person.java</file>
+            <file>file:/C:/Users/ruben/Desktop/Reizer/Trabalhos/1)%20LPII/LPII-Address_APP/src/ch/rubens/address/windows/concreate/PrimaryStageSingleton.java</file>
         </group>
     </open-files>
 </project-private>

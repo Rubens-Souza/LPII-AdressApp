@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -56,8 +58,8 @@ public class MainApp extends Application {
         
         ad.setCity("Belo Horizonte");
         ad.setStreet("Rua Onofre Camillo Campos");
-        ad2.setCity("Valfeno");
-        ad2.setStreet("Riverdell");
+        ad2.setCity("El Dorado");
+        ad2.setStreet("r. 31");
         
         p1.setFirstName("Raine");
         p1.setLastName("Souza");
@@ -65,25 +67,81 @@ public class MainApp extends Application {
         p1.addAddress(ad);
         p1.addAddress(ad2);
         
+        Person p2 = new Person(2);
+        Address adP2 = new Address(30545040);
+        
+        adP2.setCity("El Dorado");
+        adP2.setStreet("Guillock");
+        
+        p2.setFirstName("Reizer");
+        p2.setLastName("Zuriel");
+        p2.setBirthday(LocalDate.of(2001, Month.MARCH, 2));
+        p2.addAddress(adP2);
+        
+        Person p3 = new Person(3);
+        
+        p3.setFirstName("Zuriel");
+        p3.setLastName("Reizer");
+        p3.setBirthday(LocalDate.of(2001, Month.MARCH, 2));
+        p3.addAddress(adP2);
+        
+        
+        // Testing
         PersonXMLDAO pDAO = new PersonXMLDAO();
         
+        pDAO.add(p1);
+        pDAO.add(p3);
+        pDAO.add(p2);
+        
+        contactsFile.saveFileXML();
+        
+        System.out.println(pDAO.isRegistered(1)); // True
+        System.out.println(pDAO.isRegistered(0)); // False
+        
+        for (int i = 1; i <= 3; i++) {
+            
+            Person p = pDAO.getPerson(i);
+            
+            System.out.println(p.getFirstName());
+            System.out.println(p.getLastName());
+            System.out.println(p.getAddress(0).getStreet());            
+            
+        }
+        
+        Person p4 = new Person(4);
+        p4.setFirstName("Mae");
+        p4.setLastName("Borowski");
+        p4.setBirthday(LocalDate.of(1996, Month.DECEMBER, 1));
+        
+        Address ad4 = new Address(4);
+        ad4.setCity("Possum Springs");
+        ad4.setStreet("Line street");
+        p4.addAddress(ad4);
+        
+        pDAO.update(p1, p4);
+        
+        contactsFile.saveFileXML();
+        
+        Person removedPerson = pDAO.remove(p4);
+        
+        contactsFile.saveFileXML();
+        
+        System.out.println(removedPerson.getFirstName());
+        
+        pDAO.add(p4);
         pDAO.add(p1);
         
         contactsFile.saveFileXML();
         
-        Person p = pDAO.getPerson(p1.getId());
-        System.out.println(p.getFirstName());
-        System.out.println(p.getLastName());
-        System.out.println(p.getAddress(0).getStreet());
+        List<Person> list = pDAO.listAll();
         
-        p.removeAddress(1);
-        
-        pDAO.update(p1, p);
-        
-        contactsFile.saveFileXML();
-        
-        System.out.println(pDAO.isRegistered(1));
-        System.out.println(pDAO.isRegistered(0));
+        for (Person p : list) {
+            
+            System.out.println(p.getFirstName());
+            System.out.println(p.getLastName());
+            System.out.println(p.getAddress(0).getStreet());            
+            
+        }
 
     }
     
