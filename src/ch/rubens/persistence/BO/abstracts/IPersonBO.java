@@ -1,7 +1,8 @@
 package ch.rubens.persistence.BO.abstracts;
 
 import ch.rubens.address.model.concreate.Person;
-import java.util.Date;
+import ch.rubens.persistence.exceptions.InvalidDataInserted;
+import java.time.LocalDate;
 
 /**
  *
@@ -12,12 +13,11 @@ public interface IPersonBO extends IBO<Person> {
     public Person getPerson(int personId);
     
     public Person remove(int personId);
-    public Person update(int personId, Person newPersonData);
+    public Person update(int personId, Person newPersonData) throws InvalidDataInserted;
     public boolean isRegistered(int personId);
     
     public String getPersonFirstName(int personId);
     public String getPersonLastName(int personId);
-    public Date getPersonBirthdate(int personId);
-    public int getPersonPostalCode(int personId);
+    public LocalDate getPersonBirthdate(int personId);
     
 }

@@ -1,5 +1,6 @@
 package ch.rubens.persistence.BO.abstracts;
 
+import ch.rubens.persistence.exceptions.InvalidDataInserted;
 import java.util.List;
 
 /**
@@ -9,9 +10,9 @@ import java.util.List;
 public interface IBO<T> {
     
     public List<T> listAll();
-    public T add(T data);
+    public boolean add(T data) throws InvalidDataInserted;
     public T remove(T data);
-    public T update(T oldData, T newData);
+    public boolean update(T oldData, T newData) throws InvalidDataInserted;
     public boolean isRegistered(T data);
     
 }
