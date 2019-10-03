@@ -38,16 +38,7 @@ public class PersonXMLDAO implements IPersonDAO {
         }
         catch (NoneFileOpenedException ex) {
             
-            try {
-                
-                contactsFile = ContactsFileXMLSingleton.openXMLFile("Contacts_XML_Saved_Files\\contacts.xml");
-                
-            } 
-            catch (ParserConfigurationException | SAXException | IOException ex1 ) {
-                
-                System.out.println("Error when opening the contacts XML file: " + ex1);
-                
-            }
+            System.out.println("Main didn't initialized the contacts file");
             
         }
         

@@ -18,7 +18,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- *
+ * 
+ * Essa classe BO permite modificações no arquivo XML Contacts
+ * 
  * @author Aluno
  */
 public class PersonXMLBO implements IPersonBO {
