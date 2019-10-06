@@ -5,6 +5,9 @@ import ch.rubens.address.model.concreate.Address;
 import ch.rubens.address.model.concreate.Person;
 import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.windows.concreate.PrimaryStageSingleton;
+import ch.rubens.persistence.DAO.abstracts.IDAO;
+import ch.rubens.persistence.DAO.abstracts.IPersonDAO;
+import ch.rubens.persistence.JDBC.DAO.PersonJDBCDAO;
 import ch.rubens.persistence.XML.ContactsFileXMLSingleton;
 import ch.rubens.persistence.XML.DAO.PersonXMLDAO;
 import ch.rubens.persistence.exceptions.NotRegisteredDataException;
@@ -52,6 +55,8 @@ public class MainApp extends Application {
             
         }
         
+        IPersonDAO personJDBCDAO = new PersonJDBCDAO();
+        
         Person p1 = new Person(1);
         Address ad = new Address(31545040);
         Address ad2 = new Address(31545000);
@@ -93,7 +98,25 @@ public class MainApp extends Application {
         pDAO.add(p3);
         pDAO.add(p2);
         
-        contactsFile.saveFileXML();
+        Person p4 = new Person(4);
+        p4.setFirstName("Mae");
+        p4.setLastName("Borowski");
+        p4.setBirthday(LocalDate.of(1996, Month.DECEMBER, 1));
+        
+        Address ad4 = new Address(4);
+        ad4.setCity("Possum Springs");
+        ad4.setStreet("Line street");
+        p4.addAddress(ad4);
+        
+        List<Person> personsList = personJDBCDAO.listAll();
+        
+        for (Person person : personsList) {
+            
+            System.out.println(person.getFirstName() + " " + person.getLastName());
+            
+        }
+        
+        /*contactsFile.saveFileXML();
         
         System.out.println(pDAO.isRegistered(1)); // True
         System.out.println(pDAO.isRegistered(0)); // False
@@ -141,7 +164,7 @@ public class MainApp extends Application {
             System.out.println(p.getLastName());
             System.out.println(p.getAddress(0).getStreet());            
             
-        }
+        }*/
 
     }
     
