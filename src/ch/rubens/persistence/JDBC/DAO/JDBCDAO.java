@@ -3,8 +3,6 @@ package ch.rubens.persistence.JDBC.DAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -12,13 +10,16 @@ import java.util.logging.Logger;
  */
 public abstract class JDBCDAO {
     
-    private final String Path = "jdbc:mysql://localhost:8080/AddressApp";
-    private final String Username = "MyAddressApp";
+    private final String Driver = "com.mysql.cj.jdbc.Driver";
+    private final String Time_Zone = "?useTimezone=true&serverTimezone=UTC";
+    private final String Database_Name = "address_app_database";
+    private final String Path = "jdbc:mysql://127.0.0.1:3306/" + Database_Name + Time_Zone;
+    private final String Username = "MyAddressAppUser";
     private final String Password = "2A2d2s2p";
     private Connection connection;
     
     public JDBCDAO() {
-        openConnection();
+
     }
     
     protected Connection getConnection() {
@@ -28,7 +29,16 @@ public abstract class JDBCDAO {
     public void openConnection() {
         
         try {
+            
+            try {
+                Class.forName(Driver);
+            } 
+            catch (ClassNotFoundException ex) {
+                handleDriverError(ex);
+            }
+            
             connection = DriverManager.getConnection(Path, Username, Password);
+            
         }
         catch (SQLException ex) {
             handleOpenConncetionError(ex);
@@ -38,6 +48,10 @@ public abstract class JDBCDAO {
     
     private void handleOpenConncetionError(SQLException error) {
         System.out.println("Connection with BD could not be created: " + error.toString());
+    }
+    
+    private void handleDriverError(ClassNotFoundException error) {
+        System.out.println("The driver could no be found: " + error.toString());
     }
     
     public void closeConnection() {
