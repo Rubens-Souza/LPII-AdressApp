@@ -135,15 +135,6 @@ public class PersonXMLDAO implements IPersonDAO {
     }
 
     @Override
-    public int getPersonPostalCode(int personId) {
-        
-        Person personData = getPerson(personId);
-        
-        return personData.getPostalCode();
-                
-    }
-
-    @Override
     public List<Person> listAll() {
         
         Document contacts = contactsFile.getContactsAsDOM();

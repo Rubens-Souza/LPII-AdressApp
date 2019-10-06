@@ -17,6 +17,5 @@ public interface IPersonDAO extends IDAO<Person> {
     public String getPersonFirstName(int personId);
     public String getPersonLastName(int personId);
     public LocalDate getPersonBirthday(int personId);
-    public int getPersonPostalCode(int personId);
     
 }
