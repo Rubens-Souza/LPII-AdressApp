@@ -289,7 +289,7 @@ public class PersonJDBCDAO extends JDBCDAO implements IPersonDAO {
         } 
         catch (SQLException ex) {
             
-            System.out.println("Error when trying to get all persons from Database");
+            System.out.println("Error when recovering all persons from Database");
             personsList.clear();
             
         }
