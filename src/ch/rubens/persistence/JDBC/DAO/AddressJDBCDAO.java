@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -156,11 +157,13 @@ public class AddressJDBCDAO extends JDBCDAO implements IAddressDAO {
         
         try {
             
-            PreparedStatement queryCall = connection.prepareStatement(street);
+            PreparedStatement queryCall = connection.prepareStatement(query);
             ResultSet queryResult = queryCall.executeQuery();
             
             if (queryResult != null && queryResult.next()) {
+                
                 street = queryResult.getString(TABLE_STREET_COLUMN_NAME);
+                
             }
             
         }
@@ -181,32 +184,139 @@ public class AddressJDBCDAO extends JDBCDAO implements IAddressDAO {
 
     @Override
     public String getCity(int postalCode) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String query = "SELECT " + TABLE_CITY_COLUMN_NAME + " FROM " + TABLE_NAME +
+                        " WHERE " + TABLE_ID_COLUMN_NAME + " = " + "'" + postalCode + "';";
+        
+        openConnection();
+        Connection connection = getConnection();
+        
+        String city  = "";
+        
+        try {
+            
+            PreparedStatement queryCall = connection.prepareStatement(query);
+            ResultSet queryResult = queryCall.executeQuery();
+            
+            if (queryResult != null && queryResult.next()) {
+                
+                city = queryResult.getString(TABLE_CITY_COLUMN_NAME);
+                
+            }
+            
+        }
+        catch (SQLException ex) {
+            
+            System.out.println("Error on getting address street in table: " + TABLE_NAME + ". " + ex);
+            city = "";
+            
+        }
+        finally {
+            
+            closeConnection();
+            return city;
+            
+        }
+        
     }
 
     @Override
     public List<Address> listAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String query = "SELECT * FROM " + TABLE_NAME;
+        
+        openConnection();
+        Connection connection = getConnection(); 
+        ArrayList<Address> addresses = new ArrayList<Address>();
+        
+        try {
+            
+            PreparedStatement queryCall = connection.prepareStatement(query);
+            ResultSet queryResult = queryCall.executeQuery();
+            
+            while (queryResult.next()) {
+                
+                Integer postalCode = queryResult.getInt(TABLE_ID_COLUMN_NAME);
+                String city = queryResult.getString(TABLE_CITY_COLUMN_NAME);
+                String street = queryResult.getString(TABLE_STREET_COLUMN_NAME);
+                
+                Address recoveredAddress = new Address(postalCode);
+                recoveredAddress.setCity(city);
+                recoveredAddress.setStreet(street);
+                
+                addresses.add(recoveredAddress);
+                
+            }
+            
+        } 
+        catch (SQLException ex) {
+            
+            System.out.println("Error on recovering the addresses from table: " + TABLE_NAME + ". " + ex);
+            addresses = null;
+            
+        }
+        finally {
+            
+            return addresses;
+            
+        }
+        
     }
 
     @Override
     public boolean add(Address data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        boolean wasAddressInserted = false;
+        
+        String query = "INSERT INTO " + TABLE_NAME + 
+                        "VALUES (" + data.getPostalCode() + ", " +
+                        "'" + data.getCity() + "', " +
+                        "'" + data.getStreet() + "');";
+        
+        openConnection();
+        Connection connection = getConnection();
+        
+        try {
+            
+            PreparedStatement queryCall = connection.prepareStatement(query);
+            queryCall.execute();
+            
+            wasAddressInserted = true;
+            
+        }
+        catch (SQLException ex) {
+            
+            System.out.println("Error to insert a address on " + TABLE_NAME + ": " + ex);
+            wasAddressInserted = false;
+            
+        }
+        finally {
+            
+            return wasAddressInserted;
+            
+        }
+        
     }
 
     @Override
     public Address remove(Address data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return remove(data.getPostalCode());
+        
     }
 
     @Override
     public boolean update(Address oldData, Address newData) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return (update(oldData.getPostalCode(), newData) != null);
+        
     }
 
     @Override
     public boolean isRegistered(Address data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return  isRegistered(data.getPostalCode());
+        
     }
     
 }
