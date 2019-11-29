@@ -1,4 +1,4 @@
-package ch.rubens.address.util.abstracts;
+package ch.rubens.address.util.UserInput;
 
 import java.io.File;
 
@@ -6,10 +6,24 @@ import java.io.File;
  *
  * @author Rubens
  */
-public interface Opener {
+public abstract class Chooser {
     
-    public File openFile();
+    private String panelName;
     
-    public File openFile(String path);
+    public abstract File open();
+    
+    public abstract File open(String path);
+    
+    public void setPanelName(String panelName) {
+        
+        this.panelName = panelName;
+        
+    }
+    
+    public String getPanelName() {
+        
+        return panelName;
+        
+    }
     
 }

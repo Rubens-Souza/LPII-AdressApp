@@ -1,20 +1,20 @@
-package ch.rubens.address.util.concreate;
+package ch.rubens.address.util.UserInput;
 
-import ch.rubens.address.util.abstracts.Opener;
 import ch.rubens.address.windows.concreate.PrimaryStageInstanceException;
 import ch.rubens.address.windows.concreate.PrimaryStageSingleton;
 import ch.rubens.address.windows.concreate.PrimaryStageSingletonInstanceException;
 import java.io.File;
 import javafx.stage.FileChooser;
+import ch.rubens.address.util.UserInput.Chooser;
 
 /**
  *
  * @author Rubens
  */
-public class XMLOpener implements Opener{
+public class XMLOpener extends Chooser{
 
     @Override
-    public File openFile() {
+    public File open() {
         
         FileChooser fileChooser = new FileChooser();
         
@@ -39,7 +39,7 @@ public class XMLOpener implements Opener{
     }
 
     @Override
-    public File openFile(String path) {
+    public File open(String path) {
         
         File file = null;
         
