@@ -104,13 +104,13 @@ public class PersonJDBCDAO extends JDBCDAO implements IPersonDAO {
     @Override
     public Person update(int personId, Person newPersonData) {
         
-        String query = "update " + TABLE_NAME +
-                       " set " + 
+        String query = "UPDATE " + TABLE_NAME +
+                       " SET " + 
                             TABLE_ID_COLUMN_NAME + " = " + "'" + newPersonData.getId() + "', " +
                             TABLE_FIRST_NAME_COLUMN_NAME + " = " + "'" + newPersonData.getFirstName() + "', " +
                             TABLE_LAST_NAME_COLUMN_NAME + " = " + "'" + newPersonData.getLastName() + "', " +
                             TABLE_BIRTHDAY_COLUMN_NAME + " = " + "'" + newPersonData.getBirthday() + "'" +
-                       " where " + TABLE_ID_COLUMN_NAME + " = " + "'" + personId + "'";
+                       " WHERE " + TABLE_ID_COLUMN_NAME + " = " + "'" + personId + "'";
         
         openConnection();
         Connection connection = getConnection();
