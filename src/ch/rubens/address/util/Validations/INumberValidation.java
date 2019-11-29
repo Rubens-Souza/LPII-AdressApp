@@ -1,4 +1,4 @@
-package ch.rubens.address.util.abstracts;
+package ch.rubens.address.util.Validations;
 
 /**
  * Esta interface originou-se devido a necessidade de verificar se os valores

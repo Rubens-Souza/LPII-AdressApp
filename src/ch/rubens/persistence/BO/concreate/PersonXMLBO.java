@@ -2,19 +2,20 @@ package ch.rubens.persistence.BO.concreate;
 
 import ch.rubens.address.model.concreate.Address;
 import ch.rubens.address.model.concreate.Person;
-import ch.rubens.address.util.abstracts.IAddressValidation;
-import ch.rubens.address.util.abstracts.IDateValidation;
-import ch.rubens.address.util.abstracts.INameValidation;
-import ch.rubens.address.util.abstracts.INumberValidation;
-import ch.rubens.address.util.concreate.AddressValidation;
-import ch.rubens.address.util.concreate.BrazilDateValidation;
-import ch.rubens.address.util.concreate.NameValidation;
-import ch.rubens.address.util.concreate.NumberValidation;
+import ch.rubens.address.util.Validations.IAddressValidation;
+import ch.rubens.address.util.Validations.IDateValidation;
+import ch.rubens.address.util.Validations.INameValidation;
+import ch.rubens.address.util.Validations.INumberValidation;
+import ch.rubens.address.util.Validations.AddressValidation;
+import ch.rubens.address.util.Validations.BrazilDateValidation;
+import ch.rubens.address.util.Validations.NameValidation;
+import ch.rubens.address.util.Validations.NumberValidation;
 import ch.rubens.persistence.BO.abstracts.IPersonBO;
 import ch.rubens.persistence.DAO.abstracts.IPersonDAO;
 import ch.rubens.persistence.XML.DAO.PersonXMLDAO;
 import ch.rubens.persistence.exceptions.InvalidDataInserted;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -152,6 +153,13 @@ public class PersonXMLBO implements IPersonBO {
         
         boolean isRegistered = personDAO.isRegistered(data);
         return isRegistered;
+        
+    }
+    
+    @Override
+    public ArrayList<Person> loadAllPersonsData() {
+        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
     }
     

@@ -1,15 +1,15 @@
 package ch.rubens.address.view.concreate;
 
-import ch.rubens.address.util.abstracts.IAddressValidation;
-import ch.rubens.address.util.abstracts.IDateValidation;
+import ch.rubens.address.util.Validations.IAddressValidation;
+import ch.rubens.address.util.Validations.IDateValidation;
 import ch.rubens.address.util.abstracts.IFastAlert;
-import ch.rubens.address.util.abstracts.INameValidation;
-import ch.rubens.address.util.abstracts.INumberValidation;
-import ch.rubens.address.util.concreate.AddressValidation;
-import ch.rubens.address.util.concreate.BrazilDateValidation;
+import ch.rubens.address.util.Validations.INameValidation;
+import ch.rubens.address.util.Validations.INumberValidation;
+import ch.rubens.address.util.Validations.AddressValidation;
+import ch.rubens.address.util.Validations.BrazilDateValidation;
 import ch.rubens.address.util.concreate.FastAlertWarning;
-import ch.rubens.address.util.concreate.NameValidation;
-import ch.rubens.address.util.concreate.NumberValidation;
+import ch.rubens.address.util.Validations.NameValidation;
+import ch.rubens.address.util.Validations.NumberValidation;
 import ch.rubens.address.view.PersonEditDialogController;
 import ch.rubens.address.view.abstracts.IInputValidation;
 

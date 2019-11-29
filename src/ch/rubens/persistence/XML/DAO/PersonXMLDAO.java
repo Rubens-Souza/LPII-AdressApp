@@ -217,7 +217,7 @@ public class PersonXMLDAO implements IPersonDAO {
         
     }
     
-    public Person createPersonFromElement(Element personElement) {
+    private Person createPersonFromElement(Element personElement) {
         
         Integer personId = Integer.parseInt(personElement.getAttributes().getNamedItem("id").getTextContent().split("_")[1]);
         
@@ -262,7 +262,7 @@ public class PersonXMLDAO implements IPersonDAO {
         
     }
    
-    public Node createNode(Person personData){
+    private Node createNode(Person personData){
 
         Document contacts = contactsFile.getContactsAsDOM();
         

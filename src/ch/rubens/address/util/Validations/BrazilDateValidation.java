@@ -1,6 +1,6 @@
-package ch.rubens.address.util.concreate;
+package ch.rubens.address.util.Validations;
 
-import ch.rubens.address.util.abstracts.IDateValidation;
+import ch.rubens.address.util.Validations.IDateValidation;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -13,7 +13,7 @@ import java.time.format.DateTimeParseException;
  */
 public class BrazilDateValidation implements IDateValidation {
 
-    private final String DATE_PATTERN = "dd/MM/yyyy";
+    private final String DATE_PATTERN = "yyyy-MM-dd";
     private final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
     
     @Override

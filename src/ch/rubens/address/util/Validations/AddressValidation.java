@@ -1,6 +1,6 @@
-package ch.rubens.address.util.concreate;
+package ch.rubens.address.util.Validations;
 
-import ch.rubens.address.util.abstracts.IAddressValidation;
+import ch.rubens.address.util.Validations.IAddressValidation;
 
 /**
  * Esta classe é a implementação da interface IAddressValidation de acordo com a

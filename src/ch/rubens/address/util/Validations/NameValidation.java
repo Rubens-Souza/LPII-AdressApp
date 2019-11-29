@@ -1,6 +1,4 @@
-package ch.rubens.address.util.concreate;
-
-import ch.rubens.address.util.abstracts.INameValidation;
+package ch.rubens.address.util.Validations;
 
 /**
  * Esta classe é a implementação da interface INameValidation de acordo com a

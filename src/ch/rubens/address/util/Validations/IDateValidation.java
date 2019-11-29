@@ -1,4 +1,4 @@
-package ch.rubens.address.util.abstracts;
+package ch.rubens.address.util.Validations;
 
 /**
  * Esta classe se originou devido ao DateUtil, que vai contra o principio SRP
