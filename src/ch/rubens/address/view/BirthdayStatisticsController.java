@@ -1,6 +1,7 @@
 package ch.rubens.address.view;
 
 import ch.rubens.address.model.abstracts.IPerson;
+import ch.rubens.address.model.concreate.Person;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -34,14 +35,14 @@ public class BirthdayStatisticsController implements IController {
         
     }
     
-    public void setPersonData(List<IPerson> persons) {
+    public void setPersonData(List<Person> persons) {
         
         int[] monthCounter = new int[12];
         int i = 0;
         
-        for (IPerson p: persons) {
+        for (Person person: persons) {
             
-            int month = p.getBirthday().getMonthValue();
+            int month = person.getBirthday().getMonthValue();
             month--;
             monthCounter[month]++;
             

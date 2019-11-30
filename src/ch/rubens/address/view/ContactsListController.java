@@ -1,22 +1,25 @@
 package ch.rubens.address.view;
 
 import ch.rubens.address.view.abstracts.IPersonManipulation;
-import ch.rubens.address.view.concreate.OverviewControllerPersonManipulation;
+import ch.rubens.address.view.concreate.ContactsListControllerActions;
 import ch.rubens.address.view.concreate.ShowOverviewInfo;
 import ch.rubens.address.view.abstracts.IShowPersonInfo;
 import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.abstracts.IPersonProperty;
+import ch.rubens.address.model.concreate.Person;
 import ch.rubens.address.model.concreate.PersonListSingleton;
+import ch.rubens.address.model.concreate.PersonPropertyAdapter;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.fxml.FXML;
 import ch.rubens.address.view.abstracts.IController;
+import javafx.collections.ObservableList;
 
 /**
  * As implementações dos seus métodos foram divididas em outras classes para que o 
- * PersonOverviewController tenha como única responsabilidade associar quais ações
- * devem ser tomadas em determinados eventos. (SRP)
+ ContactsListController tenha como única responsabilidade associar quais ações
+ devem ser tomadas em determinados eventos. (SRP)
  * 
  * A segregação das funcionalidades em outras classes/interfaces atende o OCP,
  * o ISP e o DIP.
@@ -26,11 +29,11 @@ import ch.rubens.address.view.abstracts.IController;
  * 
  * @author rubens
  */
-public class PersonOverviewController implements IController {
+public class ContactsListController implements IController {
     
-    @FXML private TableView<IPerson> personTable;
-    @FXML private TableColumn<IPersonProperty, String> firstNameColumn;
-    @FXML private TableColumn<IPersonProperty, String> lastNameColumn;
+    @FXML private TableView<PersonPropertyAdapter> personTable;
+    @FXML private TableColumn<PersonPropertyAdapter, String> firstNameColumn;
+    @FXML private TableColumn<PersonPropertyAdapter, String> lastNameColumn;
     
     @FXML private Label firstNameLabel;
     @FXML private Label lastNameLabel;
@@ -39,13 +42,11 @@ public class PersonOverviewController implements IController {
     @FXML private Label cityLabel;
     @FXML private Label birthdayLabel;
 
-    private IPersonManipulation personManipulator;
-    private IShowPersonInfo infoExhibitor;
+    private ContactsListControllerActions controllerActions;
     
-    public PersonOverviewController() {
+    public ContactsListController() {
         
-        personManipulator = new OverviewControllerPersonManipulation(this);
-        infoExhibitor = new ShowOverviewInfo(this);
+        controllerActions = new ContactsListControllerActions(this);
         
     }
     
@@ -57,41 +58,44 @@ public class PersonOverviewController implements IController {
         lastNameColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getLastNameProperty());
         
-        infoExhibitor.hideInfo();
+        controllerActions.clearLabelsContent();
         
         personTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showPersonDetails(newValue));
         
     }
     
-    private void showPersonDetails(IPerson person) {
-        infoExhibitor.loadInfo(person);
+    private void showPersonDetails(PersonPropertyAdapter personPropertySelected) {
+        
+        Person person = personPropertySelected.getPerson();
+        controllerActions.showSelectedPersonContent(person);
+        
     }
     
     @FXML
     private void handelDeletePerson() {
-        personManipulator.deletePerson();
+        controllerActions.deletePerson();
     }
     
     @FXML
     private void handleNewPerson() {
-        personManipulator.newPerson();
+        controllerActions.addPerson();
     }
     
     @FXML
     private void handleEditPerson() {
-        personManipulator.editPerson();
+        controllerActions.editPerson();
     }
     
-    public TableView<IPerson> getPersonTable() {
+    public TableView<PersonPropertyAdapter> getPersonTable() {
         return personTable;
     }
 
-    public TableColumn<IPersonProperty, String> getFirstNameColumn() {
+    public TableColumn<PersonPropertyAdapter, String> getFirstNameColumn() {
         return firstNameColumn;
     }
 
-    public TableColumn<IPersonProperty, String> getLastNameColumn() {
+    public TableColumn<PersonPropertyAdapter, String> getLastNameColumn() {
         return lastNameColumn;
     }
 
@@ -120,8 +124,11 @@ public class PersonOverviewController implements IController {
     }
     
     public void setTableItems() {
-
-        personTable.setItems(PersonListSingleton.getInstance().getObservableList());
+        
+        PersonListSingleton personsList = PersonListSingleton.getInstance();
+        ObservableList<PersonPropertyAdapter> personsObservableList = personsList.getPersonsObservableList();
+        
+        personTable.setItems(personsObservableList);
         
     }
     

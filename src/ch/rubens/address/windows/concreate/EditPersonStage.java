@@ -3,6 +3,7 @@ package ch.rubens.address.windows.concreate;
 import ch.rubens.address.windows.abstracts.IWindow;
 import ch.rubens.address.MainApp;
 import ch.rubens.address.model.abstracts.IPerson;
+import ch.rubens.address.model.concreate.Person;
 import ch.rubens.address.view.PersonEditDialogController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
  */
 public class EditPersonStage extends IWindow {
 
-    public EditPersonStage(IPerson person) {
+    public EditPersonStage(Person person) {
         
         setName("Edit Person");
         
