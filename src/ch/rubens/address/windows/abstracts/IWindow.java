@@ -22,6 +22,7 @@ public abstract class IWindow {
     private IController controller;
     
     private boolean opened;
+    private boolean hasClosed;
     
     protected abstract void initLayout();
     
@@ -29,21 +30,29 @@ public abstract class IWindow {
     
     public void open() {
         
-        layout.showAndWait();
+        setHasClosed(false);
         setOpened(true);
+        layout.showAndWait();
         
     }
     
     public void close() {
         
-        layout.close();
+        setHasClosed(true);
         setOpened(false);
+        layout.close();
         
     }
     
     public boolean isOpen() {
     
         return opened;
+        
+    }
+    
+    public boolean hasClosed() {
+        
+        return hasClosed;
         
     }
     
@@ -92,6 +101,12 @@ public abstract class IWindow {
     protected void setOpened(boolean isOpen) {
         
         this.opened = isOpen;
+        
+    }
+    
+    protected void setHasClosed(boolean hasClosed) {
+        
+        this.hasClosed = hasClosed;
         
     }
     

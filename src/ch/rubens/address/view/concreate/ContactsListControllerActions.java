@@ -10,15 +10,16 @@ import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.concreate.Address;
 import ch.rubens.address.model.concreate.Person;
 import ch.rubens.address.model.concreate.PersonListSingleton;
-import ch.rubens.address.windows.concreate.EditPersonStage;
+import ch.rubens.address.windows.concreate.PersonFormStage;
 import ch.rubens.address.windows.abstracts.IWindow;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 
 /**
  * Esta classe é a implementação da interface IPersonManipulation
- * 
- * A referência ao Main foi substituida pela instanciação da classe EditPersonStage
- * para abrir a janela
+ 
+ A referência ao Main foi substituida pela instanciação da classe PersonFormStage
+ para abrir a janela
  * 
  * @author rubens
  */
@@ -33,17 +34,28 @@ public class ContactsListControllerActions {
     }
     
     public void deletePerson() {
-
-        int selectedIndex = controller.getPersonTable().getSelectionModel().getSelectedIndex();
         
-        if (selectedIndex >= 0) {
-            controller.getPersonTable().getItems().remove(selectedIndex);
+        TableView<PersonPropertyAdapter> personsTable = controller.getPersonTable();
+        int selectedPersonIndex = personsTable.getSelectionModel().getSelectedIndex();
+        
+        if (selectedPersonIndex >= 0) {
+            
+            PersonPropertyAdapter personAdapter = personsTable.getItems().get(selectedPersonIndex);
+            Person personToRemove = personAdapter.getPerson();
+            
+            PersonListSingleton personsList = PersonListSingleton.getInstance();
+            personsList.removePerson(personToRemove);
+            
+            clearLabelsContent();
+            
         }
         else {
-            IFastAlert alert = new FastAlertWarning("Nenhuma seleção!", 
-                    "Nenhuma pessoa foi selecionada", 
-                    "por favor, selecione uma pessoa na tabela."); 
+            
+            IFastAlert alert = new FastAlertWarning("No Person Selected", 
+                    "None person selected to be removed", 
+                    "Please, select a person to remove from the contacts"); 
             alert.openAlert();
+            
         }
         
     }
@@ -51,11 +63,13 @@ public class ContactsListControllerActions {
     public void addPerson() {
         
         Person addedPerson = new Person();
-        IWindow editWindow = new EditPersonStage(addedPerson);
+        Address addedPersonAddress = new Address();
+        addedPerson.addAddress(addedPersonAddress);
         
-        editWindow.open();
+        IWindow personFormWindow = new PersonFormStage(addedPerson, PersonFormStage.OpeningMode.NEW);
+        personFormWindow.open();
         
-        if (editWindow.isOpen()) {
+        if (personFormWindow.hasClosed()) {
             
             PersonListSingleton.getInstance().addPerson(addedPerson);
             
@@ -65,18 +79,22 @@ public class ContactsListControllerActions {
 
     public void editPerson() {
         
-       PersonPropertyAdapter selectedPerson = controller.getPersonTable().getSelectionModel().getSelectedItem();
-       Person person = selectedPerson.getPerson();
+       TableView<PersonPropertyAdapter> personsTable = controller.getPersonTable();
+       PersonPropertyAdapter selectedPerson = personsTable.getSelectionModel().getSelectedItem();
        
        if (selectedPerson != null) {
            
-           IWindow editWindow = new EditPersonStage(person);
-           editWindow.open();
+           Person person = selectedPerson.getPerson();
+           
+           IWindow personFormWindow = new PersonFormStage(person, PersonFormStage.OpeningMode.EDIT);
+           personFormWindow.open();
 
-           if (editWindow.isOpen()) {
+           selectedPerson.setPerson(person);
+           
+           if (personFormWindow.hasClosed()) {
                
-               IShowPersonInfo infoExhibitor = new ShowOverviewInfo(controller);
-               infoExhibitor.loadInfo(person);
+               showSelectedPersonContent(person);
+               personsTable.refresh();
                
            }
                 
