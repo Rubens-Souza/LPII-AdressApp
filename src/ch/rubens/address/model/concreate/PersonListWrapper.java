@@ -13,18 +13,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author rubens
  */
 @XmlRootElement(name = "persons")
-public class PersonListWrapper implements IListWrapper<PersonProperty> {
+public class PersonListWrapper implements IListWrapper<PersonPropertyAdapter> {
 
-  private List<PersonProperty> listPersons;
+  private List<PersonPropertyAdapter> listPersons;
 
    @Override
    @XmlElement(name = "person")
-   public List<PersonProperty> getList() {
+   public List<PersonPropertyAdapter> getList() {
        return listPersons;
    }
 
    @Override
-   public void setList(List<PersonProperty> list) {
+   public void setList(List<PersonPropertyAdapter> list) {
        listPersons = list;
    }
     

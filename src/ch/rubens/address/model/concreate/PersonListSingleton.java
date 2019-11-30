@@ -1,8 +1,8 @@
 package ch.rubens.address.model.concreate;
 
-import ch.rubens.address.model.abstracts.IPerson;
-import ch.rubens.address.model.abstracts.IPersonListSingleton;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -12,45 +12,58 @@ import javafx.collections.ObservableList;
  * 
  * @author rubens
  */
-public class PersonListSingleton implements IPersonListSingleton {
+public class PersonListSingleton {
 
-    private ObservableList<IPerson> personList = FXCollections.observableArrayList();
     private static PersonListSingleton instance = null;
     
-    private PersonListSingleton() { }
-
-    public static IPersonListSingleton getInstance() {
+    private ArrayList<Person> personList;
+    private ObservableList<PersonPropertyAdapter> personObservableList;
+    
+    private PersonListSingleton() {
+    
+        personList = new ArrayList<Person>();
+        personObservableList = FXCollections.observableArrayList();
         
-        if (instance == null)
+    }
+
+    public static PersonListSingleton getInstance() {
+        
+        if (instance == null) {
+            
             instance = new PersonListSingleton();
+            
+        }
         
         return instance;
         
     }
     
-    @Override
-    public void addPerson(IPerson person) {
+    public void addPerson(Person person) {
         
         personList.add(person);
         
+        PersonPropertyAdapter personProperty = new PersonPropertyAdapter(person);
+        personObservableList.add(personProperty);
+        
     }
     
-    @Override
-    public void addAll(Collection list) {
+    public void addAll(Collection<Person> list) {
         
-        personList.addAll(list);
+        for (Person person : list) {
+            
+            addPerson(person);
+            
+        }
         
     }
 
-    @Override
-    public IPerson removePerson(int index) {
+    public Person removePerson(int index) {
         
         return personList.remove(index);
         
     }
     
-    @Override
-    public IPerson removePerson(IPerson person) {
+    public Person removePerson(Person person) {
         
         personList.remove(person);
         
@@ -58,23 +71,23 @@ public class PersonListSingleton implements IPersonListSingleton {
         
     }
 
-    @Override
-    public IPerson getPerson(int index) {
+    public Person getPerson(int index) {
         
         return personList.get(index);
         
     }
 
-    @Override
-    public IPerson getPerson(String firstName) {
+    public Person getPerson(Integer personId) {
         
-        IPerson selectedPerson = null;
+        Person selectedPerson = null;
         
-        for (IPerson person : personList) {
+        for (Person person : personList) {
             
-            if (person.getFirstName() == firstName) {
+            if (Objects.equals(person.getId(), personId)) {
+                
                 selectedPerson = person;
                 break;
+                
             }
             
         }
@@ -83,17 +96,21 @@ public class PersonListSingleton implements IPersonListSingleton {
         
     }
 
-    @Override
     public void clear() {
         
         personList.clear();
         
     }
-
-    @Override
-    public ObservableList<IPerson> getObservableList() {
+    
+    public ArrayList<Person> getPersonsList() {
         
         return personList;
+        
+    }
+
+    public ObservableList<PersonPropertyAdapter> getPersonsObservableList() {
+        
+        return personObservableList;
         
     }
     
