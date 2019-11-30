@@ -15,10 +15,10 @@ import ch.rubens.address.windows.abstracts.IWindow;
 import java.io.File;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
-import ch.rubens.address.view.abstracts.IController;
 import ch.rubens.persistence.BO.abstracts.IPersonBO;
 import ch.rubens.persistence.BO.concreate.PersonXMLBO;
 import java.util.ArrayList;
+import ch.rubens.address.view.abstracts.IStageController;
 
 /**
  *
@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * 
  * @author rubens
  */
-public class RootLayoutController implements IController {
+public class RootLayoutController implements IStageController {
 
     private PersistenceService persistence;
     

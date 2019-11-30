@@ -2,10 +2,8 @@ package ch.rubens.address.windows.concreate;
 
 import ch.rubens.address.windows.abstracts.IWindow;
 import ch.rubens.address.MainApp;
-import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.concreate.Person;
 import ch.rubens.address.view.Controllers.PersonFormController;
-import ch.rubens.address.view.abstracts.IController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

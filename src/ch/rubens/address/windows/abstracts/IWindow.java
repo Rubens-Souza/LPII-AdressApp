@@ -2,7 +2,7 @@ package ch.rubens.address.windows.abstracts;
 
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import ch.rubens.address.view.abstracts.IController;
+import ch.rubens.address.view.abstracts.IStageController;
 
 /**
  *
@@ -19,7 +19,7 @@ public abstract class IWindow {
     
     private Stage layout;
     private FXMLLoader loader;
-    private IController controller;
+    private IStageController controller;
     
     private boolean opened;
     private boolean hasClosed;
@@ -62,7 +62,7 @@ public abstract class IWindow {
         
     }
     
-    public IController getController() {
+    public IStageController getController() {
         
         return controller;
         
@@ -92,7 +92,7 @@ public abstract class IWindow {
         
     }
     
-    protected void setController(IController controller) {
+    protected void setController(IStageController controller) {
         
         this.controller = controller;
         

@@ -2,15 +2,11 @@ package ch.rubens.address.util.concreate;
 
 import ch.rubens.address.MainApp;
 import ch.rubens.address.model.abstracts.IListWrapper;
-import ch.rubens.address.model.abstracts.IPerson;
-import ch.rubens.address.model.concreate.PersonListSingleton;
-import ch.rubens.address.model.concreate.PersonPropertyAdapter;
 import ch.rubens.address.util.abstracts.IPersistenceFormat;
 import ch.rubens.address.windows.concreate.PrimaryStageInstanceException;
 import ch.rubens.address.windows.concreate.PrimaryStageSingleton;
 import ch.rubens.address.windows.concreate.PrimaryStageSingletonInstanceException;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
 import javax.xml.bind.JAXBContext;

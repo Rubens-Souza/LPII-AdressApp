@@ -3,10 +3,10 @@ package ch.rubens.address.view.Controllers;
 import ch.rubens.address.model.concreate.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import ch.rubens.address.view.abstracts.IController;
 import ch.rubens.address.view.concreate.PersonFormControllerActions;
 import ch.rubens.address.windows.abstracts.IWindow;
 import ch.rubens.address.windows.concreate.PersonFormStage.OpeningMode;
+import ch.rubens.address.view.abstracts.IStageController;
 
 /**
  * O método isInputValid() foi separado em diversas interfaces, cada uma com sua
@@ -18,7 +18,7 @@ import ch.rubens.address.windows.concreate.PersonFormStage.OpeningMode;
  * 
  * @author rubens
  */
-public class PersonFormController implements IController {
+public class PersonFormController implements IStageController {
 
     @FXML private TextField firstNameField;
     @FXML private TextField lastNameField;
@@ -28,10 +28,8 @@ public class PersonFormController implements IController {
     @FXML private TextField birthdayField;
     
     private OpeningMode openingMode;
-    private PersonFormControllerActions controllerActions;
-    
     private IWindow personFromWindow;
-    private boolean okClicked = false;
+    private PersonFormControllerActions controllerActions;
     
     private Person manipulatedPerson;
     
@@ -54,8 +52,6 @@ public class PersonFormController implements IController {
         }
         
         controllerActions.setInputValuesIntoPerson(manipulatedPerson);
-            
-        okClicked = true;
         personFromWindow.close();    
         
     }
@@ -122,12 +118,6 @@ public class PersonFormController implements IController {
         }
         
         return true;
-        
-    }
-    
-    public boolean wasOkClicked() { 
-        
-        return okClicked;
         
     }
     

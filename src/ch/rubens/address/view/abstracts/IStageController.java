@@ -4,6 +4,6 @@ package ch.rubens.address.view.abstracts;
  *
  * @author rubens
  */
-public interface IController {
+public interface IStageController {
     
 }

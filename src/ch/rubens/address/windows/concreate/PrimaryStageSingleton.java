@@ -1,10 +1,8 @@
 package ch.rubens.address.windows.concreate;
 
 import ch.rubens.address.MainApp;
-import ch.rubens.address.model.concreate.PersonListWrapper;
 import ch.rubens.address.view.ContactsListController;
 import ch.rubens.address.view.RootLayoutController;
-import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

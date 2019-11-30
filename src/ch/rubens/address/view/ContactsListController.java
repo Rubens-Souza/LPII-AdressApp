@@ -1,11 +1,6 @@
 package ch.rubens.address.view;
 
-import ch.rubens.address.view.abstracts.IPersonManipulation;
 import ch.rubens.address.view.concreate.ContactsListControllerActions;
-import ch.rubens.address.view.concreate.ShowOverviewInfo;
-import ch.rubens.address.view.abstracts.IShowPersonInfo;
-import ch.rubens.address.model.abstracts.IPerson;
-import ch.rubens.address.model.abstracts.IPersonProperty;
 import ch.rubens.address.model.concreate.Person;
 import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.model.concreate.PersonPropertyAdapter;
@@ -13,8 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.fxml.FXML;
-import ch.rubens.address.view.abstracts.IController;
 import javafx.collections.ObservableList;
+import ch.rubens.address.view.abstracts.IStageController;
 
 /**
  * As implementações dos seus métodos foram divididas em outras classes para que o 
@@ -29,7 +24,7 @@ import javafx.collections.ObservableList;
  * 
  * @author rubens
  */
-public class ContactsListController implements IController {
+public class ContactsListController implements IStageController {
     
     @FXML private TableView<PersonPropertyAdapter> personTable;
     @FXML private TableColumn<PersonPropertyAdapter, String> firstNameColumn;

@@ -3,6 +3,7 @@ package ch.rubens.persistence.BO.abstracts;
 import ch.rubens.address.model.concreate.Person;
 import ch.rubens.persistence.exceptions.InvalidDataInserted;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,5 +20,7 @@ public interface IPersonBO extends IBO<Person> {
     public String getPersonFirstName(int personId);
     public String getPersonLastName(int personId);
     public LocalDate getPersonBirthdate(int personId);
+    
+    public ArrayList<Person> loadAllPersonsData();
     
 }
