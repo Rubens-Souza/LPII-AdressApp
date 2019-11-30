@@ -4,7 +4,8 @@ import ch.rubens.address.windows.abstracts.IWindow;
 import ch.rubens.address.MainApp;
 import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.concreate.Person;
-import ch.rubens.address.view.PersonEditDialogController;
+import ch.rubens.address.view.Controllers.PersonFormController;
+import ch.rubens.address.view.abstracts.IController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,20 +21,40 @@ import javafx.stage.Stage;
  * 
  * @author rubens
  */
-public class EditPersonStage extends IWindow {
-
-    public EditPersonStage(Person person) {
+public class PersonFormStage extends IWindow {
+    
+    public enum OpeningMode {
+    
+        EDIT,
+        NEW
         
-        setName("Edit Person");
+    }
+    
+    private OpeningMode openingMode;
+    
+    public PersonFormStage(Person person, OpeningMode openingMode) {
+        
+        setOpeningMode(openingMode);
+        
+        if (getOpeningMode() == OpeningMode.EDIT) {
+            
+            setName("Edit Person");
+            
+        }
+        else {
+            
+            setName("Add Person");
+            
+        }
         
         setLoader(new FXMLLoader());
-        getLoader().setLocation(MainApp.class.getResource("view/PersonEditDialog.fxml"));
+        getLoader().setLocation(MainApp.class.getResource("view/PersonForm.fxml"));
         
         initLayout();
 
         initController();
         
-        PersonEditDialogController controller = (PersonEditDialogController) getController();
+        PersonFormController controller = (PersonFormController) getController();
         controller.setPerson(person);
         
         setOpened(false);
@@ -55,7 +76,7 @@ public class EditPersonStage extends IWindow {
         }
             
         setLayout(new Stage());
-        getLayout().setTitle("Editar Pessoa");
+        getLayout().setTitle(getName());
         getLayout().getIcons().add(new Image("file:resoucers/imagens/icone_app.png"));
         getLayout().initModality(Modality.WINDOW_MODAL);
         try {
@@ -64,7 +85,7 @@ public class EditPersonStage extends IWindow {
             
         } catch (PrimaryStageInstanceException | PrimaryStageSingletonInstanceException ex) {
             
-            System.out.println("Falha ao definir o PrimaryStage para a janela de EditPersonStage. Erro: " + ex);
+            System.out.println("Falha ao definir o PrimaryStage para a janela de PersonFormStage. Erro: " + ex);
             
         }
         
@@ -78,8 +99,21 @@ public class EditPersonStage extends IWindow {
         
         setController(getLoader().getController());
         
-        PersonEditDialogController controller = (PersonEditDialogController) getController();
-        controller.setDialogStage(getLayout());
+        PersonFormController controller = (PersonFormController) getController();
+        controller.setDialogStage(this);
+        controller.setOpeningMode(openingMode);
+        
+    }
+    
+    public void setOpeningMode(OpeningMode openingMode) {
+        
+        this.openingMode = openingMode;
+        
+    }
+    
+    public OpeningMode getOpeningMode() {
+        
+        return openingMode;
         
     }
     
