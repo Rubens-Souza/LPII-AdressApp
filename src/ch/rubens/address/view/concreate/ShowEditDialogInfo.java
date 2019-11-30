@@ -2,7 +2,7 @@ package ch.rubens.address.view.concreate;
 
 import ch.rubens.address.util.abstracts.IFormater;
 import ch.rubens.address.util.concreate.LocalDateFormater;
-import ch.rubens.address.view.PersonEditDialogController;
+import ch.rubens.address.view.Controllers.PersonFormController;
 import ch.rubens.address.view.abstracts.IShowPersonInfo;
 import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.concreate.Address;
@@ -16,9 +16,9 @@ import ch.rubens.address.model.concreate.Person;
  */
 public class ShowEditDialogInfo implements IShowPersonInfo {
 
-    private PersonEditDialogController controller;
+    private PersonFormController controller;
     
-    public ShowEditDialogInfo(PersonEditDialogController controller) {
+    public ShowEditDialogInfo(PersonFormController controller) {
         setController(controller);
     }
     
@@ -60,11 +60,11 @@ public class ShowEditDialogInfo implements IShowPersonInfo {
         
     }
     
-    public PersonEditDialogController getController(){
+    public PersonFormController getController(){
         return controller;
     }
     
-    private void setController(PersonEditDialogController controller) {
+    private void setController(PersonFormController controller) {
         this.controller = controller;
     }
     

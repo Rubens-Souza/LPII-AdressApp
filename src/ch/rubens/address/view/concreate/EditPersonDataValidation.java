@@ -10,7 +10,7 @@ import ch.rubens.address.util.Validations.BrazilDateValidation;
 import ch.rubens.address.util.concreate.FastAlertWarning;
 import ch.rubens.address.util.Validations.NameValidation;
 import ch.rubens.address.util.Validations.NumberValidation;
-import ch.rubens.address.view.PersonEditDialogController;
+import ch.rubens.address.view.Controllers.PersonFormController;
 import ch.rubens.address.view.abstracts.IInputValidation;
 
 /**
@@ -23,9 +23,9 @@ import ch.rubens.address.view.abstracts.IInputValidation;
  */
 public class EditPersonDataValidation implements IInputValidation{
 
-    private PersonEditDialogController controller;
+    private PersonFormController controller;
     
-    public EditPersonDataValidation(PersonEditDialogController controller) {
+    public EditPersonDataValidation(PersonFormController controller) {
         setController(controller);
     }
     
@@ -94,11 +94,11 @@ public class EditPersonDataValidation implements IInputValidation{
         
     }
 
-    private void setController(PersonEditDialogController controller) {
+    private void setController(PersonFormController controller) {
         this.controller = controller;
     }
     
-    public PersonEditDialogController getController() {
+    public PersonFormController getController() {
         return controller;
     }
     
