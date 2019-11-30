@@ -1,15 +1,18 @@
 package ch.rubens.address.view.concreate;
 
-import ch.rubens.address.model.concreate.PersonProperty;
+import ch.rubens.address.model.concreate.PersonPropertyAdapter;
 import ch.rubens.address.util.abstracts.IFastAlert;
 import ch.rubens.address.util.concreate.FastAlertWarning;
-import ch.rubens.address.view.PersonOverviewController;
+import ch.rubens.address.view.ContactsListController;
 import ch.rubens.address.view.abstracts.IPersonManipulation;
 import ch.rubens.address.view.abstracts.IShowPersonInfo;
 import ch.rubens.address.model.abstracts.IPerson;
+import ch.rubens.address.model.concreate.Address;
+import ch.rubens.address.model.concreate.Person;
 import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.windows.concreate.EditPersonStage;
 import ch.rubens.address.windows.abstracts.IWindow;
+import javafx.scene.control.Label;
 
 /**
  * Esta classe é a implementação da interface IPersonManipulation
@@ -19,17 +22,16 @@ import ch.rubens.address.windows.abstracts.IWindow;
  * 
  * @author rubens
  */
-public class OverviewControllerPersonManipulation implements IPersonManipulation {
+public class ContactsListControllerActions {
 
-    private PersonOverviewController controller;
+    private ContactsListController controller;
     
-    public OverviewControllerPersonManipulation(PersonOverviewController controller){
+    public ContactsListControllerActions(ContactsListController controller){
         
         setController(controller);
         
     }
     
-    @Override
     public void deletePerson() {
 
         int selectedIndex = controller.getPersonTable().getSelectionModel().getSelectedIndex();
@@ -46,33 +48,35 @@ public class OverviewControllerPersonManipulation implements IPersonManipulation
         
     }
 
-    @Override
-    public void newPerson() {
+    public void addPerson() {
         
-        IPerson tempPerson = new PersonProperty();
-        IWindow editWindow = new EditPersonStage(tempPerson);
+        Person addedPerson = new Person();
+        IWindow editWindow = new EditPersonStage(addedPerson);
         
         editWindow.open();
         
-        if (editWindow.isOpen())
-            PersonListSingleton.getInstance().addPerson(tempPerson);
+        if (editWindow.isOpen()) {
+            
+            PersonListSingleton.getInstance().addPerson(addedPerson);
+            
+        }
         
     }
 
-    @Override
     public void editPerson() {
         
-       IPerson selectedPerson = controller.getPersonTable().getSelectionModel().getSelectedItem();
+       PersonPropertyAdapter selectedPerson = controller.getPersonTable().getSelectionModel().getSelectedItem();
+       Person person = selectedPerson.getPerson();
        
        if (selectedPerson != null) {
            
-           IWindow editWindow = new EditPersonStage(selectedPerson);
+           IWindow editWindow = new EditPersonStage(person);
            editWindow.open();
 
            if (editWindow.isOpen()) {
                
                IShowPersonInfo infoExhibitor = new ShowOverviewInfo(controller);
-               infoExhibitor.loadInfo(selectedPerson);
+               infoExhibitor.loadInfo(person);
                
            }
                 
@@ -80,11 +84,54 @@ public class OverviewControllerPersonManipulation implements IPersonManipulation
         
     }
     
-    public PersonOverviewController getController(){
-        return controller;
+    public void showSelectedPersonContent(Person selectedPerson) {
+        
+        Label firstNameLabel = controller.getFirstNameLabel();
+        Label lastNameLabel = controller.getLastNameLabel();
+        Label birthdayLabel = controller.getBirthdayLabel();
+        Label postalCodeLabel = controller.getPostalCodeLabel();
+        Label streetLabel = controller.getStreetLabel();
+        Label cityLabel = controller.getCityLabel();
+        
+        firstNameLabel.setText(selectedPerson.getFirstName());
+        lastNameLabel.setText(selectedPerson.getLastName());
+        birthdayLabel.setText(selectedPerson.getBirthday().toString());
+        
+        Address selectedPersonAddress = selectedPerson.getAddress(0);
+        
+        postalCodeLabel.setText(selectedPersonAddress.getPostalCode().toString());
+        streetLabel.setText(selectedPersonAddress.getStreet());
+        cityLabel.setText(selectedPersonAddress.getCity());
+        
     }
     
-    private void setController(PersonOverviewController controller){
+    public void clearLabelsContent() {
+        
+        Label firstNameLabel = controller.getFirstNameLabel();
+        Label lastNameLabel = controller.getLastNameLabel();
+        Label birthdayLabel = controller.getBirthdayLabel();
+        Label postalCodeLabel = controller.getPostalCodeLabel();
+        Label streetLabel = controller.getStreetLabel();
+        Label cityLabel = controller.getCityLabel();
+        
+        firstNameLabel.setText("");
+        lastNameLabel.setText("");
+        birthdayLabel.setText("");
+        postalCodeLabel.setText("");
+        streetLabel.setText("");
+        cityLabel.setText("");
+        
+    }
+    
+    public ContactsListController getController(){
+        
+        return controller;
+        
+    }
+    
+    private void setController(ContactsListController controller){
+        
         this.controller = controller;
+        
     }
 }
