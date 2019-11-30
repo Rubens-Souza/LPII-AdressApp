@@ -1,0 +1,51 @@
+package ch.rubens.address.util.Conversions.DateParsers;
+
+import ch.rubens.address.util.Conversions.IParser;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+/**
+ * Esta classe Implementa a interfae IParser de modo que converta String em 
+ * LocalDate. [Executa o antigo método DateUtil.parse()]
+ * 
+ * @author rubens
+ */
+public class StringToLocalDateParse implements IParser<String, LocalDate> {
+
+    private String datePattern;
+    private DateTimeFormatter dateFormatter;
+    
+    public StringToLocalDateParse(String datePattern) {
+        
+        setDatePattern(datePattern);
+        
+    }
+    
+    @Override
+    public LocalDate parse(String object) {
+        
+        try{
+            return dateFormatter.parse(object, LocalDate::from);
+        }
+        catch (DateTimeParseException e) {
+            System.out.println("Erro em StringToLocalDateParse, método parse(String object) \n" + e);
+            return null;
+        }
+        
+    }
+    
+    public String getDatePattern() {
+        
+        return datePattern;
+        
+    }
+    
+    public void setDatePattern(String datePattern) {
+        
+        this.datePattern = datePattern;
+        dateFormatter = DateTimeFormatter.ofPattern(datePattern);
+        
+    }
+    
+}

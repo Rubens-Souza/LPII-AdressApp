@@ -1,21 +1,21 @@
 package ch.rubens.address;
 
-import ch.rubens.address.model.concreate.Address;
-import ch.rubens.address.model.concreate.Person;
-import ch.rubens.address.model.concreate.PersonListSingleton;
+import ch.rubens.address.model.DTO.Address;
+import ch.rubens.address.model.DTO.Person;
+import ch.rubens.address.model.RuntimeData.PersonsListsSingleton;
 import ch.rubens.address.util.UserInput.Chooser;
 import ch.rubens.address.util.UserInput.FolderChooser;
-import ch.rubens.address.windows.concreate.PrimaryStageSingleton;
-import ch.rubens.persistence.BO.abstracts.IPersonBO;
-import ch.rubens.persistence.BO.concreate.PersonXMLBO;
-import ch.rubens.persistence.DAO.abstracts.IDAO;
-import ch.rubens.persistence.DAO.abstracts.IPersonDAO;
-import ch.rubens.persistence.JDBC.DAO.PersonJDBCDAO;
-import ch.rubens.persistence.XML.ContactsFileXMLSingleton;
-import ch.rubens.persistence.XML.DAO.PersonXMLDAO;
-import ch.rubens.persistence.XML.exceptions.NoneFileOpenedException;
-import ch.rubens.persistence.exceptions.InvalidDataInserted;
-import ch.rubens.persistence.exceptions.NotRegisteredDataException;
+import ch.rubens.address.view.Windows.PrimaryStageSingleton;
+import ch.rubens.address.Persistence.BO.IPersonBO;
+import ch.rubens.address.Persistence.XML.PersonXMLBO;
+import ch.rubens.address.Persistence.DAO.IDAO;
+import ch.rubens.address.Persistence.DAO.IPersonDAO;
+import ch.rubens.address.Persistence.JDBC.PersonJDBCDAO;
+import ch.rubens.address.Persistence.XML.ContactsFileXMLSingleton;
+import ch.rubens.address.Persistence.XML.PersonXMLDAO;
+import ch.rubens.address.Persistence.Exceptions.XML.NoneFileOpenedException;
+import ch.rubens.address.Persistence.Exceptions.InvalidDataInserted;
+import ch.rubens.address.Persistence.Exceptions.NotRegisteredDataException;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -42,12 +42,12 @@ import org.xml.sax.SAXException;
  */
 public class MainApp extends Application {
     
-    private PersonListSingleton personsList;
+    private PersonsListsSingleton personsList;
     private ContactsFileXMLSingleton contactsFile;
     
     public MainApp() throws ParserConfigurationException, SAXException, IOException, TransformerException, NoneFileOpenedException, InvalidDataInserted {
         
-        personsList = PersonListSingleton.getInstance();
+        personsList = PersonsListsSingleton.getInstance();
         
         try {
             

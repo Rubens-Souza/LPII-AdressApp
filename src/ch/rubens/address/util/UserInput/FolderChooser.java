@@ -1,9 +1,8 @@
 package ch.rubens.address.util.UserInput;
 
-import ch.rubens.address.util.UserInput.Chooser;
-import ch.rubens.address.windows.concreate.PrimaryStageInstanceException;
-import ch.rubens.address.windows.concreate.PrimaryStageSingleton;
-import ch.rubens.address.windows.concreate.PrimaryStageSingletonInstanceException;
+import ch.rubens.address.view.Windows.PrimaryStageExceptions.PrimaryStageInstanceException;
+import ch.rubens.address.view.Windows.PrimaryStageSingleton;
+import ch.rubens.address.view.Windows.PrimaryStageExceptions.PrimaryStageSingletonInstanceException;
 import java.io.File;
 import javafx.stage.DirectoryChooser;
 
