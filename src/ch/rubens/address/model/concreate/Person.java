@@ -13,28 +13,26 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  * @author rubens
  */
-public class Person implements IPerson {
+public class Person {
 
     private Integer id;
     private String firstName;
     private String lastName;
     private LocalDate birthday; 
-    private String street;
-    private String city;
-    private Integer postalCode;
     
     private ArrayList<Address> addressList;
     
-    public Person() { this(null, null); }
-    
-    public Person(Integer id) {
-        setId(id);
+    public Person() { 
+        
         addressList = new ArrayList<Address>();
+        
     }
     
-    public Person(String firstName, String lastName) {
-        setFirstName(firstName);
-        setLastName(lastName);
+    public Person(Integer id) {
+        
+        setId(id);
+        addressList = new ArrayList<Address>();
+        
     }
     
     public Integer getId() {
@@ -46,36 +44,24 @@ public class Person implements IPerson {
     }
     
     public Address getAddress(int index) {
+        
+        if (addressList.size() <= 0) {
+            
+            return null;
+            
+        }
+        
         return addressList.get(index);
     }
     
-    @Override
     public String getFirstName() {
         return firstName;
     }
 
-    @Override
     public String getLastName() {
         return lastName;
     }
 
-    @Override
-    public String getStreet() {
-        return street;
-    }
-
-    @Override
-    public String getCity() {
-        return city;
-    }
-
-    @Override
-    public Integer getPostalCode() {
-        return postalCode;
-    }
-
-    @Override
-    @XmlJavaTypeAdapter(LocalDateAdapter.class) // Anotação para salvar no XML
     public LocalDate getBirthday() {
         return birthday;
     }
@@ -88,32 +74,14 @@ public class Person implements IPerson {
         this.addressList = addressList;
     }
 
-    @Override
     public void setFirstName(String name) {
         this.firstName = name;
     }
 
-    @Override
     public void setLastName(String name) {
         this.lastName = name;
     }
 
-    @Override
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    @Override
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    @Override
-    public void setPostalCode(Integer postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    @Override
     public void setBirthday(LocalDate birthdayDate) {
         this.birthday = birthdayDate;
     }

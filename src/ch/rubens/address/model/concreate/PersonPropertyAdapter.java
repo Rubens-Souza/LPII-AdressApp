@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
@@ -17,117 +18,93 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  * @author rubens
  */
-public class PersonProperty implements IPersonProperty {
+public class PersonPropertyAdapter {
 
+    private Person person;
+    
     private StringProperty firstName;
     private StringProperty lastName;
-    private StringProperty street;
-    private StringProperty city;
-    private IntegerProperty postalCode;
     private ObjectProperty<LocalDate> birthday;  
     
-    public PersonProperty() { this(null, null); }
+    private ArrayList<AddressPropertyAdapter> addressProperties;
     
-    public PersonProperty(String firstName, String lastName) {
+    public PersonPropertyAdapter(Person person) { 
         
-        this.firstName = new SimpleStringProperty(firstName);
-        this.lastName = new SimpleStringProperty(lastName);
-        this.street = new SimpleStringProperty();
-        this.city = new SimpleStringProperty();
-        this.postalCode = new SimpleIntegerProperty();
-        this.birthday = new SimpleObjectProperty();
+        addressProperties = new ArrayList<AddressPropertyAdapter>();
+        
+        setPerson(person);
         
     }
     
-    @Override
+    private void setPerson(Person person) {
+        
+        this.person = person;
+        
+        firstName = new SimpleStringProperty(this.person.getFirstName());
+        lastName = new SimpleStringProperty(this.person.getLastName());
+        birthday = new SimpleObjectProperty(this.person.getBirthday());
+        
+        for (Address address : person.getAddressList()) {
+            
+            AddressPropertyAdapter addressProperty = new AddressPropertyAdapter(address);
+            addressProperties.add(addressProperty);
+            
+        }
+        
+    }
+    
     public StringProperty getFirstNameProperty() {
+        
         return firstName;
+        
     }
     
-    @Override
     public StringProperty getLastNameProperty() {
+        
         return lastName;
+        
     }
     
-    @Override
-    public StringProperty getStreetProperty() {
-        return street;
-    }
-    
-    @Override
-    public StringProperty getCityProperty() {
-        return city;
-    }
-    
-    @Override
-    public IntegerProperty getPostalCodeProperty() {
-        return postalCode;
-    }
-    
-    @Override
     public ObjectProperty<LocalDate> getBirthdayProperty() {
+        
         return birthday;
+        
     }
     
-    @Override
     public String getFirstName() {
+        
         return firstName.get();
+        
     }
 
-    @Override
     public String getLastName() {
+        
         return lastName.get();
+        
     }
 
-    @Override
-    public String getStreet() {
-        return street.get();
-    }
-
-    @Override
-    public String getCity() {
-        return city.get();
-    }
-
-    @Override
-    public Integer getPostalCode() {
-        return postalCode.get();
-    }
-
-    @Override
-    @XmlJavaTypeAdapter(LocalDateAdapter.class) // Anotação para salvar no XML
     public LocalDate getBirthday() {
+        
         return birthday.get();
-    }
-
-    @Override
-    public void setFirstName(String name) {
-        firstName.set(name);
-    }
-
-    @Override
-    public void setLastName(String name) {
-        lastName.set(name);
-    }
-
-    @Override
-    public void setStreet(String street) {
-        this.street.set(street);
-    }
-
-    @Override
-    public void setCity(String city) {
-        this.city.set(city);
-    }
-
-    @Override
-    public void setPostalCode(Integer postalCode) {
-        this.postalCode.set(postalCode);
-    }
-
-    @Override
-    public void setBirthday(LocalDate birthdayDate) {
-        this.birthday.set(birthdayDate);
+        
     }
     
+    public Person getPerson() {
+        
+        return person;
+        
+    }
+
+    public AddressPropertyAdapter getAddressProperty(int index) {
+        
+        return addressProperties.get(index);
+        
+    }
+    
+    public ArrayList<AddressPropertyAdapter> getAddressPropertiesList() {
+        
+        return addressProperties;
+        
+    }
+
 }
