@@ -41,12 +41,12 @@ public class PersistenceXML extends PersistenceService<File, File> {
     @Override
     public void load(File data) {
         
-        List personsSavedList = getPersistenceFormat().load(data);
+        /*List personsSavedList = getPersistenceFormat().load(data);
         
         PersonListSingleton.getInstance().clear();
         
         if (personsSavedList != null)
-            PersonListSingleton.getInstance().addAll(personsSavedList);
+            PersonListSingleton.getInstance().addAll(personsSavedList);*/
         
     }
 

@@ -4,7 +4,7 @@ import ch.rubens.address.MainApp;
 import ch.rubens.address.model.abstracts.IListWrapper;
 import ch.rubens.address.model.abstracts.IPerson;
 import ch.rubens.address.model.concreate.PersonListSingleton;
-import ch.rubens.address.model.concreate.PersonProperty;
+import ch.rubens.address.model.concreate.PersonPropertyAdapter;
 import ch.rubens.address.util.abstracts.IPersistenceFormat;
 import ch.rubens.address.windows.concreate.PrimaryStageInstanceException;
 import ch.rubens.address.windows.concreate.PrimaryStageSingleton;
@@ -50,10 +50,10 @@ public class PersistenceFormatXML implements IPersistenceFormat<File, File> {
     @Override
     public void save(File data) {
         
-        ArrayList<PersonProperty> personPropertyList = new ArrayList();
+        /*ArrayList<PersonPropertyAdapter> personPropertyList = new ArrayList();
             
         for(IPerson p : PersonListSingleton.getInstance().getObservableList())
-            personPropertyList.add((PersonProperty) p);
+            personPropertyList.add((PersonPropertyAdapter) p);
             
         try {
             
@@ -72,7 +72,7 @@ public class PersistenceFormatXML implements IPersistenceFormat<File, File> {
             
             System.out.println("Não foi possível salvar dados do arquivo. Erro: " + ex);
             
-        }
+        }*/
             
     }
 
