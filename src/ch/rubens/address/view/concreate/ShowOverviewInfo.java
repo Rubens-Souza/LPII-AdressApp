@@ -2,9 +2,11 @@ package ch.rubens.address.view.concreate;
 
 import ch.rubens.address.util.abstracts.IFormater;
 import ch.rubens.address.util.concreate.LocalDateFormater;
-import ch.rubens.address.view.PersonOverviewController;
+import ch.rubens.address.view.ContactsListController;
 import ch.rubens.address.view.abstracts.IShowPersonInfo;
 import ch.rubens.address.model.abstracts.IPerson;
+import ch.rubens.address.model.concreate.Address;
+import ch.rubens.address.model.concreate.Person;
 
 /**
  * Esta classe é a implementação de IShowPersonInfo de acordo com a forma que deve
@@ -14,27 +16,30 @@ import ch.rubens.address.model.abstracts.IPerson;
  */
 public class ShowOverviewInfo implements IShowPersonInfo {
     
-    private PersonOverviewController controller;
+    private ContactsListController controller;
     
-    public ShowOverviewInfo(PersonOverviewController controller) {
+    public ShowOverviewInfo(ContactsListController controller) {
         
         setController(controller);
         
     }
     
     @Override
-    public void loadInfo(IPerson person) {
+    public void loadInfo(Person person) {
         
         if (person != null) {
             
-            IFormater dateFormater = new LocalDateFormater("dd/MM/yyyy");
+            IFormater dateFormater = new LocalDateFormater("yyyy-MM-dd");
             
             controller.getFirstNameLabel().setText(person.getFirstName());
             controller.getLastNameLabel().setText(person.getLastName());
-            controller.getStreetLabel().setText(person.getStreet());
-            controller.getPostalCodeLabel().setText(Integer.toString(person.getPostalCode()));
-            controller.getCityLabel().setText(person.getCity());
             controller.getBirthdayLabel().setText(dateFormater.format(person.getBirthday()));
+            
+            Address personAddress = person.getAddress(0);
+            
+            controller.getPostalCodeLabel().setText(Integer.toString(personAddress.getPostalCode()));
+            controller.getStreetLabel().setText(personAddress.getStreet());
+            controller.getCityLabel().setText(personAddress.getCity());
             
         }
         else {
@@ -57,11 +62,11 @@ public class ShowOverviewInfo implements IShowPersonInfo {
         
     }
     
-    public PersonOverviewController getController() {
+    public ContactsListController getController() {
         return controller;
     }
     
-    private void setController(PersonOverviewController controller) {
+    private void setController(ContactsListController controller) {
         this.controller = controller;
     }
     

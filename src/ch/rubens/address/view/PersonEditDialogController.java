@@ -6,6 +6,8 @@ import ch.rubens.address.view.abstracts.IShowPersonInfo;
 import ch.rubens.address.view.concreate.EditPersonDataValidation;
 import ch.rubens.address.view.concreate.ShowEditDialogInfo;
 import ch.rubens.address.model.abstracts.IPerson;
+import ch.rubens.address.model.concreate.Address;
+import ch.rubens.address.model.concreate.Person;
 import java.time.LocalDate;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -32,10 +34,11 @@ public class PersonEditDialogController implements IController {
     @FXML private TextField birthdayField;
     
     private Stage dialogStage;
-    private IPerson person;
     private IShowPersonInfo infoExhibitor;
     private EditPersonDataValidation editDialogInputsValidator;
     private boolean okClicked = false;
+    
+    private Person person;
     
     @FXML
     private void initialize() {}
@@ -45,21 +48,32 @@ public class PersonEditDialogController implements IController {
         editDialogInputsValidator = new EditPersonDataValidation(this);
     }
     
-    public boolean isOkClicked() { return okClicked; }
+    public boolean isOkClicked() { 
+        return okClicked;
+    }
     
     @FXML
     private void handleOk() {
         
         if (isInputValid()) {
             
-            IParser dateParser = new StringToLocalDateParse("dd/MM/yyyy");
+            IParser dateParser = new StringToLocalDateParse("yyyy-MM-dd");
             
             person.setFirstName(firstNameField.getText());
             person.setLastName(lastNameField.getText());
-            person.setStreet(streetField.getText());
-            person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
-            person.setCity(cityField.getText());
             person.setBirthday((LocalDate) dateParser.parse(birthdayField.getText()));
+            
+            Address address = person.getAddress(0);
+            if (address == null) {
+                
+                address = new Address();
+                person.addAddress(address);
+                
+            }
+            
+            address.setPostalCode(Integer.parseInt(postalCodeField.getText()));
+            address.setStreet(streetField.getText());
+            address.setCity(cityField.getText());
             
             okClicked = true;
             dialogStage.close();
@@ -105,7 +119,7 @@ public class PersonEditDialogController implements IController {
         this.dialogStage = dialogStage;
     }
     
-    public void setPerson(IPerson person) {
+    public void setPerson(Person person) {
         
         this.person = person;
         infoExhibitor.loadInfo(person);
