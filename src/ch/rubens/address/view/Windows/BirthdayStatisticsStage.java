@@ -46,12 +46,12 @@ public class BirthdayStatisticsStage extends IWindow {
             
         } catch (IOException ex) {
             
-            System.out.println("Erro ao carrgar o layout da tela BirthdayStatisticsStage. Erro: " + ex);
+            System.out.println("Erro while opnening the StatisticsStage. Erro: " + ex);
             
         }
           
         setLayout(new Stage());
-        getLayout().setTitle("Estatísticas");
+        getLayout().setTitle("Statistics");
         getLayout().initModality(Modality.WINDOW_MODAL);
         try {
             
@@ -59,7 +59,7 @@ public class BirthdayStatisticsStage extends IWindow {
             
         } catch (PrimaryStageInstanceException | PrimaryStageSingletonInstanceException ex) {
             
-        System.out.println("Erro ao abrir a . Erro: " + ex);
+            System.out.println("Erro while opnening the StatisticsStage. Erro: " + ex);
            
         }
             
