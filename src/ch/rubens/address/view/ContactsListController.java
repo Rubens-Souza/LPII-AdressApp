@@ -54,37 +54,57 @@ public class ContactsListController implements IController {
     private void initialize() {
         
         firstNameColumn.setCellValueFactory(
-                cellData -> cellData.getValue().getFirstNameProperty());
+                
+                cellData -> cellData.getValue().getFirstNameProperty()
+                
+        );
+        
         lastNameColumn.setCellValueFactory(
-                cellData -> cellData.getValue().getLastNameProperty());
+                
+                cellData -> cellData.getValue().getLastNameProperty()
+                
+        );
         
         controllerActions.clearLabelsContent();
         
         personTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showPersonDetails(newValue));
+                
+                (observable, oldValue, newValue) -> showPersonDetails(newValue)
+                
+        );
         
     }
     
     private void showPersonDetails(PersonPropertyAdapter personPropertySelected) {
         
-        Person person = personPropertySelected.getPerson();
-        controllerActions.showSelectedPersonContent(person);
+        if (personPropertySelected != null) {
+            
+            Person person = personPropertySelected.getPerson();
+            controllerActions.showSelectedPersonContent(person);
+            
+        }
         
     }
     
     @FXML
     private void handelDeletePerson() {
+        
         controllerActions.deletePerson();
+        
     }
     
     @FXML
     private void handleNewPerson() {
+        
         controllerActions.addPerson();
+        
     }
     
     @FXML
     private void handleEditPerson() {
+        
         controllerActions.editPerson();
+        
     }
     
     public TableView<PersonPropertyAdapter> getPersonTable() {
