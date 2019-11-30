@@ -4,12 +4,18 @@ import ch.rubens.address.model.abstracts.IPersonListSingleton;
 import ch.rubens.address.model.concreate.Address;
 import ch.rubens.address.model.concreate.Person;
 import ch.rubens.address.model.concreate.PersonListSingleton;
+import ch.rubens.address.util.UserInput.Chooser;
+import ch.rubens.address.util.UserInput.FolderChooser;
 import ch.rubens.address.windows.concreate.PrimaryStageSingleton;
+import ch.rubens.persistence.BO.abstracts.IPersonBO;
+import ch.rubens.persistence.BO.concreate.PersonXMLBO;
 import ch.rubens.persistence.DAO.abstracts.IDAO;
 import ch.rubens.persistence.DAO.abstracts.IPersonDAO;
 import ch.rubens.persistence.JDBC.DAO.PersonJDBCDAO;
 import ch.rubens.persistence.XML.ContactsFileXMLSingleton;
 import ch.rubens.persistence.XML.DAO.PersonXMLDAO;
+import ch.rubens.persistence.XML.exceptions.NoneFileOpenedException;
+import ch.rubens.persistence.exceptions.InvalidDataInserted;
 import ch.rubens.persistence.exceptions.NotRegisteredDataException;
 import java.io.File;
 import java.io.IOException;
@@ -37,10 +43,10 @@ import org.xml.sax.SAXException;
  */
 public class MainApp extends Application {
     
-    private IPersonListSingleton personsList;
+    private PersonListSingleton personsList;
     private ContactsFileXMLSingleton contactsFile;
     
-    public MainApp() throws ParserConfigurationException, SAXException, IOException, TransformerException {
+    public MainApp() throws ParserConfigurationException, SAXException, IOException, TransformerException, NoneFileOpenedException, InvalidDataInserted {
         
         personsList = PersonListSingleton.getInstance();
         
@@ -54,7 +60,7 @@ public class MainApp extends Application {
             System.out.println("Erro when opening file: " + ex);
             
         }
-        
+       
         IPersonDAO personJDBCDAO = new PersonJDBCDAO();
         
         Person p1 = new Person(1);
@@ -90,81 +96,17 @@ public class MainApp extends Application {
         p3.setBirthday(LocalDate.of(2001, Month.MARCH, 2));
         p3.addAddress(adP2);
         
+        IPersonBO pBO = new PersonXMLBO();
         
-        // Testing
-        PersonXMLDAO pDAO = new PersonXMLDAO();
-        
-        pDAO.add(p1);
-        pDAO.add(p3);
-        pDAO.add(p2);
-        
-        Person p4 = new Person(4);
-        p4.setFirstName("Mae");
-        p4.setLastName("Borowski");
-        p4.setBirthday(LocalDate.of(1996, Month.DECEMBER, 1));
-        
-        Address ad4 = new Address(4);
-        ad4.setCity("Possum Springs");
-        ad4.setStreet("Line street");
-        p4.addAddress(ad4);
-        
-        List<Person> personsList = personJDBCDAO.listAll();
-        
-        for (Person person : personsList) {
-            
-            System.out.println(person.getFirstName() + " " + person.getLastName());
-            
-        }
-        
-        /*contactsFile.saveFileXML();
-        
-        System.out.println(pDAO.isRegistered(1)); // True
-        System.out.println(pDAO.isRegistered(0)); // False
-        
-        for (int i = 1; i <= 3; i++) {
-            
-            Person p = pDAO.getPerson(i);
-            
-            System.out.println(p.getFirstName());
-            System.out.println(p.getLastName());
-            System.out.println(p.getAddress(0).getStreet());            
-            
-        }
-        
-        Person p4 = new Person(4);
-        p4.setFirstName("Mae");
-        p4.setLastName("Borowski");
-        p4.setBirthday(LocalDate.of(1996, Month.DECEMBER, 1));
-        
-        Address ad4 = new Address(4);
-        ad4.setCity("Possum Springs");
-        ad4.setStreet("Line street");
-        p4.addAddress(ad4);
-        
-        pDAO.update(p1, p4);
+        pBO.add(p1);
+        pBO.add(p2);
+        pBO.add(p3);
         
         contactsFile.saveFileXML();
         
-        Person removedPerson = pDAO.remove(p4);
+        Person pg = pBO.getPerson(p1.getId());
         
-        contactsFile.saveFileXML();
-        
-        System.out.println(removedPerson.getFirstName());
-        
-        pDAO.add(p4);
-        pDAO.add(p1);
-        
-        contactsFile.saveFileXML();
-        
-        List<Person> list = pDAO.listAll();
-        
-        for (Person p : list) {
-            
-            System.out.println(p.getFirstName());
-            System.out.println(p.getLastName());
-            System.out.println(p.getAddress(0).getStreet());            
-            
-        }*/
+        System.out.println(pg.getAddress(0).getCity());
 
     }
     

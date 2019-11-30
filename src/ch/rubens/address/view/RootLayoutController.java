@@ -1,7 +1,10 @@
 package ch.rubens.address.view;
 
+import ch.rubens.address.model.concreate.Person;
 import ch.rubens.address.model.concreate.PersonListSingleton;
 import ch.rubens.address.model.concreate.PersonListWrapper;
+import ch.rubens.address.util.UserInput.Chooser;
+import ch.rubens.address.util.UserInput.FolderChooser;
 import ch.rubens.address.util.abstracts.PersistenceService;
 import ch.rubens.address.util.concreate.PersistenceXML;
 import ch.rubens.address.windows.concreate.BirthdayStatisticsStage;
@@ -13,6 +16,9 @@ import java.io.File;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
 import ch.rubens.address.view.abstracts.IController;
+import ch.rubens.persistence.BO.abstracts.IPersonBO;
+import ch.rubens.persistence.BO.concreate.PersonXMLBO;
+import java.util.ArrayList;
 
 /**
  *
@@ -81,6 +87,35 @@ public class RootLayoutController implements IController {
         }
         else {
             handleSaveAs();
+        }
+        
+    }
+    
+    @FXML
+    private void handleExport() {
+        
+        Chooser chooser = new FolderChooser();
+        
+        chooser.setPanelName("Choose Folder to Exeport Your Contacts");
+        File selectedFolder = chooser.open();
+        
+        if (selectedFolder != null) {
+            
+            
+            /*ArrayList<Person> personList = PersonListSingleton.getInstance().getObservableList();
+            IPersonBO personBO = new PersonXMLBO();
+            
+            for (Person person : personList) {
+                
+                
+                
+            }*/
+            
+        }
+        else {
+            
+            return;
+            
         }
         
     }

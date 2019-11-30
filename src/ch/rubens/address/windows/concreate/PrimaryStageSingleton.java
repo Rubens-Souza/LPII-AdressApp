@@ -2,8 +2,7 @@ package ch.rubens.address.windows.concreate;
 
 import ch.rubens.address.MainApp;
 import ch.rubens.address.model.concreate.PersonListWrapper;
-import ch.rubens.address.util.concreate.PersistenceXML;
-import ch.rubens.address.view.PersonOverviewController;
+import ch.rubens.address.view.ContactsListController;
 import ch.rubens.address.view.RootLayoutController;
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +27,7 @@ public class PrimaryStageSingleton {
     
     private BorderPane rootLayout;
     private RootLayoutController rootController;
-    private PersonOverviewController overviewController;
+    private ContactsListController overviewController;
     
     
     private PrimaryStageSingleton() {
@@ -72,8 +71,6 @@ public class PrimaryStageSingleton {
     
     private void initRootLayout() {
         
-        PersistenceXML persistenceXML = new PersistenceXML(PersonListWrapper.class, new PersonListWrapper());
-        
         try {
             
             FXMLLoader loader = new FXMLLoader();
@@ -91,11 +88,6 @@ public class PrimaryStageSingleton {
             e.printStackTrace();
         }
         
-        File file = persistenceXML.getFilePath();
-        if (file != null) {
-            persistenceXML.load(file);
-        }
-        
     }
     
     private void initContentLayout() {
@@ -103,7 +95,7 @@ public class PrimaryStageSingleton {
         try {
             
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/PersonOverview.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/ContactsList.fxml"));
             AnchorPane personOverview = (AnchorPane) loader.load();
             
             rootLayout.setCenter(personOverview);
