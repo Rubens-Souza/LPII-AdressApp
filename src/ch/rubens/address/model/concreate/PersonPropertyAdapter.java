@@ -36,13 +36,15 @@ public class PersonPropertyAdapter {
         
     }
     
-    private void setPerson(Person person) {
+    public void setPerson(Person person) {
         
         this.person = person;
         
         firstName = new SimpleStringProperty(this.person.getFirstName());
         lastName = new SimpleStringProperty(this.person.getLastName());
         birthday = new SimpleObjectProperty(this.person.getBirthday());
+        
+        addressProperties.clear();
         
         for (Address address : person.getAddressList()) {
             

@@ -59,12 +59,16 @@ public class PersonListSingleton {
 
     public Person removePerson(int index) {
         
+        personObservableList.remove(index);
         return personList.remove(index);
         
     }
     
     public Person removePerson(Person person) {
         
+        PersonPropertyAdapter personAdapter = getPersonPropertyAdapter(person);
+        
+        personObservableList.remove(personAdapter);
         personList.remove(person);
         
         return person;
@@ -95,10 +99,44 @@ public class PersonListSingleton {
         return selectedPerson;
         
     }
+    
+    public PersonPropertyAdapter getPersonPropertyAdapter(int index) {
+        
+        return personObservableList.get(index);
+        
+    }
+    
+    public PersonPropertyAdapter getPersonPropertyAdapter(Integer personId) {
+        
+        Person selectedPerson = getPerson(personId);
+        
+        return getPersonPropertyAdapter(selectedPerson);
+        
+    }
+    
+    public PersonPropertyAdapter getPersonPropertyAdapter(Person person) {
+        
+        PersonPropertyAdapter selectedPersonAdapter = null;
+        
+        for (PersonPropertyAdapter personAdapter : personObservableList) {
+            
+            if (personAdapter.getPerson().equals(person)) {
+                
+                selectedPersonAdapter = personAdapter;
+                break;
+                
+            }
+            
+        }
+        
+        return selectedPersonAdapter;
+        
+    }
 
     public void clear() {
         
         personList.clear();
+        personObservableList.clear();
         
     }
     
