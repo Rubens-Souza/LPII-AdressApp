@@ -17,7 +17,13 @@ public class AddressValidation implements IAddressValidation {
 
     @Override
     public boolean isPostalCodeValid(String postalCode) {
-        return !(postalCode == null || postalCode.length() == 0);
+        
+        INumberValidation numberValidator = new NumberValidation();
+        
+        boolean isEmpty = (postalCode == null || postalCode.length() == 0);
+        boolean postalCodeIsNumber = numberValidator.isNumber(postalCode);
+        
+        return (postalCodeIsNumber && !isEmpty);
     }
 
     @Override
